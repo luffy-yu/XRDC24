@@ -98,7 +98,7 @@ namespace Demo
                     tts.SendRequest(chatGPTText.text);
                     break;
                 case Stage.Speaking:
-                    tts.audioSource.PlayOneShot(audioClip);
+                    tts.audioSource.Play();
                     break;
                 default:
                     break;

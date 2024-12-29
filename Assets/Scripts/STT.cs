@@ -18,6 +18,8 @@ namespace Demo
         private bool recording = false;
 
         public System.Action<string> OnResultAvailable;
+        
+        public bool debug = false;
 
         private void Start()
         {
@@ -60,6 +62,7 @@ namespace Demo
 
         private void OnGUI()
         {
+            if (!debug) return;
             GUILayout.BeginVertical();
             GUILayout.Label($"Device: {Microphone.devices[0]}");
 

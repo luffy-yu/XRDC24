@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using UnityEngine;
 using OpenAI;
+using Samples.Whisper;
 using UnityEngine.Networking;
 
 namespace Demo
@@ -24,7 +26,10 @@ namespace Demo
 
         public AudioSource audioSource;
 
+        public bool debug = false;
+
         public System.Action<AudioClip> OnResultAvailable;
+
         private Configuration Configuration
         {
             get
@@ -140,9 +145,18 @@ namespace Demo
 
             if (response.AudioClip)
             {
-                // audioSource.PlayOneShot(response.AudioClip);
+                // save
+
+                var filename = "Audio.wav";
+                var data = SaveWav.Save(filename, response.AudioClip);
+                using (var fileStream = File.OpenWrite(filename))
+                {
+                    fileStream.Write(data);
+                }
+
                 if (OnResultAvailable != null)
                 {
+                    audioSource.clip = response.AudioClip;
                     OnResultAvailable(response.AudioClip);
                 }
             }
@@ -156,6 +170,7 @@ namespace Demo
 
         private void OnGUI()
         {
+            if (!debug) return;
             GUILayout.BeginVertical();
 
             if (GUILayout.Button("Test"))
