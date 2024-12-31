@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 
-namespace Demo
+namespace XRDC24.AI
 {
     public enum Stage
     {

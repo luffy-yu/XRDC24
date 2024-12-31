@@ -3,7 +3,7 @@ using Oculus.Interaction.Surfaces;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace Interaction
+namespace XRDC24.Interaction
 {
     public class SphereColliderSurface : MonoBehaviour, ISurface, IBounds
     {
@@ -12,6 +12,8 @@ namespace Interaction
         /// </summary>
         [Tooltip("The Surface will be represented by this collider.")] [SerializeField]
         private Collider _collider;
+
+        public System.Action OnHit;
 
         protected virtual void Start()
         {
@@ -46,6 +48,12 @@ namespace Interaction
                 hit.Point = hitInfo.point;
                 hit.Normal = hitInfo.normal;
                 hit.Distance = hitInfo.distance;
+
+                if (OnHit != null)
+                {
+                    OnHit();
+                }
+
                 return true;
             }
 

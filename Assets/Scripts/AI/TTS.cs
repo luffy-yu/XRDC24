@@ -10,7 +10,7 @@ using OpenAI;
 using Samples.Whisper;
 using UnityEngine.Networking;
 
-namespace Demo
+namespace XRDC24.AI
 {
     public class TTS : MonoBehaviour
     {

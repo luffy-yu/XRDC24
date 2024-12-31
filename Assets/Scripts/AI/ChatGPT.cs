@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using OpenAI;
 using UnityEngine;
 
-namespace Demo
+namespace XRDC24.AI
 {
     public class ChatGPT : MonoBehaviour
     {

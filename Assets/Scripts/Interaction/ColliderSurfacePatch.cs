@@ -5,7 +5,7 @@ using Oculus.Interaction.Surfaces;
 using UnityEngine;
 
 
-namespace Interaction
+namespace XRDC24.Interaction
 {
     [RequireComponent(typeof(SphereColliderSurface))]
     public class ColliderSurfacePatch : MonoBehaviour, ISurfacePatch
