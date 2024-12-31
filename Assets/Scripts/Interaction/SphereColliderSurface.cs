@@ -13,11 +13,16 @@ namespace XRDC24.Interaction
         [Tooltip("The Surface will be represented by this collider.")] [SerializeField]
         private Collider _collider;
 
-        public System.Action OnHit;
+        private SphereCollider _sphereCollider;
+
+        public System.Action<bool> OnHit;
+
+        public float touchThreshold = 2.0f;
 
         protected virtual void Start()
         {
             this.AssertField(_collider, nameof(_collider));
+            _sphereCollider = _collider as SphereCollider;
         }
 
         public Transform Transform => transform;
@@ -35,6 +40,8 @@ namespace XRDC24.Interaction
             // Reference: https://discussions.unity.com/t/collider-raycast-is-complaining-that-my-ray-does-not-have-a-normalized-direction/81409
             var newRay = new Ray(ray.origin, ray.direction);
 
+            var touched = false;
+
             if (ray.direction == Vector3.zero)
             {
                 var point = ray.origin;
@@ -48,10 +55,12 @@ namespace XRDC24.Interaction
                 hit.Point = hitInfo.point;
                 hit.Normal = hitInfo.normal;
                 hit.Distance = hitInfo.distance;
+                
+                touched = Vector3.Distance(hit.Point, _sphereCollider.center) <= touchThreshold;
 
                 if (OnHit != null)
                 {
-                    OnHit();
+                    OnHit(touched);
                 }
 
                 return true;
