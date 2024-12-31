@@ -48,6 +48,11 @@ namespace XRDC24.Bubble
             print("collision");
         }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            print("trigger"); // works
+        }
+
         IEnumerator OnPoked()
         {
             pokedPlaying = true;
