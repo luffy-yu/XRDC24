@@ -17,7 +17,7 @@ namespace XRDC24.Bubble
         private bool isShaking = false;
         private int frameCounter = 0; // Frame counter for triggering shake
 
-        void Start()
+        void Awake()
         {
             // Initialize a random horizontal drift direction
             driftDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
