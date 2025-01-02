@@ -2,26 +2,44 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: refMaterial2
-  m_Shader: {fileID: 4800000, guid: a36763ecf55485140aca584a79f8b477, type: 3}
-  m_ShaderKeywords: _ANIMATIONENABLED_ON _CEILINGBLENDMODE_SUBTRACTIVE _CEILINGMODE_MANUAL
-    _CEILING_ON _CROSSSECTIONUVSCALEDBYDISTANCE_ON _FLOORMODE_PLAYERPOSITON _FLOOR_ON
-    _FLOOR_PLAYERPOSITON _HASCLIPPEDSHADOWS_ON _ISREFERENCEMATERIAL_ON _OBSTRUCTION_ANGLEANDCONE
-    _TEXTUREDEMISSIONEDGE_ON _ZONINGMODE_ADDITATIVE
+  m_Shader: {fileID: 4800000, guid: 2f3ceaaf84dea4e4794d7f72a72da464, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _ANIMATIONENABLED_ON
+  - _CEILINGBLENDMODE_SUBTRACTIVE
+  - _CEILINGMODE_MANUAL
+  - _CEILING_ON
+  - _CROSSSECTIONUVSCALEDBYDISTANCE_ON
+  - _FLOORMODE_PLAYERPOSITON
+  - _FLOOR_ON
+  - _FLOOR_PLAYERPOSITON
+  - _HASCLIPPEDSHADOWS_ON
+  - _ISREFERENCEMATERIAL_ON
+  - _OBSTRUCTION_ANGLEANDCONE
+  - _TEXTUREDEMISSIONEDGE_ON
+  - _ZONINGMODE_ADDITATIVE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -74,6 +92,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -86,6 +108,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AddPrecomputedVelocity: 0
     - _AffectedAreaFloor: 0
@@ -99,6 +122,7 @@ Material:
     - _AngleStrength: 1
     - _AnimationEnabled: 1
     - _AnimationSpeed: 0.095
+    - _Blend: 0
     - _BlendMode: 0
     - _BumpScale: 1
     - _Ceiling: 1
@@ -123,6 +147,7 @@ Material:
     - _CylinderStrength: 1
     - _DefaultEffectRadius: 0
     - _DepthOffsetEnable: 0
+    - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DissolveColorSaturation: 0.856
     - _DissolveEmission: 1
@@ -135,6 +160,7 @@ Material:
     - _EnableBlendModePreserveSpecularLighting: 1
     - _EnableDefaultEffectRadius: 0
     - _EnableFogOnTransparent: 1
+    - _EnvironmentReflections: 1
     - _Floor: 1
     - _FloorMode: 1
     - _FloorY: 0
@@ -158,8 +184,11 @@ Material:
     - _PlayerPosYOffset: 0.62
     - _PreviewIndicatorLineThickness: 0.04
     - _PreviewMode: 0
+    - _QueueControl: -1
+    - _QueueOffset: 0
     - _RayTracing: 0
     - _RaycastMode: 0
+    - _ReceiveShadows: 1
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0
     - _RefractionModel: 0
@@ -172,6 +201,7 @@ Material:
     - _ShowContentObstructionOptionsArea: 1
     - _ShowContentReplacementOptionsArea: 1
     - _ShowContentZoningArea: 1
+    - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -186,6 +216,7 @@ Material:
     - _StencilWriteMaskGBuffer: 14
     - _StencilWriteMaskMV: 40
     - _SupportDecals: 1
+    - _Surface: 0
     - _SurfaceType: 0
     - _SyncCullMode: 0
     - _SyncZonesFloorYOffset: 0
@@ -205,6 +236,7 @@ Material:
     - _UVs: 2.77
     - _UseCustomTime: 0
     - _UseShadowThreshold: 0
+    - _WorkflowMode: 1
     - _ZTestDepthEqualForOpaque: 4
     - _ZTestGBuffer: 4
     - _ZTestTransparent: 4
@@ -219,8 +251,11 @@ Material:
     - _tDirection: 0
     - _tValue: 0
     m_Colors:
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _CrossSectionColor: {r: 1, g: 0, b: 0, a: 1}
     - _DissolveColor: {r: 0, g: 0.2386775, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
