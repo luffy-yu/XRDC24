@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using OpenAI;
 using TMPro;
+using System.Security.Cryptography;
 
 namespace XRDC24.AI
 {
@@ -13,9 +14,16 @@ namespace XRDC24.AI
 
         private OpenAIApi openai = new OpenAIApi();
         private List<ChatMessage> messages = new List<ChatMessage>();
-        private string prompt = $"Please determine whether the below sentence should be in positve or negative mood. The reply should contain 'positive' or 'negative'\n";
+        private string prompt = $"Please determine whether the below sentence should be in positve or negative mood. The reply should strictly follow the below pattern: @\"positive:\\s*(\\d+)%\\s*and\\s*negative:\\s*(\\d+)%\" \n";
 
         public TextMeshProUGUI m_UIText;
+
+        #region event
+
+        public System.Action<string> OnLLMResultAvailable;
+
+        #endregion
+
 
         private void OnEnable()
         {
@@ -63,8 +71,12 @@ namespace XRDC24.AI
                 // Initialize balls in the scene based on the reply
                 messages.Add(message);
                 Debug.Log(message.Content);
-                m_UIText.text = message.Content;
-                // InitBubble();
+                m_UIText.text += $"\n{message.Content}";
+                
+                if (OnLLMResultAvailable != null)
+                {
+                    OnLLMResultAvailable(message.Content);
+                }
             }
             else
             {

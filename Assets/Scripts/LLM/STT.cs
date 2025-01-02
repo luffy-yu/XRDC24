@@ -14,8 +14,9 @@ namespace XRDC24.AI
         private AudioClip clip;
         private int duration = Constants.SPEAK_MAX_DURATION;
         private readonly string fileName = "audio.wav";
+        private string microphone;
         private bool recording = false;
-        private int countdown;
+        private float countdown;
 
         #region event
         
@@ -23,71 +24,106 @@ namespace XRDC24.AI
 
         #endregion
 
-        public TextMeshPro m_ButtonText;
+        public TextMeshPro m_StartButtonText;
         public TextMeshProUGUI m_UIText;
+        public GameObject m_ButtonStart;
+        public GameObject m_ButtonEnd;
 
         private void Start()
         {
-            Debug.Log($"[STT] Recording will use {Microphone.devices[0]}.");
-            countdown = duration;
+            // init microphone
+            if (Microphone.devices.Length > 0)
+            {
+                Debug.Log($"[STT] Recording will use {Microphone.devices[0]}.");
+                microphone = Microphone.devices[0];
+                clip = Microphone.Start(microphone, true, duration, 44100);
+                while (Microphone.GetPosition(microphone) <= 0) { } 
+                Microphone.End(microphone);
+                Debug.Log("Microphone initialized");
+            }
+            else
+            {
+                Debug.LogError("No microphone detected!");
+            }
+
+            countdown = 0;
+            m_ButtonEnd.SetActive(false);
+
         }
 
         private void Update()
         {
+            SetTimer();
+        }
+
+        private void SetTimer()
+        {
+            if (!recording)
+                return;
             
-            
+            while (countdown > 0)
+            {
+                countdown -= Time.deltaTime;
+                if (countdown <= 0)
+                {
+                    countdown = 0;
+                    EndRecording();
+                    m_ButtonEnd.SetActive(false);
+                }
+            }
         }
 
         public void StartRecording()
         {
             // var index = PlayerPrefs.GetInt("user-mic-device-index");
-
-            clip = Microphone.Start(Microphone.devices[0], false, duration, 44100);
-            recording = true;
-            Debug.Log("Recording started...");
-
-            StartCoroutine(EndRecordingAfterDuration());
-        }
-
-        private IEnumerator EndRecordingAfterDuration()
-        {
-            while (countdown > 0)
+            
+            if (!recording && clip != null)
             {
-                m_ButtonText.text = $"{countdown}";
-                yield return new WaitForSeconds(1f);
-                countdown--;
+                clip = Microphone.Start(microphone, false, duration, 44100);
+                recording = true;
+                m_UIText.text = $"Recording...\nPress end button when you finished";
+                m_ButtonEnd.SetActive(true);
+                Debug.Log("Recording started...");
             }
-
-            m_ButtonText.text = "Transcripting...";
-            EndRecording();
         }
 
         public async void EndRecording()
         {
-            Debug.Log("End Recording...");
-
-            Microphone.End(null);
-
-            byte[] data = SaveWav.Save(fileName, clip);
-
-            var req = new CreateAudioTranscriptionsRequest
+            if (recording)
             {
-                FileData = new FileData() { Data = data, Name = fileName },
-                Model = "whisper-1",
-                Language = "en"
-            };
-            var res = await openai.CreateAudioTranscription(req);
+                Debug.Log("End Recording...");
+                m_StartButtonText.text = "Transcriping...";
 
-            Debug.Log(res.Text);
-            m_UIText.text = res.Text;
-            m_ButtonText.text = "Start Recording";
+                Microphone.End(microphone);
 
-            if (OnResultAvailable != null)
-            {
-                OnResultAvailable(res.Text);
+                byte[] data = SaveWav.Save(fileName, clip);
+
+                var req = new CreateAudioTranscriptionsRequest
+                {
+                    FileData = new FileData() { Data = data, Name = fileName },
+                    Model = "whisper-1",
+                    Language = "en"
+                };
+                var res = await openai.CreateAudioTranscription(req);
+
+                Debug.Log(res.Text);
+                m_UIText.text = res.Text;
+                m_StartButtonText.text = "Record Again";
+
+                if (OnResultAvailable != null)
+                {
+                    OnResultAvailable(res.Text);
+                }
+
+                recording = false;
             }
+        }
 
-            recording = false;
+        public int GetVideoClipLength()
+        {
+            if (clip.length >= 0)
+                return (int)clip.length;
+            return 0;
         }
 
         //private void OnGUI()
