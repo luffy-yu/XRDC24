@@ -7,6 +7,8 @@ namespace DA_Assets.FCU
     public delegate void ShowDifferenceChecker(PreImportInput data, Action<PreImportOutput> callback);
     public delegate bool GetGameViewSize(out Vector2 size);
     public delegate void Void();
+    // Add by Liuchuan Yu to fix `UpdateScrollContent` not working
+    public delegate void UpdateScrollContentDelegate();
 
     [Serializable]
     public class DelegateHolder : MonoBehaviourBinder<FigmaConverterUnity>

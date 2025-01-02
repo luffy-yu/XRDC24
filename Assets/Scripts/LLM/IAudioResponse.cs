@@ -1,7 +1,7 @@
 ﻿using OpenAI;
 using UnityEngine;
 
-namespace Demo
+namespace XRDC24.AI
 {
     public interface IAudioResponse: IResponse
     {

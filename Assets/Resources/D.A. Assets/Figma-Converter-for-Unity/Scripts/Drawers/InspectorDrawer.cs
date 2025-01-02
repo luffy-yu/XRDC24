@@ -28,7 +28,9 @@ namespace DA_Assets.FCU.Drawers
                 _doc.SetAllSelected(true);
             }
 
-            monoBeh.DelegateHolder.UpdateScrollContent();
+            // Fix by Liuchuan Yu
+            // monoBeh.DelegateHolder2.UpdateScrollContent();
+            monoBeh.UpdateScrollContentDelegate();
 
             return _doc;
         }

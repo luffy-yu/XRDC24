@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using OpenAI;
 using TMPro;
 
-namespace Demo
+namespace XRDC24.AI
 {
     public class LLMMoodDiscriminator : MonoBehaviour
     {

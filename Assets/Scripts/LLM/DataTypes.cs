@@ -1,7 +1,7 @@
 ﻿using OpenAI;
 using UnityEngine;
 
-namespace Demo
+namespace XRDC24.AI
 {
     #region Text To Speech Data Types
 

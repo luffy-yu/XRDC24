@@ -6,7 +6,7 @@ using TMPro;
 using Unity.Collections;
 using UnityEngine;
 
-namespace Demo
+namespace XRDC24.AI
 {
     public class STT : MonoBehaviour
     {
