@@ -12,12 +12,12 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
+  companyName: xrdc.com
   productName: XRDC24
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
-  m_ShowUnitySplashScreen: 1
+  m_ShowUnitySplashScreen: 0
   m_ShowUnitySplashLogo: 1
   m_SplashScreenOverlayOpacity: 1
   m_SplashScreenAnimation: 0
@@ -144,7 +144,10 @@ PlayerSettings:
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
   bundleVersion: 0.0.1
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: 11400000, guid: f8c15d1c6efbc804187636f9336eb581, type: 2}
+  - {fileID: 5269706996647393442, guid: e3aee76b9372917449aef639e2f74814, type: 2}
+  - {fileID: 11400000, guid: 455f7ff9b71f9b541b87912746e86329, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -176,8 +179,8 @@ PlayerSettings:
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 30
-  AndroidTargetSdkVersion: 32
+  AndroidMinSdkVersion: 32
+  AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 0
   aotOptions: 
   stripEngineCode: 1
@@ -547,8 +550,12 @@ PlayerSettings:
       m_SubKind: 
   m_BuildTargetBatching: []
   m_BuildTargetShaderSettings: []
-  m_BuildTargetGraphicsJobs: []
-  m_BuildTargetGraphicsJobMode: []
+  m_BuildTargetGraphicsJobs:
+  - m_BuildTarget: AndroidPlayer
+    m_GraphicsJobs: 1
+  m_BuildTargetGraphicsJobMode:
+  - m_BuildTarget: AndroidPlayer
+    m_GraphicsJobMode: 1
   m_BuildTargetGraphicsAPIs:
   - m_BuildTarget: iOSSupport
     m_APIs: 10000000
@@ -849,7 +856,7 @@ PlayerSettings:
   webGLCloseOnQuit: 0
   webWasm2023: 0
   scriptingDefineSymbols:
-    Android: USE_INPUT_SYSTEM_POSE_CONTROL;USE_STICK_CONTROL_THUMBSTICKS;ISDK_OPENXR_HAND
+    Android: USE_INPUT_SYSTEM_POSE_CONTROL;USE_STICK_CONTROL_THUMBSTICKS;ISDK_OPENXR_HAND;FCU_EXISTS;JSONNET_EXISTS;TextMeshPro;UITK_EXISTS
     Standalone: USE_INPUT_SYSTEM_POSE_CONTROL;USE_STICK_CONTROL_THUMBSTICKS;ISDK_OPENXR_HAND;FCU_EXISTS;JSONNET_EXISTS;TextMeshPro;UITK_EXISTS
     Windows Store Apps: USE_INPUT_SYSTEM_POSE_CONTROL;USE_STICK_CONTROL_THUMBSTICKS
   additionalCompilerArguments: {}

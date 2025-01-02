@@ -5,12 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 13f6f87036926f94ab0417ca1b31725c
   - enabled: 0
     path: Assets/Scenes/BasicScene.unity
     guid: bc761d9a86b33554f85fd11bb1f87ba3
+  - enabled: 1
+    path: Assets/Scenes/AIAgentChatModule.unity
+    guid: b8567c28d878b8f4d805fc0ac6d3978f
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 455f7ff9b71f9b541b87912746e86329,
       type: 2}
