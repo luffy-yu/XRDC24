@@ -14,7 +14,7 @@ namespace XRDC24.AI
 
         private OpenAIApi openai = new OpenAIApi();
         private List<ChatMessage> messages = new List<ChatMessage>();
-        private string prompt = $"Please determine whether the below sentence should be in positve or negative mood. The reply should strictly follow the below pattern: @\"positive:\\s*(\\d+)%\\s*and\\s*negative:\\s*(\\d+)%\" \n";
+        private string prompt = $"Please analyze the following sentence and determine whether it conveys a positive or negative mood. Provide the response strictly in the following format: \r\n\r\n@\"positive:\\s*(\\d+)%\\s*and\\s*negative:\\s*(\\d+)%\"\r\n\r\nReplace (\\d+) with the corresponding percentage values for positive and negative moods, ensuring the total equals 100%. For example: \"positive: 75% and negative: 25%\". Avoid any additional text outside this pattern.";
 
         public TextMeshProUGUI m_UIText;
 
@@ -54,7 +54,7 @@ namespace XRDC24.AI
                 Content = msg
             };
 
-            if (messages.Count == 0) newMessage.Content = prompt + msg;
+            if (messages.Count == 0) newMessage.Content = prompt + '\n' + msg;
             messages.Add(newMessage);
 
             var completionResponse = await openai.CreateChatCompletion(new CreateChatCompletionRequest()
