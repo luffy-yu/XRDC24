@@ -28,6 +28,12 @@ namespace XRDC24.Bubble
         private bool fallenPlaying = false;
 
         public System.Action<GameObject, AnimationType> OnAnimationFinished;
+        
+        private MeshRenderer meshRenderer;
+
+        [Header("Settings")]
+        [Tooltip("Gap before showing animation")]
+        public float gapSeconds = 1.0f;
 
         private void Start()
         {
@@ -37,6 +43,8 @@ namespace XRDC24.Bubble
             sphereColliderSurface = GetComponent<SphereColliderSurface>();
             rbRigidbody = gameObject.GetComponent<Rigidbody>();
             sphereColliderSurface.OnHit += OnHit;
+            
+            meshRenderer = GetComponent<MeshRenderer>();
         }
 
         public void LetFall()
@@ -58,21 +66,24 @@ namespace XRDC24.Bubble
                 StartCoroutine(OnPoked());
             }
         }
-
-        private void OnCollisionEnter(Collision other)
-        {
-            print("collision");
-        }
-
+        
         private void OnTriggerEnter(Collider other)
         {
-            print("trigger"); // works
+            if (other.gameObject.tag != "Bubble")
+            {
+                // trigger animation
+                TriggerPokedAnimation();
+            }
         }
 
         IEnumerator OnPoked()
         {
             pokedPlaying = true;
             fallenPlaying = false;
+            
+            meshRenderer.enabled = false;
+            yield return new WaitForSeconds(gapSeconds);
+            
             // enable
             pokedAnimation.SetActive(true);
 
@@ -97,11 +108,15 @@ namespace XRDC24.Bubble
         {
             fallenPlaying = true;
             pokedPlaying = false;
+            
+            meshRenderer.enabled = false;
+            yield return new WaitForSeconds(gapSeconds);
+            
             // enable
             fallenAnimation.SetActive(true);
 
             // wait for seconds
-            yield return new WaitForSeconds(pokeDuration);
+            yield return new WaitForSeconds(fallenDuration);
 
             // disable
             fallenAnimation.SetActive(false);
@@ -120,6 +135,11 @@ namespace XRDC24.Bubble
         public void TriggerFallenAnimation()
         {
             StartCoroutine(OnFallen());
+        }
+
+        public void TriggerPokedAnimation()
+        {
+            StartCoroutine(OnPoked());
         }
     }
 }

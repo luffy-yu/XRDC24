@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using OpenAI;
 using TMPro;
+using System.Security.Cryptography;
 
 namespace XRDC24.AI
 {
@@ -13,9 +14,16 @@ namespace XRDC24.AI
 
         private OpenAIApi openai = new OpenAIApi();
         private List<ChatMessage> messages = new List<ChatMessage>();
-        private string prompt = $"Please determine whether the below sentence should be in positve or negative mood. The reply should contain 'positive' or 'negative'\n";
+        private string prompt = $"Please analyze the following sentence and determine whether it conveys a positive or negative mood. Provide the response strictly in the following format: \r\n\r\n@\"positive:\\s*(\\d+)%\\s*and\\s*negative:\\s*(\\d+)%\"\r\n\r\nReplace (\\d+) with the corresponding percentage values for positive and negative moods, ensuring the total equals 100%. For example: \"positive: 75% and negative: 25%\". Avoid any additional text outside this pattern.";
 
         public TextMeshProUGUI m_UIText;
+
+        #region event
+
+        public System.Action<string> OnLLMResultAvailable;
+
+        #endregion
+
 
         private void OnEnable()
         {
@@ -46,7 +54,7 @@ namespace XRDC24.AI
                 Content = msg
             };
 
-            if (messages.Count == 0) newMessage.Content = prompt + msg;
+            if (messages.Count == 0) newMessage.Content = prompt + '\n' + msg;
             messages.Add(newMessage);
 
             var completionResponse = await openai.CreateChatCompletion(new CreateChatCompletionRequest()
@@ -63,8 +71,12 @@ namespace XRDC24.AI
                 // Initialize balls in the scene based on the reply
                 messages.Add(message);
                 Debug.Log(message.Content);
-                m_UIText.text = message.Content;
-                // InitBubble();
+                m_UIText.text += $"\n{message.Content}";
+                
+                if (OnLLMResultAvailable != null)
+                {
+                    OnLLMResultAvailable(message.Content);
+                }
             }
             else
             {

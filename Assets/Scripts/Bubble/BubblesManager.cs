@@ -68,6 +68,9 @@ namespace XRDC24.Bubble
 
         private void OnAnimationFinished(GameObject go, AnimationType obj)
         {
+            // might be removed before
+            if (!spawnedBubbles.Contains(go)) return;
+            
             if (obj == AnimationType.Poke)
             {
                 pokeCount++;

@@ -16,11 +16,14 @@ namespace XRDC24.Bubble
         private Vector3 driftDirection;
         private bool isShaking = false;
         private int frameCounter = 0; // Frame counter for triggering shake
+        
+        private SphereCollider sphereCollider;
 
         void Awake()
         {
             // Initialize a random horizontal drift direction
             driftDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
+            sphereCollider = GetComponent<SphereCollider>();
         }
 
         void Update()
@@ -42,6 +45,8 @@ namespace XRDC24.Bubble
                     originalPosition = transform.position;
                     isShaking = true;
                     frameCounter = 0; // Reset the frame counter
+                    // enable collider
+                    sphereCollider.enabled = true;
                 }
             }
             else
