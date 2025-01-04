@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
@@ -5,9 +6,12 @@ using XRDC24.AI;
 
 public class ModuleManager : MonoBehaviour
 {
+    [SerializeField] OVRCameraRig m_OVRCameraRig;
     [SerializeField] BubblesManager m_BubbleManager;
     [SerializeField] LLMMoodDiscriminator m_LLMMoodDiscriminator;
     [SerializeField] STT m_SpeakToText;
+
+    public GameObject m_3DUIPanel;
 
     private float positivePercentage;
     private float negativePercentage;
@@ -41,12 +45,23 @@ public class ModuleManager : MonoBehaviour
 
     void Start()
     {
-        
     }
 
     void Update()
     {
-        
+        AdjustUIPose();
+    }
+
+    private void AdjustUIPose()
+    {
+        Vector3 headPos = m_OVRCameraRig.centerEyeAnchor.position;
+        if (Vector3.Distance(headPos, m_3DUIPanel.transform.position) < 1f)
+            return;
+
+        Vector3 forward = m_OVRCameraRig.transform.forward;
+
+        m_3DUIPanel.transform.position = headPos + forward * 0.5f;
+        m_3DUIPanel.transform.rotation = m_OVRCameraRig.transform.rotation;
     }
 
     public void ProcessResultForBubbleSpawn(string input)
