@@ -49,7 +49,7 @@ namespace UnityEditor.Rendering.Universal.ShaderGUI
             if (EditorGUI.EndChangeCheck())
             {
                 foreach (var obj in blendModeProp.targets)
-                    MaterialChanged((Material)obj);
+                    ValidateMaterial((Material)obj);
             }
         }
 
@@ -105,7 +105,7 @@ namespace UnityEditor.Rendering.Universal.ShaderGUI
             material.SetFloat("_Surface", (float)surfaceType);
             material.SetFloat("_Blend", (float)blendMode);
 
-            MaterialChanged(material);
+            ValidateMaterial(material);
         }
 
 

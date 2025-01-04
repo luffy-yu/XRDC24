@@ -14,10 +14,14 @@ namespace UnityEditor.Rendering.Universal.ShaderGUI
         public override void OnOpenGUI(Material material, MaterialEditor materialEditor)
         {
             base.OnOpenGUI(material, materialEditor);
+            // refer to: Assets/Resources/SeeThroughShader/Scripts/Editor/STSShaderGUI/URP/2019-2020/BaseShaderGUI.cs L185
+            var k_KeyPrefix = "UniversalRP:Material:UI_State:";
+            var headerStateKey = k_KeyPrefix + material.shader.name;
             m_DetailInputsFoldout = new AdvancedDissolve_SavedBool($"{headerStateKey}.DetailInputsFoldout", true);
         }
 
-        public override void DrawAdditionalFoldouts(Material material)
+        // public override void DrawAdditionalFoldouts(Material material)
+        public void DrawAdditionalFoldouts(Material material)
         {
             m_DetailInputsFoldout.value = EditorGUILayout.BeginFoldoutHeaderGroup(m_DetailInputsFoldout.value, AdvancedDissolve_LitDetailGUI.Styles.detailInputs);
             if (m_DetailInputsFoldout.value)
@@ -70,7 +74,7 @@ namespace UnityEditor.Rendering.Universal.ShaderGUI
             if (EditorGUI.EndChangeCheck())
             {
                 foreach (var obj in blendModeProp.targets)
-                    MaterialChanged((Material)obj);
+                    ValidateMaterial((Material)obj);
             }
             base.DrawSurfaceOptions(material);
         }
@@ -94,7 +98,7 @@ namespace UnityEditor.Rendering.Universal.ShaderGUI
                 materialEditor.ShaderProperty(litProperties.reflections, LitGUI.Styles.reflectionsText);
                 if(EditorGUI.EndChangeCheck())
                 {
-                    MaterialChanged(material);
+                    ValidateMaterial(material);
                 }
             }
 
@@ -153,7 +157,7 @@ namespace UnityEditor.Rendering.Universal.ShaderGUI
                     material.SetTexture("_MetallicSpecGlossMap", texture);
             }
 
-            MaterialChanged(material);
+            ValidateMaterial(material);
         }
 
 
