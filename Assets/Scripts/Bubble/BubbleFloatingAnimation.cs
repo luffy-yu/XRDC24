@@ -70,7 +70,18 @@ namespace XRDC24.Bubble
                 StartFollowing();
             }
 
+            if (GUILayout.Button("Add Force"))
+            {
+                AddForce();
+            }
+
             GUILayout.EndVertical();
+        }
+
+        private void AddForce()
+        {
+            var rb = bubble.gameObject.GetComponent<Rigidbody>();
+            rb.AddForce(- transform.up * speed);
         }
 
         private void Update()
