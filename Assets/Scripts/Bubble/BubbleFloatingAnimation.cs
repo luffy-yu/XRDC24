@@ -6,69 +6,68 @@ using Random = System.Random;
 
 namespace XRDC24.Bubble
 {
+    public static class RandomExtensions
+    {
+        public static double NextDouble(
+            this Random random,
+            double minValue,
+            double maxValue)
+        {
+            return random.NextDouble() * (maxValue - minValue) + minValue;
+        }
+    }
+    
     public class BubbleFloatingAnimation : MonoBehaviour
     {
-        private Animator animator;
-        // private List<GameObject> followees;
-
+        public Animator animator;
         public float speed = 0.6f;
 
-        private Vector3 startPosition;
-
-        private Dictionary<GameObject, Vector3> bubblePositions = new Dictionary<GameObject, Vector3>();
-
-        public GameObject pos;
-        public GameObject neg;
-
         private Random random;
+        public Transform bubble;
+        private Vector3 bubbleStartPosition;
+
+        private Vector3 startPosition;
+        private bool startPositionSet;
+
+        private bool following;
 
         private void Start()
         {
-            animator = GetComponent<Animator>();
             // backup speed
             speed = animator.speed;
             random = new Random();
+            startPositionSet = false;
+            following = false;
+            
+            // test
+            StartFollowing();
         }
 
-        IEnumerator StartAnimation()
+        void StartAnimation()
         {
             animator.speed = speed;
-            animator.Play("BubbleFloating", -1, 0);
-
-            yield return new WaitForSeconds(0.1f);
-            // backup position
-            startPosition = transform.position;
-
-            yield return null;
+            animator.Play("BubbleFloating", -1, (float)random.NextDouble(0, 1));
+            bubbleStartPosition = bubble.position;
         }
 
-        private void StopAnimation()
+        public void StartFollowing()
         {
-            animator.speed = 0f;
+            following = true;
+            StartAnimation();
         }
 
-        public void AddBubble(GameObject bubble)
+        public void StopFollowing()
         {
-            bubblePositions.Add(bubble, bubble.transform.position);
+            following = false;
         }
 
         private void OnGUI()
         {
             GUILayout.BeginVertical();
 
-            if (GUILayout.Button("Start Animation"))
+            if (GUILayout.Button("Start Following"))
             {
-                StartCoroutine(StartAnimation());
-            }
-
-            if (GUILayout.Button("Add pos"))
-            {
-                AddBubble(pos);
-            }
-
-            if (GUILayout.Button("Add neg"))
-            {
-                AddBubble(neg);
+                StartFollowing();
             }
 
             GUILayout.EndVertical();
@@ -76,14 +75,23 @@ namespace XRDC24.Bubble
 
         private void Update()
         {
-            var pos = transform.position;
-            foreach (var (k, v) in bubblePositions)
+            if (!startPositionSet)
             {
-                var offset = pos - startPosition;
-                var r = random.NextDouble();
-                offset.y = offset.y * (float)r;
-                // add randomness
-                k.transform.position = v + offset;
+                var time = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+                if (time > 0)
+                {
+                    // set start position
+                    startPosition = animator.transform.position;
+                    startPositionSet = true;
+                }
+
+                return;
+            }
+
+            if (following && startPositionSet)
+            {
+                var offset = animator.transform.position - startPosition;
+                bubble.position = bubbleStartPosition + offset;
             }
         }
     }
