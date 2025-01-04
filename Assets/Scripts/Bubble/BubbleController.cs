@@ -72,6 +72,7 @@ namespace XRDC24.Bubble
             if (other.gameObject.tag != "Bubble")
             {
                 // trigger animation
+                Debug.Log("touch ++++");
                 TriggerPokedAnimation();
             }
         }

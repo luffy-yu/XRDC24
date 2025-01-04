@@ -5,7 +5,7 @@ using XRDC24.AI;
 
 public class ModuleManager : MonoBehaviour
 {
-    [SerializeField] BubbleGenerator m_BubbleGenerator;
+    [SerializeField] BubblesManager m_BubbleManager;
     [SerializeField] LLMMoodDiscriminator m_LLMMoodDiscriminator;
     [SerializeField] STT m_SpeakToText;
 
@@ -34,7 +34,7 @@ public class ModuleManager : MonoBehaviour
 
         int positiveBubbleN = (int)(totalBubbleN * positivePercentage / 100);
         int negativeBubbleN = totalBubbleN - positiveBubbleN;
-        m_BubbleGenerator.SpawnBubbles(positiveBubbleN, negativeBubbleN);
+        m_BubbleManager.SpawnBubbles(positiveBubbleN, negativeBubbleN);
 
         m_UIText.text = $"positve bubbles: {positiveBubbleN}\nnegative bubbles: {negativeBubbleN}";
     }
