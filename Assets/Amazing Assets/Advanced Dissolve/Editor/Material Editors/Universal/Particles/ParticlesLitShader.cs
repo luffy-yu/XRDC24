@@ -45,7 +45,7 @@ namespace UnityEditor.Rendering.Universal.ShaderGUI
             if (EditorGUI.EndChangeCheck())
             {
                 foreach (var obj in blendModeProp.targets)
-                    MaterialChanged((Material)obj);
+                    ValidateMaterial((Material)obj);
             }
         }
 
@@ -66,7 +66,7 @@ namespace UnityEditor.Rendering.Universal.ShaderGUI
 
                 if (EditorGUI.EndChangeCheck())
                 {
-                    MaterialChanged(material);
+                    ValidateMaterial(material);
                 }
             }
 
