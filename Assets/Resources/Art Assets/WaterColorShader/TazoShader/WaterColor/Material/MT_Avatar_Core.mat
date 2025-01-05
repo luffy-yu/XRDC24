@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MT_Avatar_ColorWater
+  m_Name: MT_Avatar_Core
   m_Shader: {fileID: 4800000, guid: c4480d6dd975c374e9d2861ecb5d4c2d, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -121,7 +121,7 @@ Material:
     m_Floats:
     - _AV: 0.3
     - _AlphaClip: 0
-    - _AlphaMode: 0.425
+    - _AlphaMode: 0.436
     - _Blend: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
@@ -151,16 +151,16 @@ Material:
     - _UVDisMap2: 0
     - _WorkflowMode: 1
     - _ZWrite: 0
-    - _a: 0
+    - _a: 0.604
     - _flow_offset: 0.01
-    - _flow_strength: 2
+    - _flow_strength: 2.9
     - _mat_angle: 0.21
     - _mat_scale: 0.88
-    - _pow: 0.5
-    - _s: 0.182
-    - _tile: 3.4
-    - _tileOffsetX: 0.183
-    - _tileOffsetY: 0
+    - _pow: 0.89
+    - _s: 0.703
+    - _tile: 4.94
+    - _tileOffsetX: 0.151
+    - _tileOffsetY: 0.109
     - _tileUV: 0.8
     - rimWidth: 0.95
     m_Colors:
@@ -169,7 +169,7 @@ Material:
     - _Color2: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Color3: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _MColor: {r: 0.8443396, g: 0.9105119, b: 1, a: 1}
+    - _MColor: {r: 0.36862743, g: 0.63987786, b: 1, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
