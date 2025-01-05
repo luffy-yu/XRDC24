@@ -17,7 +17,7 @@ namespace XRDC24.Interaction
 
         public System.Action<bool> OnHit;
 
-        public float touchThreshold = 2.0f;
+        public float touchThreshold = 0.1f;
 
         protected virtual void Start()
         {
@@ -57,6 +57,9 @@ namespace XRDC24.Interaction
                 hit.Distance = hitInfo.distance;
                 
                 touched = Vector3.Distance(hit.Point, _sphereCollider.center) <= touchThreshold;
+                //Debug.Log("++++: " + Vector3.Distance(hit.Point, transform.TransformPoint(_sphereCollider.center)));
+                //Debug.Log("----: " + hit.Point + ", touched: " + touched);
+                //Debug.Log("====: " + transform.TransformPoint(_sphereCollider.center));
 
                 if (OnHit != null)
                 {

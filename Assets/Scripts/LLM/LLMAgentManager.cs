@@ -3,15 +3,11 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using OpenAI;
 using TMPro;
-using System.Security.Cryptography;
 
 namespace XRDC24.AI
 {
-    public class LLMMoodDiscriminator : MonoBehaviour
+    public class LLMAgentManager : MonoBehaviour
     {
-        [SerializeField] private STT stt;
-        // [SerializeField] private BubbleGenerator bubbleGenerator;
-
         private OpenAIApi openai = new OpenAIApi();
         private List<ChatMessage> messages = new List<ChatMessage>();
         private string prompt = $"Please analyze the following sentence and determine whether it conveys a positive or negative mood. Provide the response strictly in the following format: \r\n\r\n@\"positive:\\s*(\\d+)%\\s*and\\s*negative:\\s*(\\d+)%\"\r\n\r\nReplace (\\d+) with the corresponding percentage values for positive and negative moods, ensuring the total equals 100%. For example: \"positive: 75% and negative: 25%\". Avoid any additional text outside this pattern.";
@@ -20,21 +16,10 @@ namespace XRDC24.AI
 
         #region event
 
-        public System.Action<string> OnLLMResultAvailable;
+        public System.Action<string> OnMoodResultAvailable;
 
         #endregion
 
-
-        private void OnEnable()
-        {
-            stt.OnResultAvailable += SendMsgToGPT;
-        }
-
-        private void OnDisable()
-        {
-            stt.OnResultAvailable -= SendMsgToGPT;
-
-        }
 
         void Start()
         {
@@ -46,7 +31,7 @@ namespace XRDC24.AI
             
         }
 
-        private async void SendMsgToGPT(string msg)
+        public async void SendMsgToGPT(string msg)
         {
             var newMessage = new ChatMessage()
             {
@@ -73,9 +58,9 @@ namespace XRDC24.AI
                 Debug.Log(message.Content);
                 m_UIText.text += $"\n{message.Content}";
                 
-                if (OnLLMResultAvailable != null)
+                if (OnMoodResultAvailable != null)
                 {
-                    OnLLMResultAvailable(message.Content);
+                    OnMoodResultAvailable(message.Content);
                 }
             }
             else

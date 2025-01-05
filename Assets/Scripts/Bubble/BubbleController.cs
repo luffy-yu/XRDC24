@@ -69,22 +69,22 @@ namespace XRDC24.Bubble
         
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag != "Bubble")
+            if (other.gameObject.tag == "Ground")
             {
                 // trigger animation
-                Debug.Log("touch ++++");
                 TriggerPokedAnimation();
             }
         }
 
         IEnumerator OnPoked()
         {
+            Debug.Log("on poke");
             pokedPlaying = true;
             fallenPlaying = false;
-            
+
             meshRenderer.enabled = false;
             yield return new WaitForSeconds(gapSeconds);
-            
+
             // enable
             pokedAnimation.SetActive(true);
 

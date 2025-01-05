@@ -44,7 +44,7 @@ public class BubblesManager : MonoBehaviour
         negativeNum = negative;
         totalBubbles = positiveNum + negativeNum;
 
-        if (spawnedBubbles != null || spawnedBubbles.Count > 0)
+        if (spawnedBubbles.Count > 0)
         {
             // clear previous
             foreach (var bubble in spawnedBubbles)

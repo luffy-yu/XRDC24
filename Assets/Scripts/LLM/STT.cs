@@ -92,7 +92,7 @@ namespace XRDC24.AI
             if (recording)
             {
                 Debug.Log("End Recording...");
-                m_StartButtonText.text = "Transcriping...";
+                m_StartButtonText.text = "Processing...";
 
                 Microphone.End(microphone);
 

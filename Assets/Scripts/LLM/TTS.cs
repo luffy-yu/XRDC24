@@ -14,6 +14,14 @@ namespace XRDC24.AI
 {
     public class TTS : MonoBehaviour
     {
+        public AudioSource audioSource;
+
+        #region event
+
+        public System.Action<AudioClip> OnResultAvailable;
+
+        #endregion event
+
         /// OpenAI API base path for requests.
         private const string BASE_PATH = "https://api.openai.com/v1";
 
@@ -23,12 +31,6 @@ namespace XRDC24.AI
         ///     Production requests must be routed through your own backend server where your API key can be securely loaded from an environment variable or key management service.
         /// </summary>
         private Configuration configuration;
-
-        public AudioSource audioSource;
-
-        public bool debug = false;
-
-        public System.Action<AudioClip> OnResultAvailable;
 
         private Configuration Configuration
         {
@@ -162,23 +164,23 @@ namespace XRDC24.AI
             }
         }
 
-        void Test()
-        {
-            var text = "Today is a wonderful day to build something people love!";
-            SendRequest(text);
-        }
+        //void Test()
+        //{
+        //    var text = "Today is a wonderful day to build something people love!";
+        //    SendRequest(text);
+        //}
 
-        private void OnGUI()
-        {
-            if (!debug) return;
-            GUILayout.BeginVertical();
+        //private void OnGUI()
+        //{
+        //    if (!debug) return;
+        //    GUILayout.BeginVertical();
 
-            if (GUILayout.Button("Test"))
-            {
-                Test();
-            }
+        //    if (GUILayout.Button("Test"))
+        //    {
+        //        Test();
+        //    }
 
-            GUILayout.EndVertical();
-        }
+        //    GUILayout.EndVertical();
+        //}
     }
 }

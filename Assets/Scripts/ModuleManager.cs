@@ -8,8 +8,9 @@ public class ModuleManager : MonoBehaviour
 {
     [SerializeField] OVRCameraRig m_OVRCameraRig;
     [SerializeField] BubblesManager m_BubbleManager;
-    [SerializeField] LLMMoodDiscriminator m_LLMMoodDiscriminator;
-    [SerializeField] STT m_SpeakToText;
+    [SerializeField] LLMAgentManager m_LLMAgentManager;
+    [SerializeField] STT m_SpeechToText;
+    [SerializeField] TTS m_TextToSpeech;
 
     public GameObject m_3DUIPanel;
 
@@ -22,12 +23,27 @@ public class ModuleManager : MonoBehaviour
 
     private void OnEnable()
     {
-        m_LLMMoodDiscriminator.OnLLMResultAvailable += ReceiveMoodResult;
+        m_TextToSpeech.OnResultAvailable += PlayAIAgentAudioClip;
+        m_SpeechToText.OnResultAvailable += SendTextToLLM;
+        m_LLMAgentManager.OnMoodResultAvailable += ReceiveMoodResult;
     }
 
     private void OnDisable()
     {
-        m_LLMMoodDiscriminator.OnLLMResultAvailable -= ReceiveMoodResult;
+        m_TextToSpeech.OnResultAvailable -= PlayAIAgentAudioClip;
+        m_SpeechToText.OnResultAvailable -= SendTextToLLM;
+        m_LLMAgentManager.OnMoodResultAvailable -= ReceiveMoodResult;
+    }
+
+    private void PlayAIAgentAudioClip(AudioClip clip)
+    {
+        m_TextToSpeech.audioSource.Play();
+    }
+
+    private void SendTextToLLM(string res)
+    {
+        // TODO: determine which type of communication to send
+        m_LLMAgentManager.SendMsgToGPT(res);
     }
 
     private void ReceiveMoodResult(string res)
@@ -45,6 +61,9 @@ public class ModuleManager : MonoBehaviour
 
     void Start()
     {
+        // after scan the room, start agent audio to user
+        m_TextToSpeech.SendRequest("Hi, How do you feel today?");
+
     }
 
     void Update()
@@ -78,7 +97,7 @@ public class ModuleManager : MonoBehaviour
             Debug.Log($"Parsed Positive: {positivePercentage}%");
             Debug.Log($"Parsed Negative: {negativePercentage}%");
 
-            videoClipLength = m_SpeakToText.GetVideoClipLength();
+            videoClipLength = m_SpeechToText.GetVideoClipLength();
             if (videoClipLength > 0 && videoClipLength < 8)
                 totalBubbleN = 5;
             else if (videoClipLength >= 8 && videoClipLength < 15)
