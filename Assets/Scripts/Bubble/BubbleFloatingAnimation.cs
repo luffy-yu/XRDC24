@@ -20,7 +20,7 @@ namespace XRDC24.Bubble
     public class BubbleFloatingAnimation : MonoBehaviour
     {
         public Animator animator;
-        // public float speed = 0.6f;
+        public float ratio = 0.6f;
 
         private Random random;
         public Transform bubble;
@@ -91,7 +91,7 @@ namespace XRDC24.Bubble
             if (following && startPositionSet)
             {
                 var offset = animator.transform.position - startPosition;
-                bubble.position = bubbleStartPosition + offset;
+                bubble.position = bubbleStartPosition + offset * ratio;
             }
         }
     }
