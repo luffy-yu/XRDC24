@@ -12,11 +12,8 @@ namespace XRDC24.Bubble
         Fallen
     }
 
-    [RequireComponent(typeof(SphereColliderSurface))]
     public class BubbleController : MonoBehaviour
     {
-        private SphereColliderSurface sphereColliderSurface;
-
         private Rigidbody rbRigidbody;
 
         public GameObject pokedAnimation;
@@ -28,11 +25,10 @@ namespace XRDC24.Bubble
         private bool fallenPlaying = false;
 
         public System.Action<GameObject, AnimationType> OnAnimationFinished;
-        
+
         private MeshRenderer meshRenderer;
 
-        [Header("Settings")]
-        [Tooltip("Gap before showing animation")]
+        [Header("Settings")] [Tooltip("Gap before showing animation")]
         public float gapSeconds = 1.0f;
 
         private void Start()
@@ -40,10 +36,7 @@ namespace XRDC24.Bubble
             pokedPlaying = false;
             fallenPlaying = false;
 
-            sphereColliderSurface = GetComponent<SphereColliderSurface>();
             rbRigidbody = gameObject.GetComponent<Rigidbody>();
-            sphereColliderSurface.OnHit += OnHit;
-            
             meshRenderer = GetComponent<MeshRenderer>();
         }
 
@@ -52,7 +45,7 @@ namespace XRDC24.Bubble
             // make bubble drop
             rbRigidbody.useGravity = true;
             rbRigidbody.isKinematic = false;
-            
+
             // disable floating controller
             GetComponent<BubbleFloating>().enabled = false;
         }
@@ -69,8 +62,13 @@ namespace XRDC24.Bubble
 
         private void OnTriggerEnter(Collider other)
         {
-            var tag = other.gameObject.tag;
-            if (tag != "Bubble")
+            print($"On Trigger Enter: {other.gameObject.name}");
+
+            // Add SphereCollider to XRHand_IndexTip of the Synthetic hand
+            // set Radius 0.01 and check Is Trigger
+
+            var name = other.gameObject.name;
+            if (name.Equals("XRHand_IndexTip")) // name for poke interaction
             {
                 // trigger animation
                 TriggerPokedAnimation();
@@ -79,7 +77,6 @@ namespace XRDC24.Bubble
 
         IEnumerator OnPoked()
         {
-            Debug.Log("on poke");
             pokedPlaying = true;
             fallenPlaying = false;
 
@@ -102,6 +99,9 @@ namespace XRDC24.Bubble
             {
                 OnAnimationFinished.Invoke(gameObject, AnimationType.Poke);
             }
+            
+            // make self invisible
+            gameObject.SetActive(false);
 
             yield return null;
         }
@@ -110,10 +110,10 @@ namespace XRDC24.Bubble
         {
             fallenPlaying = true;
             pokedPlaying = false;
-            
+
             meshRenderer.enabled = false;
             yield return new WaitForSeconds(gapSeconds);
-            
+
             // enable
             fallenAnimation.SetActive(true);
 
@@ -130,6 +130,9 @@ namespace XRDC24.Bubble
             {
                 OnAnimationFinished.Invoke(gameObject, AnimationType.Fallen);
             }
+            
+            // make self invisible
+            gameObject.SetActive(false);
 
             yield return null;
         }

@@ -16,18 +16,22 @@ namespace XRDC24.Interaction
         private SphereCollider _sphereCollider;
 
         public System.Action<bool> OnHit;
-
-        public float touchThreshold = 0.1f;
-
+        
+        private PokeInteractable _pokeInteractable;
+        
         protected virtual void Start()
         {
             this.AssertField(_collider, nameof(_collider));
             _sphereCollider = _collider as SphereCollider;
+            
+            _pokeInteractable = _collider.GetComponent<PokeInteractable>();
         }
 
         public Transform Transform => transform;
 
         public Bounds Bounds => _collider.bounds;
+
+        private float threshold => _sphereCollider.radius * transform.localScale.x;
 
         public bool Raycast(in Ray ray, out SurfaceHit hit, float maxDistance = 0)
         {
@@ -45,28 +49,27 @@ namespace XRDC24.Interaction
             if (ray.direction == Vector3.zero)
             {
                 var point = ray.origin;
-                Vector3 direction = _collider.bounds.center - point;
+                Vector3 direction = Bounds.center - point;
                 newRay.direction = direction.normalized;
             }
 
-            if (_collider.Raycast(newRay, out hitInfo,
-                    maxDistance <= 0 ? float.MaxValue : maxDistance))
+            if (_collider.Raycast(newRay, out hitInfo, maxDistance))
             {
                 hit.Point = hitInfo.point;
                 hit.Normal = hitInfo.normal;
                 hit.Distance = hitInfo.distance;
-                
-                touched = Vector3.Distance(hit.Point, _sphereCollider.center) <= touchThreshold;
-                //Debug.Log("++++: " + Vector3.Distance(hit.Point, transform.TransformPoint(_sphereCollider.center)));
-                //Debug.Log("----: " + hit.Point + ", touched: " + touched);
-                //Debug.Log("====: " + transform.TransformPoint(_sphereCollider.center));
 
-                if (OnHit != null)
+                var distance = Vector3.Distance(hit.Point, Bounds.center);
+
+                if (distance <= threshold)
                 {
-                    OnHit(touched);
-                }
+                    if (OnHit != null)
+                    {
+                        OnHit(true);
+                    }
 
-                return true;
+                    return true;
+                }
             }
 
             return false;
@@ -79,7 +82,7 @@ namespace XRDC24.Interaction
             Vector3 delta = closest - point;
             if (delta.x == 0f && delta.y == 0f && delta.z == 0f)
             {
-                Vector3 direction = _collider.bounds.center - point;
+                Vector3 direction = Bounds.center - point;
                 return Raycast(new Ray(point - direction,
                     direction.normalized), out hit, float.MaxValue);
             }

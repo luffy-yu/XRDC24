@@ -863,6 +863,7 @@ MonoBehaviour:
   maxY: 2
   shakeIntensity: 0.001
   shakeFrequency: 10
+  isShaking: 0
 --- !u!114 &227653347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -876,7 +877,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _collider: {fileID: 227653351}
-  touchThreshold: 2
 --- !u!114 &227653348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1433,6 +1433,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Negative Bubble w Animation (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6332418933166915007, guid: 9a2ce173ecc6634429ee4d72b2f15f03,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7975937771416277897, guid: 9a2ce173ecc6634429ee4d72b2f15f03,
         type: 3}
@@ -2331,7 +2336,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _collider: {fileID: 526460682}
-  touchThreshold: 2
 --- !u!114 &526460692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2350,6 +2354,7 @@ MonoBehaviour:
   maxY: 2
   shakeIntensity: 0.02
   shakeFrequency: 10
+  isShaking: 0
 --- !u!114 &526460693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2373,8 +2378,8 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2028374799}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &563751732
-BoxCollider:
+--- !u!135 &563751734
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2392,7 +2397,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.02, y: 0.02, z: 0.02}
+  m_Radius: 0.01
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &580139947
 PrefabInstance:
@@ -2426,6 +2431,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Positive Bubble w Animation (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5476625874181094748, guid: 19e6e4cbd1eeef94396edf57118af2c9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5528754035722492266, guid: 19e6e4cbd1eeef94396edf57118af2c9,
         type: 3}
@@ -3725,6 +3735,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Negative Bubble w Animation (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6332418933166915007, guid: 9a2ce173ecc6634429ee4d72b2f15f03,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7975937771416277897, guid: 9a2ce173ecc6634429ee4d72b2f15f03,
         type: 3}
       propertyPath: ratio
@@ -4932,6 +4947,7 @@ MonoBehaviour:
   maxY: 2
   shakeIntensity: 0.001
   shakeFrequency: 10
+  isShaking: 0
 --- !u!114 &1372418460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4945,7 +4961,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _collider: {fileID: 1372418464}
-  touchThreshold: 2
 --- !u!114 &1372418461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5501,7 +5516,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 659451796523787874, guid: e7fbb376593cff24f9db4ecf8d465aaf,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2123294365}
   m_SourcePrefab: {fileID: 100100000, guid: e7fbb376593cff24f9db4ecf8d465aaf, type: 3}
 --- !u!1001 &1736036796
 PrefabInstance:
@@ -5535,6 +5554,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Positive Bubble w Animation (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5476625874181094748, guid: 19e6e4cbd1eeef94396edf57118af2c9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5528754035722492266, guid: 19e6e4cbd1eeef94396edf57118af2c9,
         type: 3}
@@ -5733,6 +5757,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Negative Bubble w Animation (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6332418933166915007, guid: 9a2ce173ecc6634429ee4d72b2f15f03,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7975937771416277897, guid: 9a2ce173ecc6634429ee4d72b2f15f03,
         type: 3}
@@ -6037,6 +6066,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Positive Bubble w Animation (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5476625874181094748, guid: 19e6e4cbd1eeef94396edf57118af2c9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5528754035722492266, guid: 19e6e4cbd1eeef94396edf57118af2c9,
         type: 3}
@@ -6491,7 +6525,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3784621895897781478, guid: 94313e563929cb3499e3989be338a213,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 563751732}
+      addedObject: {fileID: 563751734}
   m_SourcePrefab: {fileID: 100100000, guid: 94313e563929cb3499e3989be338a213, type: 3}
 --- !u!1001 &2037694109
 PrefabInstance:
@@ -6720,6 +6754,33 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2028374799}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2123294363 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 659451796523787874, guid: e7fbb376593cff24f9db4ecf8d465aaf,
+    type: 3}
+  m_PrefabInstance: {fileID: 1615892168}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &2123294365
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2123294363}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.01
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1447245321493525247
 Transform:
   m_ObjectHideFlags: 0
@@ -6794,21 +6855,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1029916361025444119, guid: 9a2ce173ecc6634429ee4d72b2f15f03,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2013580356835280512, guid: 9a2ce173ecc6634429ee4d72b2f15f03,
-        type: 3}
-      propertyPath: m_Mass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2013580356835280512, guid: 9a2ce173ecc6634429ee4d72b2f15f03,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3262322889640603820, guid: 9a2ce173ecc6634429ee4d72b2f15f03,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6863,26 +6909,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Negative Bubble w Animation
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975937771416277897, guid: 9a2ce173ecc6634429ee4d72b2f15f03,
-        type: 3}
-      propertyPath: ratio
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8846242896648316510, guid: 9a2ce173ecc6634429ee4d72b2f15f03,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8846242896648316510, guid: 9a2ce173ecc6634429ee4d72b2f15f03,
-        type: 3}
-      propertyPath: offsetRange
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 8846242896648316510, guid: 9a2ce173ecc6634429ee4d72b2f15f03,
-        type: 3}
-      propertyPath: gravityScale
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6963,45 +6989,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 364453658637485483, guid: 19e6e4cbd1eeef94396edf57118af2c9,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 364453658637485483, guid: 19e6e4cbd1eeef94396edf57118af2c9,
-        type: 3}
-      propertyPath: offsetRange
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 364453658637485483, guid: 19e6e4cbd1eeef94396edf57118af2c9,
-        type: 3}
-      propertyPath: gravityScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2419679942273359614, guid: 19e6e4cbd1eeef94396edf57118af2c9,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5476625874181094748, guid: 19e6e4cbd1eeef94396edf57118af2c9,
         type: 3}
       propertyPath: m_Name
       value: Positive Bubble w Animation
-      objectReference: {fileID: 0}
-    - target: {fileID: 5528754035722492266, guid: 19e6e4cbd1eeef94396edf57118af2c9,
-        type: 3}
-      propertyPath: m_Mass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5528754035722492266, guid: 19e6e4cbd1eeef94396edf57118af2c9,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6277402771290356525, guid: 19e6e4cbd1eeef94396edf57118af2c9,
-        type: 3}
-      propertyPath: ratio
-      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8839670304181028970, guid: 19e6e4cbd1eeef94396edf57118af2c9,
         type: 3}
