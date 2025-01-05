@@ -1,30 +1,32 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Random = System.Random;
 
 namespace XRDC24.Bubble
 {
 
     public class RigidbodyFallSimulator : MonoBehaviour
     {
-        private Rigidbody rb;
+        public float fallSpeed = 0.01f;
+        public float movementSpeed = 2f;
 
-        // Gravity scale multiplier
-        public float gravityScale = 1.0f;
+        private bool falling = false;
+        
+        // stablize
+        [Tooltip("Change horizontal movement every shuffle frames")]
+        public int shuffle = 20;
 
-        // Offset range for randomizing the fall direction
-        public float offsetRange = 1.0f;
+        private int count = 0;
 
-        private bool isFalling = false;
+        private float xOffset;
+        private float zOffset;
+
+        private Random random = new Random();
 
         void Start()
         {
-            rb = GetComponent<Rigidbody>();
-
-            if (rb == null)
-            {
-                rb = gameObject.AddComponent<Rigidbody>();
-            }
-
-            rb.useGravity = false;
+            count = 0;
+            falling = false;
         }
 
         void Update()
@@ -32,6 +34,45 @@ namespace XRDC24.Bubble
             if (Input.GetKeyDown(KeyCode.F))
             {
                 StartFalling();
+            }
+            else if (Input.GetKeyDown(KeyCode.S))
+            {
+                StopFalling();
+            }
+
+            if (falling)
+            {
+                if (count % shuffle == 0)
+                {
+                    var rand = random.Next(2) == 1;
+                    var flag = random.Next(2) == 1;
+
+                    var x = 0f;
+                    var z = 0f;
+
+                    var sign = flag ? -1 : 1;
+
+                    if (rand)
+                    {
+                        xOffset = (float)random.NextDouble() * movementSpeed * Time.deltaTime * sign;
+                        zOffset = 0f;
+                    }
+                    else
+                    {
+                        zOffset = (float)random.NextDouble() * movementSpeed * Time.deltaTime * sign;
+                        zOffset = 0f;
+                    }
+                    // reset
+                    count = 0;
+                }
+
+                Vector3 currentPosition = transform.position;
+                Vector3 newPosition = new Vector3(currentPosition.x + xOffset,
+                    currentPosition.y - fallSpeed * Time.deltaTime, currentPosition.z + zOffset);
+
+                transform.position = newPosition;
+                
+                count += 1;
             }
         }
 
@@ -44,31 +85,13 @@ namespace XRDC24.Bubble
         public void StartFalling()
         {
             // disable parent bubble floating animation
-            DisableFloatingAnimation();
-            
-            isFalling = true;
-            rb.useGravity = true;
-
-            rb.linearVelocity = Vector3.zero;
-
-            Vector3 randomOffset = new Vector3(
-                Random.Range(-offsetRange, offsetRange),
-                0,
-                Random.Range(-offsetRange, offsetRange)
-            );
-
-            Vector3 customGravity = Physics.gravity + randomOffset;
-
-
-            rb.AddForce(customGravity * rb.mass * gravityScale, ForceMode.Acceleration);
+            // DisableFloatingAnimation();
+            falling = true;
         }
 
-        public void ResetFall(Vector3 startPosition)
+        public void StopFalling()
         {
-            isFalling = false;
-            rb.useGravity = false;
-            rb.linearVelocity = Vector3.zero;
-            transform.position = startPosition;
+            falling = false;
         }
     }
 }
