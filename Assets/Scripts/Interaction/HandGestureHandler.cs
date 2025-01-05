@@ -20,7 +20,7 @@ namespace XRDC24.Interaction
 
         public void GestureActivated()
         {
-            print("GestureActivated");
+            print($"GestureActivated: {gameObject.name}");
             if (OnGestureActivated != null)
             {
                 OnGestureActivated();
