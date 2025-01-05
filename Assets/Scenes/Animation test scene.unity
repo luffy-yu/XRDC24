@@ -26678,7 +26678,12 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 507fdbb072720c0408f41e4a53462491,
         type: 3}
       propertyPath: m_Name
-      value: agent_correct animation
+      value: AI agent
+      objectReference: {fileID: 0}
+    - target: {fileID: 2572467958822022839, guid: 507fdbb072720c0408f41e4a53462491,
+        type: 3}
+      propertyPath: m_Name
+      value: circulation
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
