@@ -23053,7 +23053,8 @@ MonoBehaviour:
   originalScale: {x: 0.5, y: 0.5, z: 0.5}
   scaleMultiplier: 1000
   minFactor: 0
-  maxFactor: 1.5
+  maxFactor: 1
+  amplitudeSmoothTime: 0.1
   m_UIText: {fileID: 1163194891}
   m_ModuleState: 1
 --- !u!1 &2103509280

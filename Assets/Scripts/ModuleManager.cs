@@ -161,7 +161,6 @@ public class ModuleManager : MonoBehaviour
                 amplitudeSmoothTime
         );
 
-        currentAmplitude = Mathf.Lerp(minFactor, maxFactor, currentAmplitude);
         m_AIAvatar.transform.localScale = originalScale * (1f + currentAmplitude);
     }
 
