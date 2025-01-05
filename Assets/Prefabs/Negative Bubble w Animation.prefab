@@ -156,7 +156,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 5096218585749425331}
-  speed: 0.6
   bubble: {fileID: 3444634103957271529}
 --- !u!1001 &333702861435116868
 PrefabInstance:
@@ -166,6 +165,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3262322889640603820}
     m_Modifications:
+    - target: {fileID: 2809358108041393829, guid: 8b4d580b8d4762e4ca31772d47fe5dc9,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3128946809407188653, guid: 8b4d580b8d4762e4ca31772d47fe5dc9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -226,6 +230,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7098933306866605828, guid: 8b4d580b8d4762e4ca31772d47fe5dc9,
+        type: 3}
+      propertyPath: m_TagString
+      value: Bubble
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -262,6 +271,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 858109695871300218}
+    - targetCorrespondingSourceObject: {fileID: 7098933306866605828, guid: 8b4d580b8d4762e4ca31772d47fe5dc9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8846242896648316510}
   m_SourcePrefab: {fileID: 100100000, guid: 8b4d580b8d4762e4ca31772d47fe5dc9, type: 3}
 --- !u!135 &2476228470132485089 stripped
 SphereCollider:
@@ -516,6 +529,20 @@ MonoBehaviour:
   fallenAnimation: {fileID: 2697529111807249002}
   fallenDuration: 1
   gapSeconds: 0.2
+--- !u!114 &8846242896648316510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7360560500895515200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60a8278d79b74f69ac2f18528528fbc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravityScale: 0.1
+  offsetRange: 1
 --- !u!1001 &3170779708065923745
 PrefabInstance:
   m_ObjectHideFlags: 0

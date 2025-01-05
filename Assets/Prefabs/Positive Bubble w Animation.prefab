@@ -156,7 +156,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1181283518770637817}
-  speed: 0.6
   bubble: {fileID: 4622272243544690053}
 --- !u!1001 &1047535985781807084
 PrefabInstance:
@@ -296,6 +295,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2809358108041393829, guid: 094ead1fa8f25f24584ae012b2acacd5,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3128946809407188653, guid: 094ead1fa8f25f24584ae012b2acacd5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -350,6 +354,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bubble Positive Prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 7098933306866605828, guid: 094ead1fa8f25f24584ae012b2acacd5,
+        type: 3}
+      propertyPath: m_TagString
+      value: Bubble
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

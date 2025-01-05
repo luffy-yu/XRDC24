@@ -5758,20 +5758,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1994541417}
   m_CullTransparentMesh: 1
---- !u!114 &2011582609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1042244687}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60a8278d79b74f69ac2f18528528fbc4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gravityScale: 0.1
-  offsetRange: 1
 --- !u!1001 &2028374799
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6139,21 +6125,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2476228470132485089, guid: 9a2ce173ecc6634429ee4d72b2f15f03,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2697529111807249002, guid: 9a2ce173ecc6634429ee4d72b2f15f03,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2697529111807249003, guid: 9a2ce173ecc6634429ee4d72b2f15f03,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3262322889640603820, guid: 9a2ce173ecc6634429ee4d72b2f15f03,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6209,19 +6180,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Negative Bubble w Animation
       objectReference: {fileID: 0}
-    - target: {fileID: 7360560500895515200, guid: 9a2ce173ecc6634429ee4d72b2f15f03,
-        type: 3}
-      propertyPath: m_TagString
-      value: Bubble
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7360560500895515200, guid: 9a2ce173ecc6634429ee4d72b2f15f03,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2011582609}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a2ce173ecc6634429ee4d72b2f15f03, type: 3}
 --- !u!1 &3343680960898137665
 GameObject:
@@ -6297,25 +6259,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 706403978989452332, guid: 19e6e4cbd1eeef94396edf57118af2c9,
-        type: 3}
-      propertyPath: m_TagString
-      value: Bubble
-      objectReference: {fileID: 0}
     - target: {fileID: 5476625874181094748, guid: 19e6e4cbd1eeef94396edf57118af2c9,
         type: 3}
       propertyPath: m_Name
       value: Positive Bubble w Animation
-      objectReference: {fileID: 0}
-    - target: {fileID: 5599386962315449741, guid: 19e6e4cbd1eeef94396edf57118af2c9,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8525753364895706310, guid: 19e6e4cbd1eeef94396edf57118af2c9,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8839670304181028970, guid: 19e6e4cbd1eeef94396edf57118af2c9,
         type: 3}
