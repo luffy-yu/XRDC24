@@ -21,18 +21,29 @@ public class ModuleManager : MonoBehaviour
 
     public TextMeshProUGUI m_UIText;
 
+    public enum ModuleState
+    {
+        OnBoarding,  // TODO
+        MoodDetection,
+        FreeSpeech
+    }
+
+    public ModuleState m_ModuleState = ModuleState.OnBoarding;
+
     private void OnEnable()
     {
         m_TextToSpeech.OnResultAvailable += PlayAIAgentAudioClip;
         m_SpeechToText.OnResultAvailable += SendTextToLLM;
-        m_LLMAgentManager.OnMoodResultAvailable += ReceiveMoodResult;
+        m_LLMAgentManager.OnMoodResultAvailable += ReceivedMoodResult;
+        m_LLMAgentManager.OnMeditationResultAvailable += ReceivedMeditationResult;
     }
 
     private void OnDisable()
     {
         m_TextToSpeech.OnResultAvailable -= PlayAIAgentAudioClip;
         m_SpeechToText.OnResultAvailable -= SendTextToLLM;
-        m_LLMAgentManager.OnMoodResultAvailable -= ReceiveMoodResult;
+        m_LLMAgentManager.OnMoodResultAvailable -= ReceivedMoodResult;
+        m_LLMAgentManager.OnMeditationResultAvailable -= ReceivedMeditationResult;
     }
 
     private void PlayAIAgentAudioClip(AudioClip clip)
@@ -42,11 +53,28 @@ public class ModuleManager : MonoBehaviour
 
     private void SendTextToLLM(string res)
     {
-        // TODO: determine which type of communication to send
-        m_LLMAgentManager.SendMsgToGPT(res);
+        switch (m_ModuleState)
+        {
+            case ModuleState.OnBoarding:
+                break;
+
+            case ModuleState.MoodDetection:
+                m_LLMAgentManager.SendMsgToGPTForMoodRequest(res);
+                // TODO, other event to trigger to next state
+                m_LLMAgentManager.ClearGPTContext();
+                m_ModuleState = ModuleState.FreeSpeech;
+                break;
+
+            case ModuleState.FreeSpeech:
+                m_LLMAgentManager.SendMsgToMeditationGPT(res);
+                break;
+
+            default:
+                break;
+        }
     }
 
-    private void ReceiveMoodResult(string res)
+    private void ReceivedMoodResult(string res)
     {
         Debug.Log($"Receive mood result: {res}");
 
@@ -59,16 +87,24 @@ public class ModuleManager : MonoBehaviour
         m_UIText.text = $"positve bubbles: {positiveBubbleN}\nnegative bubbles: {negativeBubbleN}";
     }
 
+    private void ReceivedMeditationResult(string res)
+    {
+        Debug.Log($"receive meditation result: {res}");
+
+        m_TextToSpeech.SendRequest(res);
+    }
+
     void Start()
     {
-        // after scan the room, start agent audio to user
+        // TODO: specific trigger to do that (after onboarding)
+        m_ModuleState = ModuleState.MoodDetection;
         m_TextToSpeech.SendRequest("Hi, How do you feel today?");
-
     }
 
     void Update()
     {
         AdjustUIPose();
+
     }
 
     private void AdjustUIPose()
