@@ -35,8 +35,17 @@ namespace XRDC24.Bubble
             }
         }
 
+        void DisableFloatingAnimation()
+        {
+            var go = transform.parent.gameObject;
+            go.GetComponent<BubbleFloatingAnimation>().enabled = false;
+        }
+
         public void StartFalling()
         {
+            // disable parent bubble floating animation
+            DisableFloatingAnimation();
+            
             isFalling = true;
             rb.useGravity = true;
 

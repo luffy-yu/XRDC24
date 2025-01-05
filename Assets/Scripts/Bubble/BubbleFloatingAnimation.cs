@@ -16,11 +16,11 @@ namespace XRDC24.Bubble
             return random.NextDouble() * (maxValue - minValue) + minValue;
         }
     }
-    
+
     public class BubbleFloatingAnimation : MonoBehaviour
     {
         public Animator animator;
-        public float speed = 0.6f;
+        // public float speed = 0.6f;
 
         private Random random;
         public Transform bubble;
@@ -34,18 +34,18 @@ namespace XRDC24.Bubble
         private void Start()
         {
             // backup speed
-            speed = animator.speed;
+            // speed = animator.speed;
             random = new Random();
             startPositionSet = false;
             following = false;
-            
+
             // test
             StartFollowing();
         }
 
         void StartAnimation()
         {
-            animator.speed = speed;
+            // animator.speed = speed;
             animator.Play("BubbleFloating", -1, (float)random.NextDouble(0, 1));
             bubbleStartPosition = bubble.position;
         }
@@ -70,18 +70,7 @@ namespace XRDC24.Bubble
                 StartFollowing();
             }
 
-            if (GUILayout.Button("Add Force"))
-            {
-                AddForce();
-            }
-
             GUILayout.EndVertical();
-        }
-
-        private void AddForce()
-        {
-            var rb = bubble.gameObject.GetComponent<Rigidbody>();
-            rb.AddForce(- transform.up * speed);
         }
 
         private void Update()

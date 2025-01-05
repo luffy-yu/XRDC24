@@ -66,13 +66,14 @@ namespace XRDC24.Bubble
                 StartCoroutine(OnPoked());
             }
         }
-        
+
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag != "Bubble")
+            var tag = other.gameObject.tag;
+            if (tag != "Bubble" && tag != "Ground")
             {
                 // trigger animation
-                Debug.Log("touch ++++");
+                Debug.Log($"touch ++++ {other.gameObject.name}");
                 TriggerPokedAnimation();
             }
         }
