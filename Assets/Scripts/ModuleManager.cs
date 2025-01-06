@@ -14,6 +14,7 @@ public class ModuleManager : MonoBehaviour
     [SerializeField] TTS m_TextToSpeech;
 
     public GameObject m_3DUIPanel;
+    public GameObject m_ButtonNext;
     public GameObject m_AIAvatar;
 
     private float positivePercentage;
@@ -72,9 +73,6 @@ public class ModuleManager : MonoBehaviour
 
             case ModuleState.MoodDetection:
                 m_LLMAgentManager.SendMsgToGPTForMoodRequest(res);
-                // TODO, other event to trigger to next state
-                m_LLMAgentManager.ClearGPTContext();
-                m_ModuleState = ModuleState.FreeSpeech;
                 break;
 
             case ModuleState.FreeSpeech:
@@ -109,8 +107,7 @@ public class ModuleManager : MonoBehaviour
     void Start()
     {
         // TODO: specific trigger to do that (after onboarding)
-        m_ModuleState = ModuleState.MoodDetection;
-        m_TextToSpeech.SendRequest("Hi, How do you feel today?");
+        m_ModuleState = ModuleState.OnBoarding;
     }
 
     void Update()
@@ -190,5 +187,30 @@ public class ModuleManager : MonoBehaviour
         {
             Debug.LogError("Failed to parse mood result.");
         }
+    }
+
+    public void ToNext()
+    {
+        m_ModuleState++;
+
+        // to handle the pipline
+        switch (m_ModuleState)
+        {
+            case ModuleState.OnBoarding:
+                break;
+
+            case ModuleState.MoodDetection:
+                m_TextToSpeech.SendRequest("Hi, How do you feel today?");
+                break;
+
+            case ModuleState.FreeSpeech:
+                m_LLMAgentManager.ClearGPTContext();
+                m_BubbleManager.ClearAllBubbles();
+                break;
+
+            default:
+                break;
+        }
+       
     }
 }

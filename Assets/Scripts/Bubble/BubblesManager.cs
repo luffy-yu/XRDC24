@@ -72,6 +72,18 @@ public class BubblesManager : MonoBehaviour
         Debug.Log($"Bubbles spawned: positive = {positiveNum}, negative = {negativeNum}, total = {totalBubbles}");
     }
 
+    public void ClearAllBubbles()
+    {
+        if (spawnedBubbles.Count > 0)
+        {
+            foreach (var bubble in spawnedBubbles)
+            {
+                GameObject.Destroy(bubble);
+            }
+            spawnedBubbles.Clear();
+        }
+    }
+
     private void SpawnBubble(GameObject prefab, Vector3 headPos, Vector3 forward)
     {
         Vector3 spawnPoint = headPos + forward * spawnDist;
