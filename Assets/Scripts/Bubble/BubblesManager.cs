@@ -34,8 +34,6 @@ public class BubblesManager : MonoBehaviour
         spawnedBubbles = new List<GameObject>();
         pokeCount = 0;
         fallCount = 0;
-
-        //SpawnBubbles();
     }
 
     public void SpawnBubbles(int positive, int negative)
@@ -49,7 +47,7 @@ public class BubblesManager : MonoBehaviour
             // clear previous
             foreach (var bubble in spawnedBubbles)
             {
-                GameObject.Destroy(bubble);
+                Destroy(bubble);
             }
             spawnedBubbles.Clear();
         }
@@ -93,12 +91,12 @@ public class BubblesManager : MonoBehaviour
             Random.Range(-spawnRange / 2, spawnRange / 2)
         );
 
-        GameObject bubble = Instantiate(prefab, spawnPoint, Quaternion.identity);
+        GameObject bubbleAnimation = Instantiate(prefab, spawnPoint, Quaternion.identity);
 
         // binding event
-        bubble.GetComponent<BubbleController>().OnAnimationFinished += OnAnimationFinished;
+        bubbleAnimation.transform.GetChild(0).GetComponent<BubbleController>().OnAnimationFinished += OnAnimationFinished;
 
-        spawnedBubbles.Add(bubble);
+        spawnedBubbles.Add(bubbleAnimation);
     }
 
     private GameObject GetRandomTemplate(BubbleType type)

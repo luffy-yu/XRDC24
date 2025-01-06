@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using OpenAI;
 using Samples.Whisper;
 using TMPro;
@@ -34,8 +35,20 @@ namespace XRDC24.AI
             // init microphone
             if (Microphone.devices.Length > 0)
             {
-                Debug.Log($"[STT] Recording will use {Microphone.devices[0]}.");
-                microphone = Microphone.devices[0];
+                string oculusMic = Microphone.devices.FirstOrDefault(d => d.ToLower().Contains("oculus"));
+
+                if (!string.IsNullOrEmpty(oculusMic))
+                {
+                    Debug.Log($"[STT] Recording will use {oculusMic}.");
+                    microphone = oculusMic;
+                }
+                else
+                {
+                    microphone = Microphone.devices[0];
+                    Debug.Log($"[STT] Oculus mic not found. Using {microphone} instead.");
+                }
+
+
                 clip = Microphone.Start(microphone, true, duration, 44100);
                 while (Microphone.GetPosition(microphone) <= 0) { } 
                 Microphone.End(microphone);

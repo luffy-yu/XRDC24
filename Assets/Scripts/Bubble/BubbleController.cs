@@ -40,6 +40,7 @@ namespace XRDC24.Bubble
             meshRenderer = GetComponent<MeshRenderer>();
         }
 
+        // Archived
         public void LetFall()
         {
             // make bubble drop
@@ -81,6 +82,8 @@ namespace XRDC24.Bubble
             fallenPlaying = false;
 
             meshRenderer.enabled = false;
+            if (meshRenderer.transform.Find("DarkCenter"))
+                meshRenderer.transform.Find("DarkCenter").GetComponent<MeshRenderer>().enabled = false;
             yield return new WaitForSeconds(gapSeconds);
 
             // enable
@@ -112,6 +115,9 @@ namespace XRDC24.Bubble
             pokedPlaying = false;
 
             meshRenderer.enabled = false;
+            if (meshRenderer.transform.Find("DarkCenter"))
+                meshRenderer.transform.Find("DarkCenter").GetComponent<MeshRenderer>().enabled = false;
+
             yield return new WaitForSeconds(gapSeconds);
 
             // enable
