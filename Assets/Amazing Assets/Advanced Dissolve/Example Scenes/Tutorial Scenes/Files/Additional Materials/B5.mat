@@ -2,24 +2,34 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: B5
   m_Shader: {fileID: 4800000, guid: dcda956a6808f8c4e84b1460ad3ac6eb, type: 3}
-  m_ShaderKeywords: _AD_CUTOUT_GEOMETRIC_COUNT_ONE _AD_CUTOUT_GEOMETRIC_TYPE_NONE
-    _AD_CUTOUT_STANDARD_SOURCE_CUSTOM_MAP _AD_CUTOUT_STANDARD_SOURCE_MAPS_MAPPING_TYPE_TRIPLANAR
-    _AD_EDGE_ADDITIONAL_COLOR_NONE _AD_EDGE_BASE_SOURCE_CUTOUT_STANDARD _AD_EDGE_UV_DISTORTION_SOURCE_DEFAULT
-    _AD_GLOBAL_CONTROL_ID_NONE _AD_STATE_ENABLED
-  m_LightmapFlags: 4
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _AD_CUTOUT_STANDARD_SOURCE_CUSTOM_MAP
+  - _AD_CUTOUT_STANDARD_SOURCE_MAPS_MAPPING_TYPE_TRIPLANAR
+  - _AD_EDGE_ADDITIONAL_COLOR_GRADIENT_COLOR
+  - _AD_EDGE_BASE_SOURCE_CUTOUT_STANDARD
+  - _AD_STATE_ENABLED
+  m_InvalidKeywords:
+  - _AD_CUTOUT_GEOMETRIC_COUNT_ONE
+  - _AD_CUTOUT_GEOMETRIC_TYPE_NONE
+  - _AD_EDGE_UV_DISTORTION_SOURCE_DEFAULT
+  - _AD_GLOBAL_CONTROL_ID_NONE
+  m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
   m_CustomRenderQueue: 2000
   stringTagMap:
     RenderType: Opaque
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -127,6 +137,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AdvancedDissolveCutoutBaseInvert: 0
     - _AdvancedDissolveCutoutClip: 0.4
@@ -248,7 +259,7 @@ Material:
     - _AdvancedDissolveKeywordCutoutStandardSourceMapsMappingType: 1
     - _AdvancedDissolveKeywordDynamicMaskCount: 0
     - _AdvancedDissolveKeywordDynamicMaskType: 0
-    - _AdvancedDissolveKeywordEdgeAdditionalColorSource: 0
+    - _AdvancedDissolveKeywordEdgeAdditionalColorSource: 4
     - _AdvancedDissolveKeywordEdgeBaseSource: 1
     - _AdvancedDissolveKeywordEdgeBlendColor: 0
     - _AdvancedDissolveKeywordEdgeUVDistortionSource: 0
@@ -269,7 +280,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Metallic: 0.7
+    - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
@@ -354,11 +365,12 @@ Material:
     - _AdvancedDissolveEdgeUVDistortionMapScroll: {r: 0, g: 0, b: 0, a: 0}
     - _AdvancedDissolveEdgeUVDistortionMapTiling: {r: 1, g: 1, b: 1, a: 1}
     - _AdvancedDissolveMetaPassObjectPosition: {r: 0, g: 0, b: 0, a: 0}
-    - _BaseColor: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
+    - _BaseColor: {r: 1, g: 0.8283019, b: 0.8283019, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!114 &6724039819652240116
 MonoBehaviour:
   m_ObjectHideFlags: 11
