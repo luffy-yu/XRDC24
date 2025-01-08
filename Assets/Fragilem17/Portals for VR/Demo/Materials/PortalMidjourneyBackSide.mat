@@ -123,7 +123,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlbedoAlpha: 8
+    - _AlbedoAlpha: 1.29
     - _Alpha: 1
     - _AlphaClip: 0
     - _AlphaToMask: 0
@@ -140,7 +140,7 @@ Material:
     - _DstBlend: 10
     - _EnvironmentReflections: 1
     - _Factor: 1
-    - _FadeColorBlend: 1
+    - _FadeColorBlend: 0
     - _ForceEye: 0
     - _GlossMapScale: 0
     - _Glossiness: 0
@@ -148,7 +148,7 @@ Material:
     - _Invert_Metallic: 0
     - _Metallic: 0
     - _MetallicV: 1
-    - _NearFadeBlur: 0
+    - _NearFadeBlur: 0.474
     - _NormalStrength: 0
     - _NormalToAlbedo: 0.155
     - _OcclusionStrength: 1
@@ -166,13 +166,13 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 5
     - _Surface: 1
-    - _Transparency: 1
+    - _Transparency: 0.52
     - _Use_Metallic_Texture: 0
     - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 0
     - _ZWriteControl: 0
-    - _refraction: -0.00000042796808
+    - _refraction: -0.000001089996
     - _useTransparency: 1
     m_Colors:
     - _AlbedoSpeed: {r: 0, g: 0, b: -0.5, a: 0}
@@ -180,7 +180,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color2: {r: 1, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FadeColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FadeColor: {r: 1, g: 0.5113207, b: 0.5113207, a: 1}
     - _NormalSpeed: {r: 0, g: 0, b: 0.1, a: 0}
     - _NormalSpeed_1: {r: 0, g: -0.1, b: 0, a: 0}
     - _OffsetAlbedo: {r: 0, g: 0, b: 0, a: 0}
@@ -194,7 +194,7 @@ Material:
     - _Tiling_And_Offset: {r: 0.8, g: 0.8, b: 0.1, a: 0.1}
     - _Tiling_And_Offset_Normal: {r: 0.2, g: 0.2, b: 0, a: 0}
     - _Tiling_And_Offset_Transparency: {r: 0.9, g: 0.9, b: 0.05, a: 0.05}
-    - _Tint: {r: 0.1745283, g: 0.6181018, b: 1, a: 1}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
     - _TransparancySpeed: {r: 0, g: 0, b: 0.5, a: 0}
     - _WorldDir: {r: 0, g: 0, b: 0, a: 0}
     - _WorldPos: {r: 0, g: 0, b: 0, a: 0}
