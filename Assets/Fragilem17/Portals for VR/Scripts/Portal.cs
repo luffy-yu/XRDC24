@@ -14,7 +14,7 @@ namespace Fragilem17.MirrorsAndPortals
     [ExecuteInEditMode]
     public class Portal : MonoBehaviour
     {
-        private static readonly Quaternion halfTurn = Quaternion.Euler(0.0f, 180.0f, 0.0f);
+        private static readonly Quaternion halfTurn = Quaternion.Euler(0.0f, 0.0f, 0.0f);
 
         [Tooltip("a reference to the Portal this Portal is looking out of.")]
         public Portal OtherPortal;

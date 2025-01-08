@@ -1119,42 +1119,42 @@ namespace Fragilem17.MirrorsAndPortals
             textureOut = tex;
         }
 
-        private void Update()
-        {
-            if (Portals == null)
-            {
-                return;
-            }
-            foreach (Portal p in Portals) {
-                p.MyRenderer = this;
-            }
+        // private void Update()
+        // {
+        //     if (Portals == null)
+        //     {
+        //         return;
+        //     }
+        //     foreach (Portal p in Portals) {
+        //         p.MyRenderer = this;
+        //     }
 
-            if (_oldTextureSize != ((int)textureSize.x + (int)textureSize.y)
-                || _oldScreenScaleFactor != screenScaleFactor
-                || _oldAntiAliasing != antiAliasing
-                || _oldRenderTextureFormat != _renderTextureFormat
-                || _oldUseScreenScaleFactor != useScreenScaleFactor)
-            {
-                _oldUseScreenScaleFactor = useScreenScaleFactor;
-                _oldAntiAliasing = antiAliasing;
-                _oldRenderTextureFormat = _renderTextureFormat;
-                _oldScreenScaleFactor = screenScaleFactor;
-                _oldTextureSize = ((int)textureSize.x + (int)textureSize.y);
+        //     if (_oldTextureSize != ((int)textureSize.x + (int)textureSize.y)
+        //         || _oldScreenScaleFactor != screenScaleFactor
+        //         || _oldAntiAliasing != antiAliasing
+        //         || _oldRenderTextureFormat != _renderTextureFormat
+        //         || _oldUseScreenScaleFactor != useScreenScaleFactor)
+        //     {
+        //         _oldUseScreenScaleFactor = useScreenScaleFactor;
+        //         _oldAntiAliasing = antiAliasing;
+        //         _oldRenderTextureFormat = _renderTextureFormat;
+        //         _oldScreenScaleFactor = screenScaleFactor;
+        //         _oldTextureSize = ((int)textureSize.x + (int)textureSize.y);
 
-                foreach (PooledPortalTexture tex in _pooledTextures)
-                {
-                    DestroyImmediate(((RenderTexture)tex.texture));
-                }
-                _pooledTextures.Clear();
+        //         foreach (PooledPortalTexture tex in _pooledTextures)
+        //         {
+        //             DestroyImmediate(((RenderTexture)tex.texture));
+        //         }
+        //         _pooledTextures.Clear();
 
-            }
+        //     }
 
-            if (recursions > 8)
-            {
-                recursions = 8;
+        //     if (recursions > 8)
+        //     {
+        //         recursions = 8;
 
-            }
-        }
+        //     }
+        // }
         private void GetUACData(Camera renderCamera, out UniversalAdditionalCameraData uac)
         {
             UniversalAdditionalCameraData uacOut;
