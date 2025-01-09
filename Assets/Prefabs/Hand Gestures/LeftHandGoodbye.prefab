@@ -84,6 +84,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 556ea8d812636874890f35aa3e8cd594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  whenGestureActivated:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1216905621964756376
 GameObject:
   m_ObjectHideFlags: 0
@@ -1309,6 +1312,6 @@ MonoBehaviour:
       _relativeTo: 0
       _worldAxis: 4
       _handAxis: 2
-  _degreesPerSecond: 45
+  _degreesPerSecond: 90
   _thresholdWidth: 10
   _minTimeInState: 0.05
