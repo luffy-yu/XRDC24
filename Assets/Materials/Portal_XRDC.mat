@@ -98,11 +98,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TexLeft:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 8400000, guid: 9ce52c331eee25b47ae32774e5b2927d, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TexRight:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 8400000, guid: d99cbf275db20204f8ddd258c4066e19, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TransparencyMap:
@@ -172,7 +172,7 @@ Material:
     - _ZTest: 4
     - _ZWrite: 0
     - _ZWriteControl: 0
-    - _refraction: -0.00000051959137
+    - _refraction: -0.00000080432386
     - _useTransparency: 1
     m_Colors:
     - _AlbedoSpeed: {r: 0, g: 0, b: -0.5, a: 0}
@@ -196,7 +196,7 @@ Material:
     - _Tiling_And_Offset_Transparency: {r: 0.9, g: 0.9, b: 0.05, a: 0.05}
     - _Tint: {r: 0.76792455, g: 0.8928033, b: 1, a: 1}
     - _TransparancySpeed: {r: 0, g: 0, b: 0.5, a: 0}
-    - _WorldDir: {r: 0, g: 0, b: 0, a: 0}
+    - _WorldDir: {r: 1, g: 0, b: 0, a: 0}
     - _WorldPos: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
