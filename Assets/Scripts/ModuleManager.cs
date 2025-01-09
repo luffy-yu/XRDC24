@@ -1,9 +1,9 @@
-using System.Collections;
+using Meta.XR.MRUtilityKit;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Audio;
 using XRDC24.AI;
+using System.Collections.Generic;
 
 public class ModuleManager : MonoBehaviour
 {
@@ -12,16 +12,21 @@ public class ModuleManager : MonoBehaviour
     [SerializeField] LLMAgentManager m_LLMAgentManager;
     [SerializeField] STT m_SpeechToText;
     [SerializeField] TTS m_TextToSpeech;
+    [SerializeField] MRUK m_MRUK;
 
+    // UI
     public GameObject m_3DUIPanel;
     public GameObject m_ButtonNext;
     public GameObject m_AIAvatar;
+    public TextMeshProUGUI m_UIText;
 
+    // bubble
     private float positivePercentage;
     private float negativePercentage;
     private int videoClipLength;
     private int totalBubbleN;
 
+    // agent avatar
     private float[] spectrumData = new float[256];
     [Header("AI Avatar Setting")]
     public Vector3 originalScale = Vector3.one;
@@ -30,9 +35,11 @@ public class ModuleManager : MonoBehaviour
     public float maxFactor = 1.2f;
     public float amplitudeSmoothTime = 0.1f; 
     private float currentAmplitude;        
-    private float amplitudeVelocity;      
+    private float amplitudeVelocity;
 
-    public TextMeshProUGUI m_UIText;
+    // scene
+    List<MRUKAnchor> walls = new List<MRUKAnchor>();
+    MRUKAnchor ground;
 
     public enum ModuleState
     {
@@ -102,6 +109,29 @@ public class ModuleManager : MonoBehaviour
         Debug.Log($"receive meditation result: {res}");
 
         m_TextToSpeech.SendRequest(res);
+    }
+
+    public void SceneInitialized()
+    {
+        Debug.Log("scene loaded Successfully");
+
+        foreach (MRUKRoom room in MRUK.Instance.Rooms)
+        {
+            foreach (MRUKAnchor childAnchor in room.Anchors)
+            {
+                if (childAnchor.HasAnyLabel(MRUKAnchor.SceneLabels.WALL_FACE))
+                {
+                    walls.Add(childAnchor);
+                }
+                else if (childAnchor.HasAnyLabel(MRUKAnchor.SceneLabels.FLOOR))
+                {
+                    ground = childAnchor;
+                }
+
+            }
+        }
+
+        Debug.Log($"wall num: {walls.Count}");
     }
 
     void Start()
