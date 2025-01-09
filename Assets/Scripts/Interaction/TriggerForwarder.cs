@@ -16,6 +16,15 @@ namespace XRDC24.Interaction
 
         public TriggerType triggerType;
 
+        public Material pressedMaterial;
+
+        private Material originalMaterial;
+
+        private void Start()
+        {
+            originalMaterial = GetComponent<Renderer>().material;
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             // if it's hand
@@ -23,7 +32,21 @@ namespace XRDC24.Interaction
             // Add box collider to LeftHand/RightHand which has a SkinnedMeshRender
             if (name.Contains("Hand"))
             {
+                // change material
+                GetComponent<Renderer>().material = pressedMaterial;
                 OnTriggerTriggered?.Invoke(triggerType);
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            // if it's hand
+            var name = other.gameObject.name;
+            // Add box collider to LeftHand/RightHand which has a SkinnedMeshRender
+            if (name.Contains("Hand"))
+            {
+                // revert material
+                GetComponent<Renderer>().material = originalMaterial;
             }
         }
     }
