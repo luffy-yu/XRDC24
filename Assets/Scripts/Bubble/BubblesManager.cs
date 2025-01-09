@@ -23,6 +23,12 @@ public class BubblesManager : MonoBehaviour
     private float spawnDist = 0.6f;
     private float spawnRange = 0.5f;
 
+    #region event
+
+    public System.Action<Vector3, Vector3, AnimationType> OnBubbleAnimated;
+
+    #endregion
+
     public enum BubbleType
     {
         Positive,
@@ -95,6 +101,7 @@ public class BubblesManager : MonoBehaviour
 
         // binding event
         bubbleAnimation.transform.GetChild(0).GetComponent<BubbleController>().OnAnimationFinished += OnAnimationFinished;
+        bubbleAnimation.transform.GetChild(0).GetComponent<BubbleController>().OnBubbleAnimated += BubbleAnimated;
 
         spawnedBubbles.Add(bubbleAnimation);
     }
@@ -132,11 +139,19 @@ public class BubblesManager : MonoBehaviour
         // clear from list
         spawnedBubbles.Remove(go);
         // destroy go
-        GameObject.Destroy(go);
+        Destroy(go);
 
         Debug.Log($"Poke count: {pokeCount}, Fall count: {fallCount} Remaining: {spawnedBubbles.Count}");
     }
 
+    private void BubbleAnimated(GameObject obj, AnimationType type)
+    {
+        Debug.Log("bubble animation invoke in bubble manager");
+
+        // ray cast to get the portal position and sent back to module manager
+        OnBubbleAnimated(m_OVRCameraRig.centerEyeAnchor.position, obj.transform.position, type);
+    }
+    
     void LetAllFall()
     {
         foreach (var go in spawnedBubbles)

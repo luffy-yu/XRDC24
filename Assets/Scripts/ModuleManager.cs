@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using XRDC24.AI;
 using System.Collections.Generic;
+using XRDC24.Bubble;
 
 public class ModuleManager : MonoBehaviour
 {
@@ -41,7 +42,6 @@ public class ModuleManager : MonoBehaviour
     // scene
     List<MRUKAnchor> walls = new List<MRUKAnchor>();
     MRUKAnchor ground;
-    int idx = 0;
 
     public enum ModuleState
     {
@@ -58,6 +58,7 @@ public class ModuleManager : MonoBehaviour
         m_SpeechToText.OnResultAvailable += SendTextToLLM;
         m_LLMAgentManager.OnMoodResultAvailable += ReceivedMoodResult;
         m_LLMAgentManager.OnMeditationResultAvailable += ReceivedMeditationResult;
+        m_BubbleManager.OnBubbleAnimated += SpawnPortalBasedOnBubble;
     }
 
     private void OnDisable()
@@ -66,6 +67,7 @@ public class ModuleManager : MonoBehaviour
         m_SpeechToText.OnResultAvailable -= SendTextToLLM;
         m_LLMAgentManager.OnMoodResultAvailable -= ReceivedMoodResult;
         m_LLMAgentManager.OnMeditationResultAvailable -= ReceivedMeditationResult;
+        m_BubbleManager.OnBubbleAnimated -= SpawnPortalBasedOnBubble;
     }
 
     private void PlayAIAgentAudioClip(AudioClip clip)
@@ -113,9 +115,25 @@ public class ModuleManager : MonoBehaviour
         m_TextToSpeech.SendRequest(res);
     }
 
+    private void SpawnPortalBasedOnBubble(Vector3 origin, Vector3 target, AnimationType type)
+    {
+        Ray ray = new Ray(origin, target - origin);
+        Debug.Log("invoke in module manager ++");
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f, 1 << LayerMask.NameToLayer("RoomMesh"))) 
+        {
+            Debug.Log("hit the room mesh layer ++");
+            
+            Vector3 hitPoint = hit.point;
+            GameObject hitObject = hit.collider.gameObject;
+
+            m_PortalManager.SpawnPortal(hitPoint, hitObject.transform.rotation);
+        }
+    }
+
     public void SceneInitialized()
     {
-        Debug.Log("scene loaded Successfully");
+        Debug.Log("scene loaded and created Successfully");
 
         foreach (MRUKRoom room in MRUK.Instance.Rooms)
         {
@@ -136,6 +154,25 @@ public class ModuleManager : MonoBehaviour
         Debug.Log($"wall num: {walls.Count}");
     }
 
+    private void SetupSceneMeshes()
+    {
+        // walls
+        foreach (var anchor in walls)
+        {
+            if (anchor.transform.GetChild(0))
+                anchor.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("RoomMesh");
+            else
+                Debug.LogError("No scene meshes were created! Please check!");
+        }
+
+        // ground
+        if (ground.transform.GetChild(0))
+            ground.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("RoomMesh");
+        else
+            Debug.LogError("No scene meshes were created! Please check!");
+
+    }
+
     void Start()
     {
         // TODO: specific trigger to do that (after onboarding)
@@ -147,16 +184,6 @@ public class ModuleManager : MonoBehaviour
         AdjustUIPose();
 
         UpdateAIAvatar();
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            Debug.Log("mouse button down ++");
-
-            if (idx < 4)
-                m_PortalManager.SpawnPortal(walls[idx++].transform.position, walls[idx++].transform.rotation);
-            else
-                m_PortalManager.SpawnPortal(ground.transform.position, ground.transform.rotation);
-        }
     }
 
     private void AdjustUIPose()
@@ -242,6 +269,7 @@ public class ModuleManager : MonoBehaviour
                 break;
 
             case ModuleState.MoodDetection:
+                SetupSceneMeshes();
                 m_TextToSpeech.SendRequest("Hi, How do you feel today?");
                 break;
 
