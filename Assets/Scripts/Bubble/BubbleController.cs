@@ -24,7 +24,12 @@ namespace XRDC24.Bubble
         private bool pokedPlaying = false;
         private bool fallenPlaying = false;
 
+        #region event
+
         public System.Action<GameObject, AnimationType> OnAnimationFinished;
+        public System.Action<GameObject, AnimationType> OnBubbleAnimated;
+
+        #endregion
 
         private MeshRenderer meshRenderer;
 
@@ -51,6 +56,7 @@ namespace XRDC24.Bubble
             GetComponent<BubbleFloating>().enabled = false;
         }
 
+        // Archived
         private void OnHit(bool touched)
         {
             if (!touched) return;
@@ -71,6 +77,8 @@ namespace XRDC24.Bubble
             var name = other.gameObject.name;
             if (name.Equals("XRHand_IndexTip")) // name for poke interaction
             {
+                OnBubbleAnimated.Invoke(gameObject, AnimationType.Poke);
+                
                 // trigger animation
                 TriggerPokedAnimation();
             }
