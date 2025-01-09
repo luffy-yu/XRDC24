@@ -13,6 +13,7 @@ public class ModuleManager : MonoBehaviour
     [SerializeField] STT m_SpeechToText;
     [SerializeField] TTS m_TextToSpeech;
     [SerializeField] MRUK m_MRUK;
+    [SerializeField] PortalManager m_PortalManager;
 
     // UI
     public GameObject m_3DUIPanel;
@@ -40,6 +41,7 @@ public class ModuleManager : MonoBehaviour
     // scene
     List<MRUKAnchor> walls = new List<MRUKAnchor>();
     MRUKAnchor ground;
+    int idx = 0;
 
     public enum ModuleState
     {
@@ -145,6 +147,16 @@ public class ModuleManager : MonoBehaviour
         AdjustUIPose();
 
         UpdateAIAvatar();
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("mouse button down ++");
+
+            if (idx < 4)
+                m_PortalManager.SpawnPortal(walls[idx++].transform.position, walls[idx++].transform.rotation);
+            else
+                m_PortalManager.SpawnPortal(ground.transform.position, ground.transform.rotation);
+        }
     }
 
     private void AdjustUIPose()
