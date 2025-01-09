@@ -34,7 +34,6 @@ namespace XRDC24.Interaction
             {
                 // change material
                 GetComponent<Renderer>().material = pressedMaterial;
-                OnTriggerTriggered?.Invoke(triggerType);
             }
         }
 
@@ -47,6 +46,8 @@ namespace XRDC24.Interaction
             {
                 // revert material
                 GetComponent<Renderer>().material = originalMaterial;
+                // trigger after trigger exits
+                OnTriggerTriggered?.Invoke(triggerType);
             }
         }
     }
