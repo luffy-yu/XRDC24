@@ -1,15 +1,18 @@
 using Oculus.Interaction;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace XRDC24.Interaction
 {
     [RequireComponent(typeof(ActiveStateUnityEventWrapper))]
     public class HandGestureHandler : MonoBehaviour
     {
-        public System.Action OnGestureActivated;
+        // public System.Action OnGestureActivated;
 
 
         private ActiveStateUnityEventWrapper _activeStateUnityEventWrapper;
+        
+        public UnityEvent whenGestureActivated;
 
 
         void Start()
@@ -21,10 +24,11 @@ namespace XRDC24.Interaction
         public void GestureActivated()
         {
             print($"GestureActivated: {gameObject.name}");
-            if (OnGestureActivated != null)
-            {
-                OnGestureActivated();
-            }
+            // if (GestureActivated != null)
+            // {
+            //     OnGestureActivated();
+            // }
+            whenGestureActivated?.Invoke();
         }
 
         void Update()
