@@ -111,11 +111,11 @@ namespace XRDC24.Bubble
 
             if (OnAnimationFinished != null)
             {
-                OnAnimationFinished.Invoke(gameObject, AnimationType.Poke);
+                OnAnimationFinished.Invoke(transform.parent.gameObject, AnimationType.Poke);
             }
-            
+
             // make self invisible
-            gameObject.SetActive(false);
+            transform.parent.gameObject.SetActive(false);
 
             yield return null;
         }
@@ -145,11 +145,11 @@ namespace XRDC24.Bubble
 
             if (OnAnimationFinished != null)
             {
-                OnAnimationFinished.Invoke(gameObject, AnimationType.Fallen);
+                OnAnimationFinished.Invoke(transform.parent.gameObject, AnimationType.Fallen);
             }
-            
+
             // make self invisible
-            gameObject.SetActive(false);
+            transform.parent.gameObject.SetActive(false);
 
             yield return null;
         }

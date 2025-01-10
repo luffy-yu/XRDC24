@@ -59,6 +59,7 @@ public class ModuleManager : MonoBehaviour
         m_LLMAgentManager.OnMoodResultAvailable += ReceivedMoodResult;
         m_LLMAgentManager.OnMeditationResultAvailable += ReceivedMeditationResult;
         m_BubbleManager.OnBubbleAnimated += SpawnPortalBasedOnBubble;
+        m_BubbleManager.OnBubbleInteractionFinished += ToNext;
     }
 
     private void OnDisable()
@@ -68,6 +69,7 @@ public class ModuleManager : MonoBehaviour
         m_LLMAgentManager.OnMoodResultAvailable -= ReceivedMoodResult;
         m_LLMAgentManager.OnMeditationResultAvailable -= ReceivedMeditationResult;
         m_BubbleManager.OnBubbleAnimated -= SpawnPortalBasedOnBubble;
+        m_BubbleManager.OnBubbleInteractionFinished -= ToNext;
     }
 
     private void PlayAIAgentAudioClip(AudioClip clip)
@@ -274,6 +276,7 @@ public class ModuleManager : MonoBehaviour
                 break;
 
             case ModuleState.FreeSpeech:
+                m_UIText.SetText("Now we getinto the Meditation State, Please tell me more about you.");
                 m_LLMAgentManager.ClearGPTContext();
                 m_BubbleManager.ClearAllBubbles();
                 break;
