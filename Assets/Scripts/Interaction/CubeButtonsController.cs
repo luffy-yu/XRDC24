@@ -7,6 +7,8 @@ namespace XRDC24.Interaction
     public class CubeButtonsController : MonoBehaviour
     {
         public List<TriggerForwarder> forwarders;
+        
+        public FigmaFrameController figmaFrameController;
 
         private void Start()
         {
@@ -38,11 +40,13 @@ namespace XRDC24.Interaction
         private void OnForward()
         {
             print("OnForward");
+            figmaFrameController.NextFrame();
         }
 
         private void OnBackward()
         {
             print("OnBackward");
+            figmaFrameController.PreviousFrame();
         }
 
         private void OnRecording()
