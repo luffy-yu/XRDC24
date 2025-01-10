@@ -17,11 +17,8 @@ namespace DA_Assets.FCU
         public override void OnShow()
         {
             monoBeh.DelegateHolder.ShowDifferenceChecker = ShowDifferenceChecker;
-            // Fix by Liuchuan Yu
-            // monoBeh.DelegateHolder.UpdateScrollContent = this.FrameList.UpdateScrollContent;
-            // monoBeh.DelegateHolder.UpdateScrollContent();
-            monoBeh.UpdateScrollContentDelegate = this.FrameList.UpdateScrollContent;
-            monoBeh.UpdateScrollContentDelegate();
+            monoBeh.DelegateHolder.UpdateScrollContent = this.FrameList.UpdateScrollContent;
+            monoBeh.DelegateHolder.UpdateScrollContent();
             monoBeh.DelegateHolder.GetGameViewSize = GameViewUtils.GetGameViewSize;
             monoBeh.DelegateHolder.SetGameViewSize = GameViewUtils.SetGameViewSize;
 
@@ -75,16 +72,14 @@ namespace DA_Assets.FCU
 
                             gui.Space15();
 
-                            if (gui.SquareButton30x30(new GUIContent(gui.Resources.IconOpen,
-                                    FcuLocKey.tooltip_open_fcu_window.Localize())))
+                            if (gui.SquareButton30x30(new GUIContent(gui.Resources.IconOpen, FcuLocKey.tooltip_open_fcu_window.Localize())))
                             {
                                 this.SettingsWindow.Show();
                             }
 
                             gui.Space5();
 
-                            if (gui.SquareButton30x30(new GUIContent(gui.Resources.IconExpandWindow,
-                                    FcuLocKey.tooltip_change_window_mode.Localize())))
+                            if (gui.SquareButton30x30(new GUIContent(gui.Resources.IconExpandWindow, FcuLocKey.tooltip_change_window_mode.Localize())))
                             {
                                 if (monoBeh.Settings.MainSettings.WindowMode)
                                 {
@@ -114,8 +109,7 @@ namespace DA_Assets.FCU
                         GroupType = GroupType.Horizontal,
                         Body = () =>
                         {
-                            monoBeh.Settings.MainSettings.ProjectUrl =
-                                gui.BigTextField(monoBeh.Settings.MainSettings.ProjectUrl);
+                            monoBeh.Settings.MainSettings.ProjectUrl = gui.BigTextField(monoBeh.Settings.MainSettings.ProjectUrl);
 
                             gui.Space5();
 
@@ -133,15 +127,13 @@ namespace DA_Assets.FCU
                             gr.GroupType = GroupType.Horizontal;
                             gr.Body = () =>
                             {
-                                if (gui.SquareButton30x30(new GUIContent(gui.Resources.ImgViewRecent,
-                                        FcuLocKey.tooltip_recent_projects.Localize())))
+                                if (gui.SquareButton30x30(new GUIContent(gui.Resources.ImgViewRecent, FcuLocKey.tooltip_recent_projects.Localize())))
                                 {
                                     ShowRecentProjectsPopup_OnClick();
                                 }
 
                                 gui.Space5();
-                                if (gui.SquareButton30x30(new GUIContent(gui.Resources.IconDownload,
-                                        FcuLocKey.tooltip_download_project.Localize())))
+                                if (gui.SquareButton30x30(new GUIContent(gui.Resources.IconDownload, FcuLocKey.tooltip_download_project.Localize())))
                                 {
                                     if (monoBeh.FigmaSession.IsAuthed() == false)
                                     {
@@ -158,15 +150,13 @@ namespace DA_Assets.FCU
                                 }
 
                                 gui.Space5();
-                                if (gui.SquareButton30x30(new GUIContent(gui.Resources.IconImport,
-                                        FcuLocKey.tooltip_import_frames.Localize())))
+                                if (gui.SquareButton30x30(new GUIContent(gui.Resources.IconImport, FcuLocKey.tooltip_import_frames.Localize())))
                                 {
                                     monoBeh.EventHandlers.ImportSelectedFrames_OnClick();
                                 }
 
                                 gui.Space5();
-                                if (gui.SquareButton30x30(new GUIContent(gui.Resources.IconStop,
-                                        FcuLocKey.tooltip_stop_import.Localize())))
+                                if (gui.SquareButton30x30(new GUIContent(gui.Resources.IconStop, FcuLocKey.tooltip_stop_import.Localize())))
                                 {
                                     monoBeh.EventHandlers.StopImport_OnClick();
                                     DALogger.Log(FcuLocKey.label_import_stoped_manually.Localize());
@@ -175,16 +165,14 @@ namespace DA_Assets.FCU
                                 if (monoBeh.Settings.MainSettings.WindowMode == false)
                                 {
                                     gui.Space5();
-                                    if (gui.SquareButton30x30(new GUIContent(gui.Resources.IconSettings,
-                                            FcuLocKey.tooltip_open_settings_window.Localize())))
+                                    if (gui.SquareButton30x30(new GUIContent(gui.Resources.IconSettings, FcuLocKey.tooltip_open_settings_window.Localize())))
                                     {
                                         this.SettingsWindow.Show();
                                     }
                                 }
 
                                 gui.Space5();
-                                if (gui.SquareButton30x30(new GUIContent(gui.Resources.IconExpandWindow,
-                                        FcuLocKey.tooltip_change_window_mode.Localize())))
+                                if (gui.SquareButton30x30(new GUIContent(gui.Resources.IconExpandWindow, FcuLocKey.tooltip_change_window_mode.Localize())))
                                 {
                                     if (monoBeh.Settings.MainSettings.WindowMode)
                                     {

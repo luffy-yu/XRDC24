@@ -76,10 +76,6 @@ namespace DA_Assets.FCU
         [SerializeField] DelegateHolder delegateHolder;
         [SerializeProperty(nameof(delegateHolder))]
         public DelegateHolder DelegateHolder => delegateHolder.SetMonoBehaviour(this);
-        
-        [SerializeField] UpdateScrollContentDelegate updateScrollContentDelegate;
-        [SerializeProperty(nameof(updateScrollContentDelegate))]
-        public UpdateScrollContentDelegate UpdateScrollContentDelegate { get; set; }
 
         [SerializeField] SettingsBinder settings;
         [SerializeProperty(nameof(settings))]
