@@ -22,6 +22,7 @@ public class ModuleManager : MonoBehaviour
     public GameObject m_ButtonNext;
     public GameObject m_AIAvatar;
     public VisualEffect m_AIAvatarVFX;
+    public GameObject m_AvatarBackground;
     public TextMeshProUGUI m_UIText;
 
     // bubble
@@ -35,6 +36,7 @@ public class ModuleManager : MonoBehaviour
     [Header("AI Avatar Setting")]
     public Vector3 originalScale = Vector3.one;
     public float originalRate = 1f;
+    public float originalAnimatedSpeed = 1f;
     public float scaleMultiplier = 100f;
     public float minFactor = 0.8f;
     public float maxFactor = 1.2f;
@@ -241,6 +243,7 @@ public class ModuleManager : MonoBehaviour
         if (!m_TextToSpeech.audioSource.isPlaying)
         {
             m_AIAvatarVFX.playRate = originalRate;
+            m_AIAvatar.GetComponent<Animator>().speed = originalAnimatedSpeed;
             return;
         }
 
@@ -266,6 +269,7 @@ public class ModuleManager : MonoBehaviour
         );
 
         m_AIAvatarVFX.playRate = originalRate * (1f + currentAmplitude * 10);
+        m_AIAvatar.GetComponent<Animator>().speed = originalAnimatedSpeed * (1f + currentAmplitude);
     }
 
     public void ProcessResultForBubbleSpawn(string input)
