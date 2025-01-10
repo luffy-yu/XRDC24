@@ -26,6 +26,7 @@ public class BubblesManager : MonoBehaviour
     #region event
 
     public System.Action<Vector3, Vector3, AnimationType> OnBubbleAnimated;
+    public System.Action OnBubbleInteractionFinished;
 
     #endregion
 
@@ -136,12 +137,12 @@ public class BubblesManager : MonoBehaviour
             fallCount++;
         }
 
-        // clear from list
-        spawnedBubbles.Remove(go);
-        // destroy go
-        Destroy(go);
+        go.SetActive(false);
 
-        Debug.Log($"Poke count: {pokeCount}, Fall count: {fallCount} Remaining: {spawnedBubbles.Count}");
+        Debug.Log($"Poke count: {pokeCount}, Fall count: {fallCount} Remaining: {totalBubbles - pokeCount - fallCount}");
+
+        if (totalBubbles - pokeCount - fallCount <= 0)
+            OnBubbleInteractionFinished();
     }
 
     private void BubbleAnimated(GameObject obj, AnimationType type)

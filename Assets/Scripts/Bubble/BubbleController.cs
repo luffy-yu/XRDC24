@@ -69,7 +69,7 @@ namespace XRDC24.Bubble
 
         private void OnTriggerEnter(Collider other)
         {
-            print($"On Trigger Enter: {other.gameObject.name}");
+            // print($"On Trigger Enter: {other.gameObject.name}");
 
             // Add SphereCollider to XRHand_IndexTip of the Synthetic hand
             // set Radius 0.01 and check Is Trigger
@@ -78,9 +78,12 @@ namespace XRDC24.Bubble
             if (name.Equals("XRHand_IndexTip")) // name for poke interaction
             {
                 OnBubbleAnimated.Invoke(gameObject, AnimationType.Poke);
-                
-                // trigger animation
                 TriggerPokedAnimation();
+            }
+            else if (name.Contains("FLOOR"))
+            {
+                OnBubbleAnimated.Invoke(gameObject, AnimationType.Fallen);
+                TriggerFallenAnimation();
             }
         }
 
@@ -108,11 +111,11 @@ namespace XRDC24.Bubble
 
             if (OnAnimationFinished != null)
             {
-                OnAnimationFinished.Invoke(gameObject, AnimationType.Poke);
+                OnAnimationFinished.Invoke(transform.parent.gameObject, AnimationType.Poke);
             }
-            
+
             // make self invisible
-            gameObject.SetActive(false);
+            transform.parent.gameObject.SetActive(false);
 
             yield return null;
         }
@@ -142,11 +145,11 @@ namespace XRDC24.Bubble
 
             if (OnAnimationFinished != null)
             {
-                OnAnimationFinished.Invoke(gameObject, AnimationType.Fallen);
+                OnAnimationFinished.Invoke(transform.parent.gameObject, AnimationType.Fallen);
             }
-            
+
             // make self invisible
-            gameObject.SetActive(false);
+            transform.parent.gameObject.SetActive(false);
 
             yield return null;
         }

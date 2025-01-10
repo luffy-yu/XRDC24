@@ -346,6 +346,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 798165759}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!2083052967 &33813251 stripped
+VisualEffect:
+  m_CorrespondingSourceObject: {fileID: 1242926988739361076, guid: 86fd9e83b31d9974dabd331194e64003,
+    type: 3}
+  m_PrefabInstance: {fileID: 826329467}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &33924230
 GameObject:
   m_ObjectHideFlags: 0
@@ -1657,7 +1663,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -9396,6 +9402,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 524776413234977388, guid: c19a2d64274b96e46aa2fae15534447c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 626672760788952484, guid: c19a2d64274b96e46aa2fae15534447c,
         type: 3}
       propertyPath: m_IsActive
@@ -9526,6 +9537,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8788151007407338352, guid: c19a2d64274b96e46aa2fae15534447c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -9626,7 +9642,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 6.746093, y: 0.024504025, z: 5.686328}
   m_Center: {x: 0.090873, y: 0.018763551, z: 1.9291749}
@@ -10725,7 +10741,37 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1242926988739361076, guid: 86fd9e83b31d9974dabd331194e64003,
         type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242926988739361076, guid: 86fd9e83b31d9974dabd331194e64003,
+        type: 3}
       propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[0].m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242926988739361076, guid: 86fd9e83b31d9974dabd331194e64003,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Name
+      value: Color
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242926988739361076, guid: 86fd9e83b31d9974dabd331194e64003,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.x
+      value: 0.13697661
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242926988739361076, guid: 86fd9e83b31d9974dabd331194e64003,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.y
+      value: 1.4489453
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242926988739361076, guid: 86fd9e83b31d9974dabd331194e64003,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.z
+      value: 2.7954397
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242926988739361076, guid: 86fd9e83b31d9974dabd331194e64003,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Overridden
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3669358016374695411, guid: 86fd9e83b31d9974dabd331194e64003,
@@ -11186,7 +11232,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &855743583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25036,8 +25082,10 @@ MonoBehaviour:
   m_3DUIPanel: {fileID: 1230982548}
   m_ButtonNext: {fileID: 1320176552}
   m_AIAvatar: {fileID: 826329468}
+  m_AIAvatarVFX: {fileID: 33813251}
   m_UIText: {fileID: 1163194891}
   originalScale: {x: 0.5, y: 0.5, z: 0.5}
+  originalRate: 0.5
   scaleMultiplier: 1000
   minFactor: 0
   maxFactor: 1
