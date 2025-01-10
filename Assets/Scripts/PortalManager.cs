@@ -60,6 +60,20 @@ public class PortalManager : MonoBehaviour
         portals.Add(portalSet);
     }
 
+    public void ClearPortals()
+    {
+        if (portals.Count <= 0)
+            return;
+
+        foreach (PortalSet portal in portals)
+        {
+            Destroy(portal.portal);
+            Destroy(portal.camera.gameObject);
+            portal.rt.Release();
+        }
+
+        portals.Clear();
+    }
 
 
 }

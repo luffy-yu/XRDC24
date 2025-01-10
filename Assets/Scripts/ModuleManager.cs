@@ -190,7 +190,7 @@ public class ModuleManager : MonoBehaviour
     {
         AdjustUIPose();
 
-        //UpdateAIAvatarScale();
+        UpdateAIAvatarScale();
         UpdateAIAvatarParticleRate();
     }
 
@@ -230,7 +230,7 @@ public class ModuleManager : MonoBehaviour
 
         currentAmplitude = Mathf.SmoothDamp(
                 currentAmplitude,
-                targetAmplitude,
+                targetAmplitude * 0.1f,
                 ref amplitudeVelocity,
                 amplitudeSmoothTime
         );
@@ -316,9 +316,10 @@ public class ModuleManager : MonoBehaviour
                 break;
 
             case ModuleState.FreeSpeech:
-                m_UIText.SetText("Now we getinto the Meditation State, Please tell me more about you.");
+                m_UIText.SetText("Now we get into the Meditation State, Please tell me more about you.");
                 m_LLMAgentManager.ClearGPTContext();
                 m_BubbleManager.ClearAllBubbles();
+                m_PortalManager.ClearPortals();
                 break;
 
             default:
