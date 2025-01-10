@@ -5,6 +5,7 @@ using UnityEngine;
 using XRDC24.AI;
 using System.Collections.Generic;
 using XRDC24.Bubble;
+using UnityEngine.VFX;
 
 public class ModuleManager : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class ModuleManager : MonoBehaviour
     public GameObject m_3DUIPanel;
     public GameObject m_ButtonNext;
     public GameObject m_AIAvatar;
+    public VisualEffect m_AIAvatarVFX;
     public TextMeshProUGUI m_UIText;
 
     // bubble
@@ -32,6 +34,7 @@ public class ModuleManager : MonoBehaviour
     private float[] spectrumData = new float[256];
     [Header("AI Avatar Setting")]
     public Vector3 originalScale = Vector3.one;
+    public float originalRate = 1f;
     public float scaleMultiplier = 100f;
     public float minFactor = 0.8f;
     public float maxFactor = 1.2f;
@@ -185,7 +188,8 @@ public class ModuleManager : MonoBehaviour
     {
         AdjustUIPose();
 
-        UpdateAIAvatar();
+        //UpdateAIAvatarScale();
+        UpdateAIAvatarParticleRate();
     }
 
     private void AdjustUIPose()
@@ -200,7 +204,7 @@ public class ModuleManager : MonoBehaviour
         m_3DUIPanel.transform.rotation = m_OVRCameraRig.transform.rotation;
     }
 
-    private void UpdateAIAvatar()
+    private void UpdateAIAvatarScale()
     {
         if (!m_TextToSpeech.audioSource.isPlaying)
         {
@@ -230,6 +234,38 @@ public class ModuleManager : MonoBehaviour
         );
 
         m_AIAvatar.transform.localScale = originalScale * (1f + currentAmplitude);
+    }
+
+    private void UpdateAIAvatarParticleRate()
+    {
+        if (!m_TextToSpeech.audioSource.isPlaying)
+        {
+            m_AIAvatarVFX.playRate = originalRate;
+            return;
+        }
+
+        // get the current spectrum data
+        m_TextToSpeech.audioSource.GetSpectrumData(spectrumData, 0, FFTWindow.BlackmanHarris);
+
+        float sum = 0f;
+        for (int i = 0; i < spectrumData.Length; i++)
+        {
+            sum += spectrumData[i];
+        }
+
+        // compute an amplitube
+        float targetAmplitude = Mathf.Clamp01(sum / spectrumData.Length);
+        targetAmplitude *= scaleMultiplier;
+        //Debug.Log(targetAmplitude);
+
+        currentAmplitude = Mathf.SmoothDamp(
+                currentAmplitude,
+                targetAmplitude,
+                ref amplitudeVelocity,
+                amplitudeSmoothTime
+        );
+
+        m_AIAvatarVFX.playRate = originalRate * (1f + currentAmplitude * 10);
     }
 
     public void ProcessResultForBubbleSpawn(string input)

@@ -346,6 +346,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 798165759}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!2083052967 &33813251 stripped
+VisualEffect:
+  m_CorrespondingSourceObject: {fileID: 1242926988739361076, guid: 86fd9e83b31d9974dabd331194e64003,
+    type: 3}
+  m_PrefabInstance: {fileID: 826329467}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &33924230
 GameObject:
   m_ObjectHideFlags: 0
@@ -10735,7 +10741,37 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1242926988739361076, guid: 86fd9e83b31d9974dabd331194e64003,
         type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242926988739361076, guid: 86fd9e83b31d9974dabd331194e64003,
+        type: 3}
       propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[0].m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242926988739361076, guid: 86fd9e83b31d9974dabd331194e64003,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Name
+      value: Color
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242926988739361076, guid: 86fd9e83b31d9974dabd331194e64003,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.x
+      value: 0.13697661
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242926988739361076, guid: 86fd9e83b31d9974dabd331194e64003,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.y
+      value: 1.4489453
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242926988739361076, guid: 86fd9e83b31d9974dabd331194e64003,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.z
+      value: 2.7954397
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242926988739361076, guid: 86fd9e83b31d9974dabd331194e64003,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Overridden
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3669358016374695411, guid: 86fd9e83b31d9974dabd331194e64003,
@@ -25046,8 +25082,10 @@ MonoBehaviour:
   m_3DUIPanel: {fileID: 1230982548}
   m_ButtonNext: {fileID: 1320176552}
   m_AIAvatar: {fileID: 826329468}
+  m_AIAvatarVFX: {fileID: 33813251}
   m_UIText: {fileID: 1163194891}
   originalScale: {x: 0.5, y: 0.5, z: 0.5}
+  originalRate: 0.5
   scaleMultiplier: 1000
   minFactor: 0
   maxFactor: 1
