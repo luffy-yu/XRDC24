@@ -43,6 +43,9 @@ namespace XRDC24.Environment
 
         public void Dissolve()
         {
+            // enable room
+            room.SetActive(true);
+            
             // backup material
             if (roomMaterials.Count == 0)
             {
@@ -73,10 +76,14 @@ namespace XRDC24.Environment
 
                 yield return new WaitForSeconds(gap);
             }
+            // set inactive
+            room.SetActive(false);
         }
 
         public void Revert()
         {
+            room.SetActive(true);
+            
             foreach (var m in roomMaterials.Values)
             {
                 // m.shader = defaultShader;
