@@ -6,6 +6,7 @@ using XRDC24.AI;
 using System.Collections.Generic;
 using XRDC24.Bubble;
 using UnityEngine.VFX;
+using System.Collections;
 
 public class ModuleManager : MonoBehaviour
 {
@@ -19,12 +20,15 @@ public class ModuleManager : MonoBehaviour
     [SerializeField] PortalManager m_PortalManager;
 
     // UI
+    [Header("User Interfaces")]
     public GameObject m_3DUIPanel;
     public GameObject m_ButtonNext;
     public GameObject m_AIAvatar;
     public VisualEffect m_AIAvatarVFX;
     public GameObject m_AvatarBackground;
     public TextMeshProUGUI m_UIText;
+    public GameObject m_TitleLogo;
+    private int frameIndex = 0;
 
     // bubble
     private float positivePercentage;
@@ -44,6 +48,7 @@ public class ModuleManager : MonoBehaviour
     public float amplitudeSmoothTime = 0.1f; 
     private float currentAmplitude;        
     private float amplitudeVelocity;
+    private bool isPoseInit = false;
 
     // scene
     List<MRUKAnchor> walls = new List<MRUKAnchor>();
@@ -101,6 +106,53 @@ public class ModuleManager : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    private void PlayOnBoardingFrames()
+    {
+        if (m_ModuleState != ModuleState.OnBoarding)
+            return;
+
+        switch (frameIndex)
+        {
+            case 0:
+                break;
+
+            case 1:
+                StartCoroutine(ShowTitble());
+                frameIndex = 0;
+                break;
+
+            case 2:
+                break;
+
+        }
+    }
+
+    private IEnumerator ShowTitble()
+    {
+        m_TitleLogo.SetActive(true);
+
+        yield return new WaitForSeconds(Constants.TITLE_SHOW_SECONDS);
+        
+        //float time = 0f;
+        //float startAlpha = m_TitleLogo.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.color.a;
+        
+        //while (time < 3f)
+        //{
+        //    time += Time.deltaTime;
+        //    float alpha = Mathf.Lerp(startAlpha, 0f, time / 3f);
+
+        //    // Update the material’s color
+        //    Color newColor = m_TitleLogo.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.color;
+        //    newColor.a = alpha;
+        //    m_TitleLogo.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.color = newColor;
+
+        //    yield return null;
+        //}
+
+        m_TitleLogo.SetActive(false);
+        frameIndex = 2;
     }
 
     private void ReceivedMoodResult(string res)
@@ -161,6 +213,7 @@ public class ModuleManager : MonoBehaviour
 
         Debug.Log($"wall num: {walls.Count}");
     }
+    
 
     private void SetupSceneMeshes()
     {
@@ -185,6 +238,9 @@ public class ModuleManager : MonoBehaviour
     {
         // TODO: specific trigger to do that (after onboarding)
         m_ModuleState = ModuleState.OnBoarding;
+        frameIndex = 1;
+        m_AvatarBackground.SetActive(false);
+        m_3DUIPanel.SetActive(false);
     }
 
     void Update()
@@ -193,6 +249,8 @@ public class ModuleManager : MonoBehaviour
 
         UpdateAIAvatarScale();
         UpdateAIAvatarParticleRate();
+
+        PlayOnBoardingFrames();
     }
 
     private void AdjustUIPose()
