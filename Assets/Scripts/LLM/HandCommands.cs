@@ -54,7 +54,7 @@ namespace XRDC24.AI
             chatGPTText.text = obj;
         }
         
-        private void OnTTSResultAvailable(AudioClip obj)
+        private void OnTTSResultAvailable(AudioClip obj, string text)
         {
             ttsText.text = "Done";
             audioClip = obj;
