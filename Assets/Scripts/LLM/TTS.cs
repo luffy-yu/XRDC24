@@ -18,7 +18,7 @@ namespace XRDC24.AI
 
         #region event
 
-        public System.Action<AudioClip> OnResultAvailable;
+        public System.Action<AudioClip, string> OnResultAvailable;
 
         #endregion event
 
@@ -159,7 +159,7 @@ namespace XRDC24.AI
                 if (OnResultAvailable != null)
                 {
                     audioSource.clip = response.AudioClip;
-                    OnResultAvailable(response.AudioClip);
+                    OnResultAvailable(response.AudioClip, text);
                 }
             }
         }
@@ -187,7 +187,7 @@ namespace XRDC24.AI
                 if (OnResultAvailable != null)
                 {
                     audioSource.clip = response.AudioClip;
-                    OnResultAvailable(response.AudioClip);
+                    OnResultAvailable(response.AudioClip, text);
                 }
 
                 return true;

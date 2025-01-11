@@ -26,9 +26,11 @@ public class ModuleManager : MonoBehaviour
     public GameObject m_AIAvatar;
     public VisualEffect m_AIAvatarVFX;
     public GameObject m_AvatarBackground;
-    public TextMeshProUGUI m_UIText;
+    //public TextMeshProUGUI m_UIText;
     public GameObject m_TitleLogo;
     private int frameIndex = 0;
+    private TextMeshProUGUI textAgent;
+    private TextMeshProUGUI textUser;
 
     // bubble
     private float positivePercentage;
@@ -83,9 +85,15 @@ public class ModuleManager : MonoBehaviour
         m_BubbleManager.OnBubbleInteractionFinished -= ToNext;
     }
 
-    private void PlayAIAgentAudioClip(AudioClip clip)
+    private void PlayAIAgentAudioClip(AudioClip clip, string text)
     {
         m_TextToSpeech.audioSource.Play();
+
+        // show agent text dialog
+        GameObject dialog = m_3DUIPanel.transform.Find("DialogAgentUser").gameObject;
+        dialog.SetActive(true);
+        dialog.transform.Find("Dialog_Agent").gameObject.SetActive(true);
+        textAgent.text = text;
     }
 
     private void SendTextToLLM(string res)
@@ -178,7 +186,7 @@ public class ModuleManager : MonoBehaviour
         int negativeBubbleN = totalBubbleN - positiveBubbleN;
         m_BubbleManager.SpawnBubbles(positiveBubbleN, negativeBubbleN);
 
-        m_UIText.text = $"positve bubbles: {positiveBubbleN}\nnegative bubbles: {negativeBubbleN}";
+        Debug.Log($"positve bubbles: {positiveBubbleN}\nnegative bubbles: {negativeBubbleN}");
     }
 
     private void ReceivedMeditationResult(string res)
@@ -253,6 +261,9 @@ public class ModuleManager : MonoBehaviour
         frameIndex = 1;
         m_3DUIPanel.SetActive(true);
         m_AvatarBackground.SetActive(false);
+
+        textAgent = m_3DUIPanel.transform.Find("DialogAgentUser").Find("Dialog_Agent").GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
+        textUser = m_3DUIPanel.transform.Find("DialogAgentUser").Find("Dialog_User").GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
     }
 
     void Update()
@@ -387,7 +398,6 @@ public class ModuleManager : MonoBehaviour
                 break;
 
             case ModuleState.FreeSpeech:
-                m_UIText.SetText("Now we get into the Meditation State, Please tell me more about you.");
                 m_LLMAgentManager.ClearGPTContext();
                 m_BubbleManager.ClearAllBubbles();
                 m_PortalManager.ClearPortals();
