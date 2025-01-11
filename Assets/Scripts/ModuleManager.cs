@@ -10,6 +10,7 @@ using UnityEngine.VFX;
 public class ModuleManager : MonoBehaviour
 {
     [SerializeField] OVRCameraRig m_OVRCameraRig;
+    [SerializeField] OVRManager m_OVRManager;
     [SerializeField] BubblesManager m_BubbleManager;
     [SerializeField] LLMAgentManager m_LLMAgentManager;
     [SerializeField] STT m_SpeechToText;
@@ -320,11 +321,26 @@ public class ModuleManager : MonoBehaviour
                 m_LLMAgentManager.ClearGPTContext();
                 m_BubbleManager.ClearAllBubbles();
                 m_PortalManager.ClearPortals();
+                TriggerPassthrough(false);
                 break;
 
             default:
                 break;
         }
        
+    }
+
+    public void TriggerPassthrough(bool isEnabled)
+    {
+        if (isEnabled)
+        {
+            m_OVRManager.isInsightPassthroughEnabled = true;
+            m_OVRCameraRig.centerEyeAnchor.GetComponent<Camera>().clearFlags = CameraClearFlags.SolidColor;
+        }
+        else
+        {
+            m_OVRManager.isInsightPassthroughEnabled = false;
+            m_OVRCameraRig.centerEyeAnchor.GetComponent<Camera>().clearFlags = CameraClearFlags.Skybox;
+        }
     }
 }
