@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using System;
 using DA_Assets.Shared.Extensions;
 using UnityEngine;
 using UnityEngine.UI;
@@ -44,8 +45,8 @@ namespace DA_Assets.Shared
 
         private Vector4 GetNormalizedRadii()
         {
-            float width = GetComponent<RectTransform>().GetWidth();
-            float height = GetComponent<RectTransform>().GetHeight();
+            float width = Math.Abs(GetComponent<RectTransform>().GetWidth());
+            float height = Math.Abs(GetComponent<RectTransform>().GetHeight());
 
             Vector4 r = new Vector4();
             r.x = radiiSerialized.x.NormalizeAngleToSize(width, height);
