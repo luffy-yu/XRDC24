@@ -89,11 +89,23 @@ public class ModuleManager : MonoBehaviour
     {
         m_TextToSpeech.audioSource.Play();
 
-        // show agent text dialog
+        StartCoroutine(ShowAgentText(clip.length, text));
+    }
+
+    private IEnumerator ShowAgentText(float second, string text)
+    {
         GameObject dialog = m_3DUIPanel.transform.Find("DialogAgentUser").gameObject;
+
+        // show text
         dialog.SetActive(true);
         dialog.transform.Find("Dialog_Agent").gameObject.SetActive(true);
         textAgent.text = text;
+
+        yield return new WaitForSeconds(second);
+
+        // hide text
+        dialog.SetActive(false);
+        dialog.transform.Find("Dialog_Agent").gameObject.SetActive(false);
     }
 
     private void SendTextToLLM(string res)
