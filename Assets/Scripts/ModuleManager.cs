@@ -124,9 +124,22 @@ public class ModuleManager : MonoBehaviour
                 break;
 
             case 2:
+                StartCoroutine(ShowOnboardPanel());
+                frameIndex = 0;
                 break;
 
         }
+    }
+
+    private IEnumerator ShowOnboardPanel()
+    {
+        m_3DUIPanel.transform.Find("FigmaCanvasI01")?.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(Constants.ONBOARD_PANEL_SHOW_SECONDS);
+
+        m_3DUIPanel.transform.Find("FigmaCanvasI01")?.gameObject.SetActive(false);
+
+        ToNext();
     }
 
     private IEnumerator ShowTitble()
@@ -236,11 +249,10 @@ public class ModuleManager : MonoBehaviour
 
     void Start()
     {
-        // TODO: specific trigger to do that (after onboarding)
         m_ModuleState = ModuleState.OnBoarding;
         frameIndex = 1;
+        m_3DUIPanel.SetActive(true);
         m_AvatarBackground.SetActive(false);
-        m_3DUIPanel.SetActive(false);
     }
 
     void Update()
@@ -371,7 +383,7 @@ public class ModuleManager : MonoBehaviour
 
             case ModuleState.MoodDetection:
                 SetupSceneMeshes();
-                m_TextToSpeech.SendRequest("Hi, How do you feel today?");
+                m_TextToSpeech.SendRequest("Hello, my name is Flo, your personal mental health assistant, I’m here to listen. How are you feeling today?");
                 break;
 
             case ModuleState.FreeSpeech:

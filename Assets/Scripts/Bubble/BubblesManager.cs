@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using XRDC24.Bubble;
 
@@ -12,6 +13,8 @@ public class BubblesManager : MonoBehaviour
 
     public int pokeCount = 0;
     public int fallCount = 0;
+    public AudioSource m_BubbleBurstSound;
+    public AudioSource m_BubbleGenSound;
 
     // private 
     private List<GameObject> spawnedBubbles;
@@ -74,7 +77,18 @@ public class BubblesManager : MonoBehaviour
             SpawnBubble(template, headPos, forward);
         }
 
+        StartCoroutine(PlayBubbleGenerateSound());
+
         Debug.Log($"Bubbles spawned: positive = {positiveNum}, negative = {negativeNum}, total = {totalBubbles}");
+    }
+
+    private IEnumerator PlayBubbleGenerateSound()
+    {
+        m_BubbleGenSound.Play();
+
+        yield return new WaitForSeconds(2);
+
+        m_BubbleGenSound.Stop();
     }
 
     public void ClearAllBubbles()
@@ -148,6 +162,9 @@ public class BubblesManager : MonoBehaviour
     private void BubbleAnimated(GameObject obj, AnimationType type)
     {
         Debug.Log("bubble animation invoke in bubble manager");
+
+        // play sound effect
+        m_BubbleBurstSound.Play();
 
         // ray cast to get the portal position and sent back to module manager
         OnBubbleAnimated(m_OVRCameraRig.centerEyeAnchor.position, obj.transform.position, type);
