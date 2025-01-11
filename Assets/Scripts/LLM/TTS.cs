@@ -163,6 +163,38 @@ namespace XRDC24.AI
                 }
             }
         }
+        
+        public async Task<bool> SendRequest(string text, string filename)
+        {
+            var request = new CreateTextToSpeechRequest
+            {
+                Input = text,
+                Model = "tts-1",
+                Voice = "alloy"
+            };
+
+            var response = await CreateTextToSpeech(request);
+
+            if (response.AudioClip)
+            {
+                // save
+                var data = SaveWav.Save(filename, response.AudioClip);
+                using (var fileStream = File.OpenWrite(filename))
+                {
+                    fileStream.Write(data);
+                }
+
+                if (OnResultAvailable != null)
+                {
+                    audioSource.clip = response.AudioClip;
+                    OnResultAvailable(response.AudioClip);
+                }
+
+                return true;
+            }
+
+            return false;
+        }
 
         //void Test()
         //{
