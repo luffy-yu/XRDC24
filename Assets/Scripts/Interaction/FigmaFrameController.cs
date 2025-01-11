@@ -17,8 +17,25 @@ namespace XRDC24.Interaction
         private void Start()
         {
             currentFrame = -1;
+            // verify names
+            Verify();
             // disable all 
             SetVisible();
+        }
+
+        void Verify()
+        {
+            // sometimes some object is added more than once.
+            var set = new HashSet<GameObject>();
+            frames.ForEach(frame =>
+            {
+                if (set.Contains(frame))
+                {
+                    Debug.LogError($"{frame} is already added.");
+                }
+
+                set.Add(frame);
+            });
         }
 
         public void ShowFirst()
@@ -49,11 +66,11 @@ namespace XRDC24.Interaction
             {
                 if (i == currentFrame)
                 {
-                    frames[i].gameObject.SetActive(true);
+                    frames[i].SetActive(true);
                 }
                 else
                 {
-                    frames[i].gameObject.SetActive(false);
+                    frames[i].SetActive(false);
                 }
             }
         }
