@@ -141,14 +141,14 @@ public class ModuleManager : MonoBehaviour
         {
             if (audioFrameIndex == 0)
             {
-                m_TextToSpeech.SendRequest("With each bubble you break, the world around you opens a little more.");
+                m_TextToSpeech.SendRequest("With each bubble you break, the world around you opens a little more. Not all bubbles need to be touched. Sometimes letting them fall brings new life.");
                 audioFrameIndex++;
             }
-            else if (audioFrameIndex == 1)
-            {
-                m_TextToSpeech.SendRequest("Not all bubbles need to be touched. Sometimes letting them fall brings new life.");
-                audioFrameIndex++;
-            }
+            //else if (audioFrameIndex == 1)
+            //{
+            //    m_TextToSpeech.SendRequest("Not all bubbles need to be touched. Sometimes letting them fall brings new life.");
+            //    audioFrameIndex++;
+            //}
         }
     }
 
@@ -299,8 +299,6 @@ public class ModuleManager : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, 1 << LayerMask.NameToLayer("RoomMesh"))) 
         {
-            Debug.Log("hit the room mesh layer ++");
-            
             Vector3 hitPoint = hit.point;
             GameObject hitObject = hit.collider.gameObject;
 
@@ -309,11 +307,11 @@ public class ModuleManager : MonoBehaviour
 
         // add bubble agent sound if needed
         float totalTriggerNum = m_BubbleManager.fallCount + m_BubbleManager.pokeCount;
-        if (totalTriggerNum == 8)
+        if (totalTriggerNum == 15)
         {
             m_TextToSpeech.SendRequest("Every movement matters.");
         }
-        else if (totalTriggerNum == 15)
+        else if (totalTriggerNum == 18)
         {
             m_TextToSpeech.SendRequest("Keep going at your own pace.");
         }
