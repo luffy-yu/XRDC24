@@ -1,3 +1,4 @@
+using System;
 using Oculus.Interaction;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,7 +14,14 @@ namespace XRDC24.Interaction
         private ActiveStateUnityEventWrapper _activeStateUnityEventWrapper;
         
         public UnityEvent whenGestureActivated;
+        
+        [HideInInspector] public bool Triggered = false;
 
+
+        private void Awake()
+        {
+            Triggered = false;
+        }
 
         void Start()
         {
@@ -28,6 +36,7 @@ namespace XRDC24.Interaction
             // {
             //     OnGestureActivated();
             // }
+            Triggered = true;
             whenGestureActivated?.Invoke();
         }
 
