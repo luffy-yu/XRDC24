@@ -18,7 +18,7 @@ namespace XRDC24.Interaction
         [HideInInspector] public bool Triggered = false;
 
 
-        private void Awake()
+        private void OnEnable()
         {
             Triggered = false;
         }

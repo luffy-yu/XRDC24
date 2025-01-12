@@ -33,15 +33,20 @@ namespace XRDC24.Interaction
         private bool AtFirst => gestures != null && gestures.Count > 0 && current == 0;
         private bool AtLast => gestures != null && gestures.Count > 0 && current == gestures.Count - 1;
 
-        private void Awake()
+        private void OnEnable()
         {
             // reset gestures
             ResetGestures();
 
-            // enable first state
-            current = 0;
+            // only enable when it's current frame
+            if (figmaFrameController != null && figmaFrameController.CurrentFrame != null &&
+                figmaFrameController.CurrentFrame == gameObject)
+            {
+                // enable first state
+                current = 0;
 
-            StartGuidance();
+                StartGuidance();
+            }
         }
 
         void ResetGestures()
@@ -63,42 +68,55 @@ namespace XRDC24.Interaction
             gesture.demos.ForEach(item => item.SetActive(true));
             // play animation automatically
             // enable handler
-            gesture.handlers.ForEach(h =>
-            {
-                h.enabled = true;
-                h.whenGestureActivated.AddListener(UpdateLoop);
-            });
+            gesture.handlers.ForEach(h => { h.enabled = true; });
         }
 
         void UpdateLoop()
         {
-            // must all triggered before entering next stage
-            var satisfied = true;
-            
-            gestures[current].handlers.ForEach(item => satisfied = satisfied && item.Triggered);
-            
-            if(!satisfied) return;
-            
-            if (AtLast)
+            if (current > 0)
             {
-                // enter next frame
-                figmaFrameController.NextFrame();
-                return;
+                // disable current
+                gestures[current - 1].demos.ForEach(item => item.SetActive(false));
             }
-
-            // disable current
-            gestures[current].demos.ForEach(item => item.SetActive(false));
 
             StartCoroutine(UpdateLoopImpl());
         }
 
+        private void Update()
+        {
+            if (current < gestures.Count && current >= 0)
+            {
+                // must all triggered before entering next stage
+                var satisfied = true;
+
+                gestures[current].handlers.ForEach(item => { satisfied = satisfied && item.Triggered; });
+
+                if (satisfied)
+                {
+                    // update
+                    current += 1;
+                    UpdateLoop();
+                }
+            }
+        }
+
         IEnumerator UpdateLoopImpl()
         {
-            // wait
-            var time = gestures[current].waitTime;
-            yield return new WaitForSeconds(time);
-            // update
-            current += 1;
+            if (current > 0)
+            {
+                // wait
+                yield return new WaitForSeconds(gestures[current - 1].waitTime);
+            }
+
+            if (current >= gestures.Count)
+            {
+                // disable gestures
+                ResetGestures();
+
+                // enter next frame
+                figmaFrameController.NextFrame();
+            }
+
             // update guidance
             StartGuidance();
         }
