@@ -13,6 +13,7 @@ namespace XRDC24.Interaction
 
         public List<GameObject> frames;
         private int currentFrame = -1;
+        public GameObject CurrentFrame => frames != null && currentFrame >= 0 ? frames[currentFrame] : null;
 
         private bool AtFirstFrame => frames != null && frames.Count > 0 && currentFrame == 0;
         private bool AtLastFrame => frames != null && frames.Count > 0 && currentFrame == frames.Count - 1;
@@ -26,7 +27,7 @@ namespace XRDC24.Interaction
 
         private void Start()
         {
-            currentFrame = -1;
+            currentFrame = -1; //24
             // bind breathing event
             BindBreathingTimer();
             // init sounds
