@@ -13136,6 +13136,7 @@ GameObject:
   - component: {fileID: 9030489655120368949}
   - component: {fileID: 5738219152537251608}
   - component: {fileID: 6780898090246259625}
+  - component: {fileID: 2461646597878644583}
   m_Layer: 5
   m_Name: 01-3 meditation_stage 1_breath
   m_TagString: Untagged
@@ -13258,6 +13259,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &2461646597878644583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1352910640809179591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3644e88852104c9694ae1b931d70a9b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  duration: 60
 --- !u!1 &1355288602451068737
 GameObject:
   m_ObjectHideFlags: 0
@@ -20951,6 +20966,7 @@ GameObject:
   - component: {fileID: 8573229146641435977}
   - component: {fileID: 6016325425954839339}
   - component: {fileID: 8988802136788796912}
+  - component: {fileID: 4497258678704671173}
   m_Layer: 5
   m_Name: 01-2 meditation_stage 1_breath
   m_TagString: Untagged
@@ -21073,6 +21089,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &4497258678704671173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104638116625801106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3644e88852104c9694ae1b931d70a9b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  duration: 60
 --- !u!1 &2110608427045592189
 GameObject:
   m_ObjectHideFlags: 0
@@ -53850,6 +53880,7 @@ GameObject:
   - component: {fileID: 8023903870693094920}
   - component: {fileID: 5355785868777484513}
   - component: {fileID: 6396513522234286993}
+  - component: {fileID: 2686966029879884162}
   m_Layer: 5
   m_Name: 01-1 meditation_stage 1_breath
   m_TagString: Untagged
@@ -53991,6 +54022,20 @@ MonoBehaviour:
   riseDuration: 1
   displayDuration: 3
   fadeDuration: 0.5
+--- !u!114 &2686966029879884162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5396330834409427854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3644e88852104c9694ae1b931d70a9b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  duration: 60
 --- !u!1 &5398931853570738566
 GameObject:
   m_ObjectHideFlags: 0
@@ -64238,6 +64283,7 @@ GameObject:
   - component: {fileID: 4631342190557856340}
   - component: {fileID: 9100049354211319813}
   - component: {fileID: 165414989334542257}
+  - component: {fileID: 2324336571840783392}
   m_Layer: 5
   m_Name: 01-4 meditation_stage 1_breath
   m_TagString: Untagged
@@ -64360,6 +64406,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &2324336571840783392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6909229316669451219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3644e88852104c9694ae1b931d70a9b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  duration: 60
 --- !u!1 &6915802702078035388
 GameObject:
   m_ObjectHideFlags: 0
@@ -73449,6 +73509,7 @@ GameObject:
   - component: {fileID: 6764225378734815874}
   - component: {fileID: 5135419509420172136}
   - component: {fileID: 7546000822264041467}
+  - component: {fileID: 8788552055986064409}
   m_Layer: 5
   m_Name: 04-6 meditation_stage 4_collect
   m_TagString: Untagged
@@ -73572,6 +73633,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &8788552055986064409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7916561461630298631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3644e88852104c9694ae1b931d70a9b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  duration: 60
 --- !u!1 &7932716545946977658
 GameObject:
   m_ObjectHideFlags: 0
