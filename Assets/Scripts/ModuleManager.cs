@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using XRDC24.Bubble;
 using UnityEngine.VFX;
 using System.Collections;
+using XRDC24.Interaction;
 
 public class ModuleManager : MonoBehaviour
 {
@@ -75,6 +76,7 @@ public class ModuleManager : MonoBehaviour
         m_LLMAgentManager.OnMeditationResultAvailable += ReceivedMeditationResult;
         m_BubbleManager.OnBubbleAnimated += SpawnPortalBasedOnBubble;
         m_BubbleManager.OnBubbleInteractionFinished += ToNext;
+        m_3DButton.transform.Find("RecordingButton").GetChild(0).GetComponent<TriggerForwarder>().OnRecordingTriggerEnter += StartRecording;
     }
 
     private void OnDisable()
@@ -85,6 +87,7 @@ public class ModuleManager : MonoBehaviour
         m_LLMAgentManager.OnMeditationResultAvailable -= ReceivedMeditationResult;
         m_BubbleManager.OnBubbleAnimated -= SpawnPortalBasedOnBubble;
         m_BubbleManager.OnBubbleInteractionFinished -= ToNext;
+        m_3DButton.transform.Find("RecordingButton").GetChild(0).GetComponent<TriggerForwarder>().OnRecordingTriggerExit += EndRecording;
     }
 
     private void PlayAIAgentAudioClip(AudioClip clip, string text)
@@ -259,6 +262,22 @@ public class ModuleManager : MonoBehaviour
 
             m_PortalManager.SpawnPortal(hitPoint, hitObject.transform.rotation);
         }
+    }
+
+    private void StartRecording(TriggerType type)
+    {
+        if (type != TriggerType.Recording)
+            return;
+
+        m_SpeechToText.StartRecording();
+    }
+
+    private void EndRecording(TriggerType type)
+    {
+        if (type != TriggerType.Recording)
+            return;
+
+        m_SpeechToText.EndRecording();
     }
 
     public void SceneInitialized()
@@ -475,4 +494,5 @@ public class ModuleManager : MonoBehaviour
             m_OVRCameraRig.centerEyeAnchor.GetComponent<Camera>().clearFlags = CameraClearFlags.Skybox;
         }
     }
+
 }

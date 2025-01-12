@@ -13,10 +13,12 @@ namespace XRDC24.Interaction
     public class TriggerForwarder : MonoBehaviour
     {
         public System.Action<TriggerType> OnTriggerTriggered;
+        public System.Action<TriggerType> OnRecordingTriggerEnter;
+        public System.Action<TriggerType> OnRecordingTriggerExit;
 
         public TriggerType triggerType;
-
         public Material pressedMaterial;
+        public AudioSource clickSound;
 
         private Material originalMaterial;
 
@@ -34,6 +36,11 @@ namespace XRDC24.Interaction
             {
                 // change material
                 GetComponent<Renderer>().material = pressedMaterial;
+
+                clickSound.Play();
+
+                // trigger
+                OnRecordingTriggerEnter?.Invoke(triggerType);
             }
         }
 
@@ -46,8 +53,13 @@ namespace XRDC24.Interaction
             {
                 // revert material
                 GetComponent<Renderer>().material = originalMaterial;
+
+                if (triggerType == TriggerType.Recording)
+                    clickSound.Play();
+
                 // trigger after trigger exits
                 OnTriggerTriggered?.Invoke(triggerType);
+                OnRecordingTriggerExit?.Invoke(triggerType);
             }
         }
     }

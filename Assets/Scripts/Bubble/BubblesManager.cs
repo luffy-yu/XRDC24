@@ -24,7 +24,7 @@ public class BubblesManager : MonoBehaviour
     private int totalBubbles;
 
     private float spawnDist = 0.6f;
-    private float spawnRange = 0.5f;
+    private float spawnRange = 1.0f;
 
     #region event
 

@@ -94,8 +94,8 @@ namespace XRDC24.AI
             {
                 clip = Microphone.Start(microphone, false, duration, 44100);
                 recording = true;
-                m_UIText.text = $"Recording...\nPress end button when you finished";
-                m_ButtonEnd.SetActive(true);
+                //m_UIText.text = $"Recording...\nPress end button when you finished";
+                //m_ButtonEnd.SetActive(true);
                 Debug.Log("Recording started...");
             }
         }
@@ -105,7 +105,7 @@ namespace XRDC24.AI
             if (recording)
             {
                 Debug.Log("End Recording...");
-                m_StartButtonText.text = "Processing...";
+                //m_StartButtonText.text = "Processing...";
 
                 Microphone.End(microphone);
 
@@ -120,8 +120,8 @@ namespace XRDC24.AI
                 var res = await openai.CreateAudioTranscription(req);
 
                 Debug.Log(res.Text);
-                m_UIText.text = res.Text;
-                m_StartButtonText.text = "Record Again";
+                //m_UIText.text = res.Text;
+                //m_StartButtonText.text = "Record Again";
 
                 if (OnResultAvailable != null)
                 {
