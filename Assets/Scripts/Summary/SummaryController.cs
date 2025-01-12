@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -15,6 +16,12 @@ namespace XRDC24.Summary
         public int positiveCount;
         public int negativeCount;
         public int duration;
+
+        private void Start()
+        {
+            // Update UI
+            UpdateUI();
+        }
 
         string GenerateSentence()
         {
