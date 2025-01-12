@@ -57,6 +57,12 @@ public class ModuleManager : MonoBehaviour
     private float amplitudeVelocity;
     private bool isPoseInit = false;
 
+    // agent pre-defined sound
+    public AudioClip m_BubbleAgentSound1;
+    public AudioClip m_BubbleAgentSound2;
+    private bool isBubbleFirstPoked = true;
+    private bool isBubbleSeconPoked = true;
+
     // scene
     List<MRUKAnchor> walls = new List<MRUKAnchor>();
     MRUKAnchor ground;
@@ -76,7 +82,7 @@ public class ModuleManager : MonoBehaviour
         m_SpeechToText.OnResultAvailable += SendTextToLLM;
         m_LLMAgentManager.OnMoodResultAvailable += ReceivedMoodResult;
         m_LLMAgentManager.OnMeditationResultAvailable += ReceivedMeditationResult;
-        m_BubbleManager.OnBubbleAnimated += SpawnPortalBasedOnBubble;
+        m_BubbleManager.OnBubbleAnimated += OnBubbleTriggered;
         m_BubbleManager.OnBubbleInteractionFinished += ToNext;
         m_3DButton.transform.Find("RecordingButton").GetChild(0).GetComponent<TriggerForwarder>().OnRecordingTriggerEnter += StartRecording;
         m_3DButton.transform.Find("RecordingButton").GetChild(0).GetComponent<TriggerForwarder>().OnRecordingTriggerExit += EndRecording;
@@ -88,7 +94,7 @@ public class ModuleManager : MonoBehaviour
         m_SpeechToText.OnResultAvailable -= SendTextToLLM;
         m_LLMAgentManager.OnMoodResultAvailable -= ReceivedMoodResult;
         m_LLMAgentManager.OnMeditationResultAvailable -= ReceivedMeditationResult;
-        m_BubbleManager.OnBubbleAnimated -= SpawnPortalBasedOnBubble;
+        m_BubbleManager.OnBubbleAnimated -= OnBubbleTriggered;
         m_BubbleManager.OnBubbleInteractionFinished -= ToNext;
     }
 
@@ -293,21 +299,37 @@ public class ModuleManager : MonoBehaviour
         m_TextToSpeech.SendRequest(res);
     }
 
-    private void SpawnPortalBasedOnBubble(Vector3 origin, Vector3 target, AnimationType type)
+    private void SpawnPortal(Vector3 origin, Vector3 target, AnimationType type)
     {
         Ray ray = new Ray(origin, target - origin);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f, 1 << LayerMask.NameToLayer("RoomMesh"))) 
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f, 1 << LayerMask.NameToLayer("RoomMesh")))
         {
             Vector3 hitPoint = hit.point;
             GameObject hitObject = hit.collider.gameObject;
 
             m_PortalManager.SpawnPortal(hitPoint, hitObject.transform.rotation);
         }
+    }
 
+    private void PlayPreDefinedAgentSound(AnimationType type)
+    {
         // add bubble agent sound if needed
         float totalTriggerNum = m_BubbleManager.fallCount + m_BubbleManager.pokeCount;
-        if (totalTriggerNum == 15)
+        if (type == AnimationType.Poke && !m_TextToSpeech.audioSource.isPlaying)
+        {
+            if (isBubbleFirstPoked)
+            {
+                m_TextToSpeech.SendRequest("Wonderful! You’ve touched a bubble – feel the energy flow through you.");
+                isBubbleFirstPoked = false;
+            }
+            else if (isBubbleSeconPoked)
+            {
+                m_TextToSpeech.SendRequest("Great focus! Watch as the bubble shatters, opening portals around you.");
+                isBubbleSeconPoked = false;
+            }
+        }
+        else if (totalTriggerNum == 15)
         {
             m_TextToSpeech.SendRequest("Every movement matters.");
         }
@@ -315,6 +337,13 @@ public class ModuleManager : MonoBehaviour
         {
             m_TextToSpeech.SendRequest("Keep going at your own pace.");
         }
+    }
+
+    private void OnBubbleTriggered(Vector3 origin, Vector3 target, AnimationType type)
+    {
+        SpawnPortal(origin, target, type);
+
+        PlayPreDefinedAgentSound(type);
     }
 
     private void StartRecording(TriggerType type)

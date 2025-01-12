@@ -16,8 +16,6 @@ public class BubblesManager : MonoBehaviour
     public AudioSource m_AudioSource;
     public AudioClip m_BubbleBurstSound;
     public AudioClip m_BubbleGenSound;
-    public AudioClip m_BubbleAgentSound1;
-    public AudioClip m_BubbleAgentSound2;
 
     // private 
     private List<GameObject> spawnedBubbles;
@@ -166,20 +164,8 @@ public class BubblesManager : MonoBehaviour
     private void BubbleAnimated(GameObject obj, AnimationType type)
     {
         // play sound effect
-        if (pokeCount > 1)
-        {
-            m_AudioSource.clip = m_BubbleBurstSound;
-            m_AudioSource.Play();
-        }
-        else if (type == AnimationType.Poke)
-        {
-            if (pokeCount == 0)
-                m_AudioSource.clip = m_BubbleAgentSound1;
-            else
-                m_AudioSource.clip = m_BubbleAgentSound2;
-
-            m_AudioSource.Play();
-        }
+        m_AudioSource.clip = m_BubbleBurstSound;
+        m_AudioSource.Play();
 
         // ray cast to get the portal position and sent back to module manager
         OnBubbleAnimated(m_OVRCameraRig.centerEyeAnchor.position, obj.transform.position, type);
