@@ -51,7 +51,7 @@ namespace XRDC24.Interaction
                 // disable demos
                 gesture.demos.ForEach(item => item.SetActive(false));
                 // disable handlers
-                gesture.handlers.ForEach(h => { h.whenGestureActivated.RemoveAllListeners(); });
+                gesture.handlers.ForEach(h => { h.enabled = false; });
             }
         }
 
@@ -63,7 +63,7 @@ namespace XRDC24.Interaction
             gesture.demos.ForEach(item => item.SetActive(true));
             // play animation automatically
             // enable handler
-            gesture.handlers.ForEach(h => { h.whenGestureActivated.AddListener(UpdateLoop); });
+            gesture.handlers.ForEach(h => { h.enabled = true; });
         }
 
         void UpdateLoop()
