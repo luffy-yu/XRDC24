@@ -30,6 +30,7 @@ public class ModuleManager : MonoBehaviour
     public GameObject m_3DButton;
 
     private int frameIndex = 0;
+    private int audioFrameIndex = 0;
     private TextMeshProUGUI textAgent;
     private TextMeshProUGUI textUser;
 
@@ -108,12 +109,28 @@ public class ModuleManager : MonoBehaviour
         dialog.SetActive(false);
         dialog.transform.Find("Dialog_Agent").gameObject.SetActive(false);
 
-        if (m_ModuleState == ModuleState.MoodDetection)
+        if (m_ModuleState == ModuleState.OnBoarding)
         {
-            yield return new WaitForSeconds(1);
+            if (audioFrameIndex == 0)
+            {
+                yield return new WaitForSeconds(0.5f);
 
-            m_3DButton.SetActive(true);
-            m_3DUIPanel.transform.Find("FigmaCanvas02").gameObject.SetActive(true); 
+                m_3DButton.SetActive(true);
+                m_3DUIPanel.transform.Find("FigmaCanvas02").gameObject.SetActive(true);
+
+                frameIndex = 3;
+                audioFrameIndex++;
+            }
+            else if (audioFrameIndex == 1)
+            {
+                frameIndex = 4;
+                audioFrameIndex++;
+            }
+            else if (audioFrameIndex == 2)
+            {
+                // to moode detection mode
+                ToNext();
+            }
         }
     }
 
@@ -157,6 +174,16 @@ public class ModuleManager : MonoBehaviour
                 frameIndex = 0;
                 break;
 
+            case 3:
+                m_TextToSpeech.SendRequest("Take your time. As you speak, I’ll reflect your words as bubbles.");
+                frameIndex = 0;
+                break;
+
+            case 4:
+                m_TextToSpeech.SendRequest("Your positive emotions will form soft, glowing bubbles. If there are heavier \r\nfeelings, they might appear darker or sharper – and that’s okay.");
+                frameIndex = 0;
+                break;
+
         }
     }
 
@@ -168,7 +195,8 @@ public class ModuleManager : MonoBehaviour
 
         m_3DUIPanel.transform.Find("FigmaCanvasI01")?.gameObject.SetActive(false);
 
-        ToNext();
+        // to next onboarding frame
+        m_TextToSpeech.SendRequest("Hello, my name is Flo, your personal mental health assistant, I’m here to listen. How are you feeling today?");
     }
 
     private IEnumerator ShowTitle()
@@ -419,7 +447,6 @@ public class ModuleManager : MonoBehaviour
 
             case ModuleState.MoodDetection:
                 SetupSceneMeshes();
-                m_TextToSpeech.SendRequest("Hello, my name is Flo, your personal mental health assistant, I’m here to listen. How are you feeling today?");
                 break;
 
             case ModuleState.FreeSpeech:
