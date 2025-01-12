@@ -63,11 +63,22 @@ namespace XRDC24.Interaction
             gesture.demos.ForEach(item => item.SetActive(true));
             // play animation automatically
             // enable handler
-            gesture.handlers.ForEach(h => { h.enabled = true; });
+            gesture.handlers.ForEach(h =>
+            {
+                h.enabled = true;
+                h.whenGestureActivated.AddListener(UpdateLoop);
+            });
         }
 
         void UpdateLoop()
         {
+            // must all triggered before entering next stage
+            var satisfied = true;
+            
+            gestures[current].handlers.ForEach(item => satisfied = satisfied && item.Triggered);
+            
+            if(!satisfied) return;
+            
             if (AtLast)
             {
                 // enter next frame
