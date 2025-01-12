@@ -26,8 +26,9 @@ public class ModuleManager : MonoBehaviour
     public GameObject m_AIAvatar;
     public VisualEffect m_AIAvatarVFX;
     public GameObject m_AvatarBackground;
-    //public TextMeshProUGUI m_UIText;
     public GameObject m_TitleLogo;
+    public GameObject m_3DButton;
+
     private int frameIndex = 0;
     private TextMeshProUGUI textAgent;
     private TextMeshProUGUI textUser;
@@ -106,6 +107,14 @@ public class ModuleManager : MonoBehaviour
         // hide text
         dialog.SetActive(false);
         dialog.transform.Find("Dialog_Agent").gameObject.SetActive(false);
+
+        if (m_ModuleState == ModuleState.MoodDetection)
+        {
+            yield return new WaitForSeconds(1);
+
+            m_3DButton.SetActive(true);
+            m_3DUIPanel.transform.Find("FigmaCanvas02").gameObject.SetActive(true); 
+        }
     }
 
     private void SendTextToLLM(string res)
@@ -139,7 +148,7 @@ public class ModuleManager : MonoBehaviour
                 break;
 
             case 1:
-                StartCoroutine(ShowTitble());
+                StartCoroutine(ShowTitle());
                 frameIndex = 0;
                 break;
 
@@ -162,7 +171,7 @@ public class ModuleManager : MonoBehaviour
         ToNext();
     }
 
-    private IEnumerator ShowTitble()
+    private IEnumerator ShowTitle()
     {
         m_TitleLogo.SetActive(true);
 
@@ -273,6 +282,7 @@ public class ModuleManager : MonoBehaviour
         frameIndex = 1;
         m_3DUIPanel.SetActive(true);
         m_AvatarBackground.SetActive(false);
+        m_3DButton.SetActive(false);
 
         textAgent = m_3DUIPanel.transform.Find("DialogAgentUser").Find("Dialog_Agent").GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
         textUser = m_3DUIPanel.transform.Find("DialogAgentUser").Find("Dialog_User").GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
@@ -298,6 +308,9 @@ public class ModuleManager : MonoBehaviour
 
         m_3DUIPanel.transform.position = headPos + forward * 0.5f;
         m_3DUIPanel.transform.rotation = m_OVRCameraRig.transform.rotation;
+
+        m_AIAvatar.transform.position = headPos + forward * 1.2f;
+        m_AIAvatar.transform.rotation = m_OVRCameraRig.transform.rotation;
     }
 
     private void UpdateAIAvatarScale()
