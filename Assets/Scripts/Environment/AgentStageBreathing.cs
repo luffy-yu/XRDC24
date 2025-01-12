@@ -59,6 +59,8 @@ namespace XRDC24.Environment
                     // restore agent
                     agent.transform.position = originalPosition;
                     agent.transform.rotation = originalRotation;
+                    
+                    print("Time out");
 
                     TimeOut?.Invoke();
                 }
@@ -67,6 +69,7 @@ namespace XRDC24.Environment
 
         public void StartTimer()
         {
+            print("StartTimer");
             timerRemaining = duration;
             timerRunning = true;
         }
