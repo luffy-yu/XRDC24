@@ -8,6 +8,7 @@ using XRDC24.Bubble;
 using UnityEngine.VFX;
 using System.Collections;
 using XRDC24.Interaction;
+using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
 public class ModuleManager : MonoBehaviour
 {
@@ -77,6 +78,7 @@ public class ModuleManager : MonoBehaviour
         m_BubbleManager.OnBubbleAnimated += SpawnPortalBasedOnBubble;
         m_BubbleManager.OnBubbleInteractionFinished += ToNext;
         m_3DButton.transform.Find("RecordingButton").GetChild(0).GetComponent<TriggerForwarder>().OnRecordingTriggerEnter += StartRecording;
+        m_3DButton.transform.Find("RecordingButton").GetChild(0).GetComponent<TriggerForwarder>().OnRecordingTriggerExit += EndRecording;
     }
 
     private void OnDisable()
@@ -87,7 +89,8 @@ public class ModuleManager : MonoBehaviour
         m_LLMAgentManager.OnMeditationResultAvailable -= ReceivedMeditationResult;
         m_BubbleManager.OnBubbleAnimated -= SpawnPortalBasedOnBubble;
         m_BubbleManager.OnBubbleInteractionFinished -= ToNext;
-        m_3DButton.transform.Find("RecordingButton").GetChild(0).GetComponent<TriggerForwarder>().OnRecordingTriggerExit += EndRecording;
+        m_3DButton.transform.Find("RecordingButton").GetChild(0).GetComponent<TriggerForwarder>().OnRecordingTriggerEnter -= StartRecording;
+        m_3DButton.transform.Find("RecordingButton").GetChild(0).GetComponent<TriggerForwarder>().OnRecordingTriggerExit -= EndRecording;
     }
 
     private void PlayAIAgentAudioClip(AudioClip clip, string text)
@@ -137,6 +140,19 @@ public class ModuleManager : MonoBehaviour
         }
     }
 
+    private IEnumerator ShowUserText(string text)
+    {
+        GameObject dialog = m_3DUIPanel.transform.Find("DialogAgentUser").gameObject;
+
+        // show text
+        dialog.SetActive(true);
+        dialog.transform.Find("Dialog_User").gameObject.SetActive(true);
+        textUser.text = text;
+
+        yield return new WaitForSeconds(3);
+    }
+
+
     private void SendTextToLLM(string res)
     {
         switch (m_ModuleState)
@@ -145,6 +161,7 @@ public class ModuleManager : MonoBehaviour
                 break;
 
             case ModuleState.MoodDetection:
+                StartCoroutine(ShowUserText(res));
                 m_LLMAgentManager.SendMsgToGPTForMoodRequest(res);
                 break;
 
@@ -269,6 +286,7 @@ public class ModuleManager : MonoBehaviour
         if (type != TriggerType.Recording)
             return;
 
+        m_3DUIPanel.transform.Find("FigmaCanvas02").gameObject.SetActive(false);
         m_SpeechToText.StartRecording();
     }
 
@@ -277,6 +295,7 @@ public class ModuleManager : MonoBehaviour
         if (type != TriggerType.Recording)
             return;
 
+        Debug.Log("inside the end recording");
         m_SpeechToText.EndRecording();
     }
 

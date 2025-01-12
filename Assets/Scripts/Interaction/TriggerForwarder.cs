@@ -55,11 +55,15 @@ namespace XRDC24.Interaction
                 GetComponent<Renderer>().material = originalMaterial;
 
                 if (triggerType == TriggerType.Recording)
+                {
+                    OnRecordingTriggerExit?.Invoke(triggerType);
                     clickSound.Play();
-
-                // trigger after trigger exits
-                OnTriggerTriggered?.Invoke(triggerType);
-                OnRecordingTriggerExit?.Invoke(triggerType);
+                }
+                else
+                {
+                    // trigger after trigger exits
+                    OnTriggerTriggered?.Invoke(triggerType);
+                }
             }
         }
     }

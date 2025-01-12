@@ -100,7 +100,7 @@ namespace XRDC24.AI
 
                 // Initialize balls in the scene based on the reply
                 messages.Add(message);
-                m_UIText.text += $"\n{message.Content}";
+                //m_UIText.text += $"\n{message.Content}";
                 
                 if (OnMoodResultAvailable != null)
                 {
