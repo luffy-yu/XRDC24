@@ -13,8 +13,11 @@ public class BubblesManager : MonoBehaviour
 
     public int pokeCount = 0;
     public int fallCount = 0;
-    public AudioSource m_BubbleBurstSound;
-    public AudioSource m_BubbleGenSound;
+    public AudioSource m_AudioSource;
+    public AudioClip m_BubbleBurstSound;
+    public AudioClip m_BubbleGenSound;
+    public AudioClip m_BubbleAgentSound1;
+    public AudioClip m_BubbleAgentSound2;
 
     // private 
     private List<GameObject> spawnedBubbles;
@@ -84,11 +87,12 @@ public class BubblesManager : MonoBehaviour
 
     private IEnumerator PlayBubbleGenerateSound()
     {
-        m_BubbleGenSound.Play();
+        m_AudioSource.clip = m_BubbleGenSound;
+        m_AudioSource.Play();
 
         yield return new WaitForSeconds(2);
 
-        m_BubbleGenSound.Stop();
+        m_AudioSource.Stop();
     }
 
     public void ClearAllBubbles()
@@ -161,15 +165,26 @@ public class BubblesManager : MonoBehaviour
 
     private void BubbleAnimated(GameObject obj, AnimationType type)
     {
-        Debug.Log("bubble animation invoke in bubble manager");
-
         // play sound effect
-        m_BubbleBurstSound.Play();
+        if (pokeCount > 1)
+        {
+            m_AudioSource.clip = m_BubbleBurstSound;
+            m_AudioSource.Play();
+        }
+        else if (type == AnimationType.Poke)
+        {
+            if (pokeCount == 0)
+                m_AudioSource.clip = m_BubbleAgentSound1;
+            else
+                m_AudioSource.clip = m_BubbleAgentSound2;
+
+            m_AudioSource.Play();
+        }
 
         // ray cast to get the portal position and sent back to module manager
         OnBubbleAnimated(m_OVRCameraRig.centerEyeAnchor.position, obj.transform.position, type);
     }
-    
+
     void LetAllFall()
     {
         foreach (var go in spawnedBubbles)
