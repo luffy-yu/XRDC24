@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor.VersionControl;
 using UnityEngine;
+using XRDC24.Environment;
 
 namespace XRDC24.Interaction
 {
@@ -26,6 +27,8 @@ namespace XRDC24.Interaction
         private void Start()
         {
             currentFrame = -1;
+            // bind breathing event
+            BindBreathingTimer();
             // init sounds
             InitSounds();
             // verify names
@@ -34,6 +37,19 @@ namespace XRDC24.Interaction
             SetVisible();
 
             lastName = "";
+        }
+
+        void BindBreathingTimer()
+        {
+            frames.ForEach(item =>
+            {
+                // bind breathing animation
+                AgentStageBreathing asb;
+                if (item.TryGetComponent<AgentStageBreathing>(out asb))
+                {
+                    asb.TimeOut += OnTimeOut;
+                }
+            });
         }
 
         void InitSounds()
@@ -46,6 +62,11 @@ namespace XRDC24.Interaction
                 var clip = LoadSound(frame.name);
                 frameClips.Add(key, clip);
             }
+        }
+
+        private void OnTimeOut()
+        {
+            NextFrame();
         }
 
         void Verify()
