@@ -91,6 +91,17 @@ namespace XRDC24.Environment
             }
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyUp(KeyCode.D))
+            {
+                Dissolve();
+            } else if (Input.GetKeyUp(KeyCode.R))
+            {
+                Revert();
+            }
+        }
+
         #region Debug
 
         private void OnGUI()

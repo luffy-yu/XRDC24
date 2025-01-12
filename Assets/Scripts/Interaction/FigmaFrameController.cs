@@ -39,6 +39,9 @@ namespace XRDC24.Interaction
             SetVisible();
 
             lastName = "";
+            
+            // disable agent animator at the start
+            m_AIAvatarVFX.GetComponent<Animator>().enabled = false;
         }
 
         void BindBreathingTimer()
