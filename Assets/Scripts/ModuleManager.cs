@@ -8,6 +8,7 @@ using XRDC24.Bubble;
 using UnityEngine.VFX;
 using System.Collections;
 using XRDC24.Interaction;
+using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
 public class ModuleManager : MonoBehaviour
 {
@@ -40,6 +41,7 @@ public class ModuleManager : MonoBehaviour
     private float negativePercentage;
     private int videoClipLength;
     private int totalBubbleN;
+    private string moodRes;
 
     // agent avatar
     private float[] spectrumData = new float[256];
@@ -77,6 +79,7 @@ public class ModuleManager : MonoBehaviour
         m_BubbleManager.OnBubbleAnimated += SpawnPortalBasedOnBubble;
         m_BubbleManager.OnBubbleInteractionFinished += ToNext;
         m_3DButton.transform.Find("RecordingButton").GetChild(0).GetComponent<TriggerForwarder>().OnRecordingTriggerEnter += StartRecording;
+        m_3DButton.transform.Find("RecordingButton").GetChild(0).GetComponent<TriggerForwarder>().OnRecordingTriggerExit += EndRecording;
     }
 
     private void OnDisable()
@@ -87,7 +90,6 @@ public class ModuleManager : MonoBehaviour
         m_LLMAgentManager.OnMeditationResultAvailable -= ReceivedMeditationResult;
         m_BubbleManager.OnBubbleAnimated -= SpawnPortalBasedOnBubble;
         m_BubbleManager.OnBubbleInteractionFinished -= ToNext;
-        m_3DButton.transform.Find("RecordingButton").GetChild(0).GetComponent<TriggerForwarder>().OnRecordingTriggerExit += EndRecording;
     }
 
     private void PlayAIAgentAudioClip(AudioClip clip, string text)
@@ -135,7 +137,40 @@ public class ModuleManager : MonoBehaviour
                 ToNext();
             }
         }
+        else if (m_ModuleState == ModuleState.MoodDetection)
+        {
+            if (audioFrameIndex == 0)
+            {
+                m_TextToSpeech.SendRequest("With each bubble you break, the world around you opens a little more. Not all bubbles need to be touched. Sometimes letting them fall brings new life.");
+                audioFrameIndex++;
+            }
+            //else if (audioFrameIndex == 1)
+            //{
+            //    m_TextToSpeech.SendRequest("Not all bubbles need to be touched. Sometimes letting them fall brings new life.");
+            //    audioFrameIndex++;
+            //}
+        }
     }
+
+    private IEnumerator ShowUserText(string text)
+    {
+        GameObject dialog = m_3DUIPanel.transform.Find("DialogAgentUser").gameObject;
+
+        // show text
+        dialog.SetActive(true);
+        dialog.transform.Find("Dialog_User").gameObject.SetActive(true);
+        textUser.text = text;
+
+        yield return new WaitForSeconds(3);
+
+        dialog.SetActive(false);
+        dialog.transform.Find("Dialog_User").gameObject.SetActive(false);
+
+        // trigger bubble instruction
+        m_TextToSpeech.SendRequest("Let’s pop some bubbles together. Stretch your hand to break them, or let them float down – it’s all part of the journey!");
+        audioFrameIndex = 0;
+    }
+
 
     private void SendTextToLLM(string res)
     {
@@ -145,6 +180,7 @@ public class ModuleManager : MonoBehaviour
                 break;
 
             case ModuleState.MoodDetection:
+                StartCoroutine(ShowUserText(res));
                 m_LLMAgentManager.SendMsgToGPTForMoodRequest(res);
                 break;
 
@@ -231,8 +267,17 @@ public class ModuleManager : MonoBehaviour
     private void ReceivedMoodResult(string res)
     {
         Debug.Log($"Receive mood result: {res}");
+        moodRes = res;
 
-        ProcessResultForBubbleSpawn(res);
+        SpawnBublesByMoodRes();
+    }
+
+    private void SpawnBublesByMoodRes()
+    {
+        // disable the tree background
+        m_AvatarBackground.SetActive(false);
+
+        ProcessResultForBubbleSpawn(moodRes);
 
         int positiveBubbleN = (int)(totalBubbleN * positivePercentage / 100);
         int negativeBubbleN = totalBubbleN - positiveBubbleN;
@@ -251,16 +296,24 @@ public class ModuleManager : MonoBehaviour
     private void SpawnPortalBasedOnBubble(Vector3 origin, Vector3 target, AnimationType type)
     {
         Ray ray = new Ray(origin, target - origin);
-        Debug.Log("invoke in module manager ++");
 
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, 1 << LayerMask.NameToLayer("RoomMesh"))) 
         {
-            Debug.Log("hit the room mesh layer ++");
-            
             Vector3 hitPoint = hit.point;
             GameObject hitObject = hit.collider.gameObject;
 
             m_PortalManager.SpawnPortal(hitPoint, hitObject.transform.rotation);
+        }
+
+        // add bubble agent sound if needed
+        float totalTriggerNum = m_BubbleManager.fallCount + m_BubbleManager.pokeCount;
+        if (totalTriggerNum == 15)
+        {
+            m_TextToSpeech.SendRequest("Every movement matters.");
+        }
+        else if (totalTriggerNum == 18)
+        {
+            m_TextToSpeech.SendRequest("Keep going at your own pace.");
         }
     }
 
@@ -269,6 +322,7 @@ public class ModuleManager : MonoBehaviour
         if (type != TriggerType.Recording)
             return;
 
+        m_3DUIPanel.transform.Find("FigmaCanvas02").gameObject.SetActive(false);
         m_SpeechToText.StartRecording();
     }
 
@@ -277,6 +331,7 @@ public class ModuleManager : MonoBehaviour
         if (type != TriggerType.Recording)
             return;
 
+        Debug.Log("inside the end recording");
         m_SpeechToText.EndRecording();
     }
 
@@ -343,6 +398,12 @@ public class ModuleManager : MonoBehaviour
         UpdateAIAvatarParticleRate();
 
         PlayOnBoardingFrames();
+
+        // use to gen the audio file
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    m_TextToSpeech.SendRequest("Wonderful! You’ve touched a bubble – feel the energy flow through you.\r\n\r\nGreat focus! Watch as the bubble shatters, opening portals around you.\r\n");
+        //}
     }
 
     private void AdjustUIPose()
