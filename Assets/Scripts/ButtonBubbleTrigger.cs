@@ -5,7 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(SphereCollider))]
 public class ButtonBubbleTrigger : MonoBehaviour
 {
-
     public enum BubbleButtonType
     {
         Start,

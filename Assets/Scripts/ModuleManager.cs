@@ -215,7 +215,7 @@ public class ModuleManager : MonoBehaviour
                 break;
 
             case 1:
-                StartCoroutine(ShowTitle());
+                StartCoroutine(DisappearingTitle());
                 frameIndex = 0;
                 break;
 
@@ -249,11 +249,8 @@ public class ModuleManager : MonoBehaviour
         m_TextToSpeech.SendRequest("Hello, my name is Flo, your personal mental health assistant, I’m here to listen. How are you feeling today?");
     }
 
-    private IEnumerator ShowTitle()
+    private IEnumerator DisappearingTitle()
     {
-        m_TitleLogo.SetActive(true);
-        m_AvatarBackground.SetActive(true);
-
         yield return new WaitForSeconds(Constants.TITLE_SHOW_SECONDS);
 
         float time = 0f;
@@ -265,8 +262,11 @@ public class ModuleManager : MonoBehaviour
             float alpha = Mathf.Lerp(startAlpha, 0f, time / Constants.TITLE_DISAPPEAR_DURATION);
 
             // Update the material’s color
-            m_TitleLogo.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.SetFloat("_OverallAlpha", alpha);
-            m_TitleLogo.transform.GetChild(1).GetChild(0).GetComponent<MeshRenderer>().material.SetFloat("_OverallAlpha", alpha);
+            foreach (Transform child in m_TitleLogo.transform)
+            {
+                child.GetComponent<MeshRenderer>().material.SetFloat("_OverallAlpha", alpha);
+            }
+            
 
             yield return null;
         }
@@ -419,6 +419,8 @@ public class ModuleManager : MonoBehaviour
             m_ModuleState = ModuleState.OnBoarding;
             frameIndex = 1;
             audioFrameIndex = 0;
+
+            m_BubbleButtonStart.SetActive(false);
         }
     }
 
@@ -429,9 +431,11 @@ public class ModuleManager : MonoBehaviour
         frameIndex = 0;
         audioFrameIndex = 0;
         m_3DUIPanel.SetActive(true);
-        m_AvatarBackground.SetActive(false);
         m_3DButton.SetActive(false);
         m_BubbleButtonStart.SetActive(true);
+        m_TitleLogo.SetActive(true);
+        m_AvatarBackground.SetActive(true);
+        m_AIAvatar.SetActive(true);
 
         textAgent = m_3DUIPanel.transform.Find("DialogAgentUser").Find("Dialog_Agent").GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
         textUser = m_3DUIPanel.transform.Find("DialogAgentUser").Find("Dialog_User").GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
@@ -461,10 +465,10 @@ public class ModuleManager : MonoBehaviour
 
         Vector3 forward = m_OVRCameraRig.transform.forward;
 
-        m_3DUIPanel.transform.position = headPos + forward * 0.5f;
+        m_3DUIPanel.transform.position = headPos + forward * 0.8f;
         m_3DUIPanel.transform.rotation = m_OVRCameraRig.transform.rotation;
 
-        m_AIAvatar.transform.position = headPos + forward * 1.2f;
+        m_AIAvatar.transform.position = headPos + forward * 1.5f;
         m_AIAvatar.transform.rotation = m_OVRCameraRig.transform.rotation;
     }
 
