@@ -9,6 +9,7 @@ using UnityEngine.VFX;
 using System.Collections;
 using XRDC24.Interaction;
 using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
+using static ButtonBubbleTrigger;
 
 public class ModuleManager : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class ModuleManager : MonoBehaviour
     public GameObject m_AvatarBackground;
     public GameObject m_TitleLogo;
     public GameObject m_3DButton;
+    public GameObject m_BubbleButtonStart;
+    public GameObject m_BubbleBUttonExit;
 
     private int frameIndex = 0;
     private int audioFrameIndex = 0;
@@ -69,7 +72,8 @@ public class ModuleManager : MonoBehaviour
 
     public enum ModuleState
     {
-        OnBoarding,  // TODO
+        Enter,
+        OnBoarding,
         MoodDetection,
         FreeSpeech
     }
@@ -86,6 +90,7 @@ public class ModuleManager : MonoBehaviour
         m_BubbleManager.OnBubbleInteractionFinished += ToNext;
         m_3DButton.transform.Find("RecordingButton").GetChild(0).GetComponent<TriggerForwarder>().OnRecordingTriggerEnter += StartRecording;
         m_3DButton.transform.Find("RecordingButton").GetChild(0).GetComponent<TriggerForwarder>().OnRecordingTriggerExit += EndRecording;
+        m_BubbleButtonStart.transform.Find("Sphere").GetChild(0).GetComponent<ButtonBubbleTrigger>().OnBubbleButtonClicked += StartGame;
     }
 
     private void OnDisable()
@@ -407,13 +412,26 @@ public class ModuleManager : MonoBehaviour
 
     }
 
+    private void StartGame(BubbleButtonType type)
+    {
+        if (type == BubbleButtonType.Start)
+        {
+            m_ModuleState = ModuleState.OnBoarding;
+            frameIndex = 1;
+            audioFrameIndex = 0;
+        }
+    }
+
     void Start()
     {
-        m_ModuleState = ModuleState.OnBoarding;
-        frameIndex = 1;
+        // init states
+        m_ModuleState = ModuleState.Enter;
+        frameIndex = 0;
+        audioFrameIndex = 0;
         m_3DUIPanel.SetActive(true);
         m_AvatarBackground.SetActive(false);
         m_3DButton.SetActive(false);
+        m_BubbleButtonStart.SetActive(true);
 
         textAgent = m_3DUIPanel.transform.Find("DialogAgentUser").Find("Dialog_Agent").GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
         textUser = m_3DUIPanel.transform.Find("DialogAgentUser").Find("Dialog_User").GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
