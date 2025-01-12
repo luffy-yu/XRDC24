@@ -441,12 +441,12 @@ public class ModuleManager : MonoBehaviour
             Debug.Log($"Parsed Negative: {negativePercentage}%");
 
             videoClipLength = m_SpeechToText.GetVideoClipLength();
-            if (videoClipLength > 0 && videoClipLength < 8)
+            if (videoClipLength > 0 && videoClipLength < 15)
                 totalBubbleN = 5;
-            else if (videoClipLength >= 8 && videoClipLength < 15)
-                totalBubbleN = 10;
-            else
+            else if (videoClipLength >= 16 && videoClipLength < 30)
                 totalBubbleN = 16;
+            else
+                totalBubbleN = 20;
         }
         else
         {
