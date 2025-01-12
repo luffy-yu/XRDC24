@@ -33,6 +33,8 @@ namespace XRDC24.Interaction
         private bool AtFirst => gestures != null && gestures.Count > 0 && current == 0;
         private bool AtLast => gestures != null && gestures.Count > 0 && current == gestures.Count - 1;
 
+        public bool inDebug = false;
+
         private void OnEnable()
         {
             // reset gestures
@@ -125,6 +127,8 @@ namespace XRDC24.Interaction
 
         private void OnGUI()
         {
+            if (!inDebug) return;
+
             GUILayout.BeginVertical();
             if (GUILayout.Button("Reset gestures"))
             {

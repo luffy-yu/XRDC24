@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using DA_Assets.Shared.Extensions;
 using UnityEditor.VersionControl;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.VFX;
 using XRDC24.Environment;
 
@@ -24,11 +27,17 @@ namespace XRDC24.Interaction
         // frame name (first 4 characters) and audio clip source
         Dictionary<string, AudioClip> frameClips = new Dictionary<string, AudioClip>();
 
+        Dictionary<int, Vector2> frameSizeDelta = new Dictionary<int, Vector2>();
+
         private string lastName = null;
 
         private void Start()
         {
             currentFrame = -1; //24
+
+            // backup framesize delta
+            BackupFrameSizeDelta();
+
             // bind breathing event
             BindBreathingTimer();
             // init sounds
@@ -39,12 +48,23 @@ namespace XRDC24.Interaction
             SetVisible();
 
             lastName = "";
-            
+
             // disable agent animator at the start
             m_AIAvatarVFX.GetComponent<Animator>().enabled = false;
         }
 
-        void BindBreathingTimer()
+        void BackupFrameSizeDelta()
+        {
+            var count = frames.Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                var size = frames[i].GetComponent<RectTransform>().sizeDelta;
+                frameSizeDelta.Add(i, size);
+            }
+        }
+
+    void BindBreathingTimer()
         {
             frames.ForEach(item =>
             {
@@ -120,11 +140,13 @@ namespace XRDC24.Interaction
             {
                 if (i == currentFrame)
                 {
-                    frames[i].SetActive(true);
+                    // frames[i].SetActive(true);
+                    frames[i].GetComponent<RectTransform>().sizeDelta = frameSizeDelta[i];
                 }
                 else
                 {
-                    frames[i].SetActive(false);
+                    // frames[i].SetActive(false);
+                    frames[i].GetComponent<RectTransform>().sizeDelta = Vector2.zero;
                 }
             }
         }
@@ -154,19 +176,22 @@ namespace XRDC24.Interaction
             // place children
             var childCanvas = frames[currentFrame].GetComponent<RectTransform>();
             var parentCanvas = rootCanvas.GetComponent<RectTransform>();
-
+            
             if (childCanvas.parent == null)
             {
                 childCanvas.SetParent(parentCanvas);
             }
-
+            
             childCanvas.localPosition = Vector3.zero;
             childCanvas.localRotation = Quaternion.identity;
             childCanvas.localScale = Vector3.one;
-
+            
             childCanvas.anchoredPosition = Vector2.zero;
             // childCanvas.sizeDelta = parentCanvas.sizeDelta;
             childCanvas.pivot = new Vector2(0.5f, 0.5f);
+            
+            // Canvas.ForceUpdateCanvases();
+            childCanvas.hasChanged = true;
         }
 
         AudioClip LoadSound(string name)
