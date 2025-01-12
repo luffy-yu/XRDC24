@@ -174,24 +174,24 @@ public class ModuleManager : MonoBehaviour
     private IEnumerator ShowTitle()
     {
         m_TitleLogo.SetActive(true);
+        m_AvatarBackground.SetActive(true);
 
         yield return new WaitForSeconds(Constants.TITLE_SHOW_SECONDS);
-        
-        //float time = 0f;
-        //float startAlpha = m_TitleLogo.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.color.a;
-        
-        //while (time < 3f)
-        //{
-        //    time += Time.deltaTime;
-        //    float alpha = Mathf.Lerp(startAlpha, 0f, time / 3f);
 
-        //    // Update the material’s color
-        //    Color newColor = m_TitleLogo.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.color;
-        //    newColor.a = alpha;
-        //    m_TitleLogo.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.color = newColor;
+        float time = 0f;
+        float startAlpha = 1f;
 
-        //    yield return null;
-        //}
+        while (time <= Constants.TITLE_DISAPPEAR_DURATION)
+        {
+            time += Time.deltaTime;
+            float alpha = Mathf.Lerp(startAlpha, 0f, time / Constants.TITLE_DISAPPEAR_DURATION);
+
+            // Update the material’s color
+            m_TitleLogo.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.SetFloat("_OverallAlpha", alpha);
+            m_TitleLogo.transform.GetChild(1).GetChild(0).GetComponent<MeshRenderer>().material.SetFloat("_OverallAlpha", alpha);
+
+            yield return null;
+        }
 
         m_TitleLogo.SetActive(false);
         frameIndex = 2;
