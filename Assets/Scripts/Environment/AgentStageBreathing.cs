@@ -23,6 +23,8 @@ namespace XRDC24.Environment
         {
             BackupAgent();
 
+            animator.enabled = true;
+
             // play it
             animator.Play("Agent", 0, 0.0f);
             // start timer

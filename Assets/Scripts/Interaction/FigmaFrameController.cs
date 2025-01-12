@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor.VersionControl;
 using UnityEngine;
+using UnityEngine.VFX;
 using XRDC24.Environment;
 
 namespace XRDC24.Interaction
@@ -38,6 +39,9 @@ namespace XRDC24.Interaction
             SetVisible();
 
             lastName = "";
+            
+            // disable agent animator at the start
+            m_AIAvatarVFX.GetComponent<Animator>().enabled = false;
         }
 
         void BindBreathingTimer()
@@ -58,8 +62,8 @@ namespace XRDC24.Interaction
             foreach (var frame in frames)
             {
                 var key = frame.name.Substring(0, 4);
-                if(frameClips.ContainsKey(key)) continue;
-                
+                if (frameClips.ContainsKey(key)) continue;
+
                 var clip = LoadSound(frame.name);
                 frameClips.Add(key, clip);
             }
@@ -182,6 +186,96 @@ namespace XRDC24.Interaction
 
             return clip;
         }
+
+        #region Speaking Animation
+
+        public GameObject m_AIAvatar;
+        public VisualEffect m_AIAvatarVFX;
+
+        private Vector3 originalScale = Vector3.one * 0.5f;
+        private float originalRate = 0.5f;
+        private float originalAnimatedSpeed = 1f;
+        private float scaleMultiplier = 1000f;
+        private float amplitudeSmoothTime = 0.1f;
+
+        private float currentAmplitude;
+        private float amplitudeVelocity;
+        private float[] spectrumData = new float[256];
+
+        private void Update()
+        {
+            UpdateAIAvatarScale();
+            UpdateAIAvatarParticleRate();
+        }
+
+        private void UpdateAIAvatarScale()
+        {
+            if (!audioSource.isPlaying)
+            {
+                m_AIAvatar.transform.localScale = originalScale;
+                return;
+            }
+
+            // get the current spectrum data
+            audioSource.GetSpectrumData(spectrumData, 0, FFTWindow.BlackmanHarris);
+
+            float sum = 0f;
+            for (int i = 0; i < spectrumData.Length; i++)
+            {
+                sum += spectrumData[i];
+            }
+
+            // compute an amplitube
+            float targetAmplitude = Mathf.Clamp01(sum / spectrumData.Length);
+            targetAmplitude *= scaleMultiplier;
+            //Debug.Log(targetAmplitude);
+
+            currentAmplitude = Mathf.SmoothDamp(
+                currentAmplitude,
+                targetAmplitude * 0.1f,
+                ref amplitudeVelocity,
+                amplitudeSmoothTime
+            );
+
+            m_AIAvatar.transform.localScale = originalScale * (1f + currentAmplitude);
+        }
+
+        private void UpdateAIAvatarParticleRate()
+        {
+            if (!audioSource.isPlaying)
+            {
+                m_AIAvatarVFX.playRate = originalRate;
+                m_AIAvatar.GetComponent<Animator>().speed = originalAnimatedSpeed;
+                return;
+            }
+
+            // get the current spectrum data
+            audioSource.GetSpectrumData(spectrumData, 0, FFTWindow.BlackmanHarris);
+
+            float sum = 0f;
+            for (int i = 0; i < spectrumData.Length; i++)
+            {
+                sum += spectrumData[i];
+            }
+
+            // compute an amplitube
+            float targetAmplitude = Mathf.Clamp01(sum / spectrumData.Length);
+            targetAmplitude *= scaleMultiplier;
+            //Debug.Log(targetAmplitude);
+
+            currentAmplitude = Mathf.SmoothDamp(
+                currentAmplitude,
+                targetAmplitude,
+                ref amplitudeVelocity,
+                amplitudeSmoothTime
+            );
+
+            m_AIAvatarVFX.playRate = originalRate * (1f + currentAmplitude * 10);
+            m_AIAvatar.GetComponent<Animator>().speed = originalAnimatedSpeed * (1f + currentAmplitude);
+        }
+
+
+        #endregion
 
         #region Debug
 
