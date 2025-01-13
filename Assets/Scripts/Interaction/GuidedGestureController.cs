@@ -40,6 +40,11 @@ namespace XRDC24.Interaction
             
         }
 
+        private void Start()
+        {
+            ResetGestures();
+        }
+
         public void EnableGuidance()
         {
             // reset gestures
