@@ -8,7 +8,7 @@ public class ButtonBubbleTrigger : MonoBehaviour
     public enum BubbleButtonType
     {
         Start,
-        Exit
+        Next
     }
 
     public BubbleButtonType m_Type;

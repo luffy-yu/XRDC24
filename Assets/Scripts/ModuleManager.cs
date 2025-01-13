@@ -32,7 +32,7 @@ public class ModuleManager : MonoBehaviour
     public GameObject m_TitleLogo;
     public GameObject m_3DButton;
     public GameObject m_BubbleButtonStart;
-    public GameObject m_BubbleBUttonExit;
+    public GameObject m_BubbleButtonExit;
 
     private int frameIndex = 0;
     private int audioFrameIndex = 0;
@@ -75,7 +75,8 @@ public class ModuleManager : MonoBehaviour
         Enter,
         OnBoarding,
         MoodDetection,
-        FreeSpeech
+        FreeSpeech,
+        Next
     }
 
     public ModuleState m_ModuleState = ModuleState.OnBoarding;
@@ -90,7 +91,8 @@ public class ModuleManager : MonoBehaviour
         m_BubbleManager.OnBubbleInteractionFinished += ToNext;
         m_3DButton.transform.Find("RecordingButton").GetChild(0).GetComponent<TriggerForwarder>().OnRecordingTriggerEnter += StartRecording;
         m_3DButton.transform.Find("RecordingButton").GetChild(0).GetComponent<TriggerForwarder>().OnRecordingTriggerExit += EndRecording;
-        m_BubbleButtonStart.transform.Find("Sphere").GetChild(0).GetComponent<ButtonBubbleTrigger>().OnBubbleButtonClicked += StartGame;
+        m_BubbleButtonStart.transform.Find("Sphere").GetChild(0).GetComponent<ButtonBubbleTrigger>().OnBubbleButtonClicked += ModuleTrigger;
+        m_BubbleButtonExit.transform.Find("Sphere").GetChild(0).GetComponent<ButtonBubbleTrigger>().OnBubbleButtonClicked += ModuleTrigger;
     }
 
     private void OnDisable()
@@ -287,6 +289,7 @@ public class ModuleManager : MonoBehaviour
     {
         // disable the tree background
         m_AvatarBackground.SetActive(false);
+        m_3DButton.SetActive(false);
 
         ProcessResultForBubbleSpawn(moodRes);
 
@@ -412,7 +415,7 @@ public class ModuleManager : MonoBehaviour
 
     }
 
-    private void StartGame(BubbleButtonType type)
+    private void ModuleTrigger(BubbleButtonType type)
     {
         if (type == BubbleButtonType.Start)
         {
@@ -421,6 +424,13 @@ public class ModuleManager : MonoBehaviour
             audioFrameIndex = 0;
 
             m_BubbleButtonStart.SetActive(false);
+        }
+        else if (type == BubbleButtonType.Next)
+        {
+            m_ModuleState = ModuleState.Next;
+            TriggerPassthrough(false);
+
+            m_BubbleButtonExit.SetActive(false);
         }
     }
 
@@ -584,7 +594,7 @@ public class ModuleManager : MonoBehaviour
                 m_LLMAgentManager.ClearGPTContext();
                 m_BubbleManager.ClearAllBubbles();
                 m_PortalManager.ClearPortals();
-                TriggerPassthrough(false);
+                m_BubbleButtonExit.SetActive(true);
                 break;
 
             default:
