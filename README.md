@@ -2,7 +2,7 @@
 
 ## Inspiration
 
-In our fast-paced world, stress and emotional disconnect are widespread. To address this, we explored how new technologies could help individuals relax and recharge quickly. Inspired by mindfulness and visual-based meditation, our team developed a gamified meditation approach. This helps users relax their bodies and minds while visualizing and overcoming emotional challenges. Our solution blends gamification, AR/VR, and AI to make mental wellness practices more engaging and impactful.
+In our fast-paced world, stress and emotional disconnect are widespread. To address this, we explored how new technologies could help stressed individuals relax and recharge quickly. Inspired by mindfulness and visual-based meditation, our team developed a gamified meditation approach. This helps users relax their bodies and minds while visualizing and overcoming emotional challenges. Our solution blends gamification, AR/VR, and AI to make mental wellness practices more engaging and impactful.
 
 ## What it does
 
@@ -15,28 +15,58 @@ The experience begins with Flo, an empathetic AI companion that analyzes users�
 
 ## How we built it
 
-**Float Mind** was developed using Meta Quest, Unity, and advanced AI technologies. The emotional analysis feature leverages natural language processing to detect positivity and negativity in user input, while the AR/VR experience was crafted using Unity’s XR Toolkit. Our team combined expertise in AI, UI/UX design, and immersive 3D environments to create a seamless and engaging user journey. Rigorous testing ensured the interactivity and flow worked smoothly without the need for controllers.
-
+**Float Mind** was developed using Meta Quest 2, Unity 6, and advanced AI technologies. The emotional analysis feature leverages LLM Agent (GPT-o1 mini model) to detect positivity and negativity in user input, while the AR/VR experience was crafted using Oculus XR All-in-One SDK. Our team combined expertise in AI, UI/UX design, and immersive 3D environments to create a seamless and engaging user journey. Rigorous testing ensured the interactivity and flow worked smoothly without the need for controllers.
 
 ## Challenges we ran into
 
-Device constraints: Eye tracking
-…
-
+* Device constraints: eye tracking feature requires Oculus Quest Pro headset.
+* Large scene rendering latency in the headset, need to add optimization (eg. use lower mesh 3d models, less particles, bake environment lighting, etc.)
+* Inhale/exhale effect implementation
+* Portal effect implementation to bridge the virtuality and reality
+* Blender geometry node animation compatibility with Unity
+* Figma Converter compatibility with Unity.
 
 ## Accomplishments that we're proud of
 
-We’re proud of creating an immersive meditation tool that blends gamification and mindfulness in an accessible way. Successfully integrating AI-driven emotional analysis with AR/VR interactions was a significant achievement, along with delivering a seamless controller-free experience on Meta Quest. Our team also takes pride in designing a visually stunning and intuitive virtual environment that resonates with users emotionally.
+We're proud to create an immersive and gamified meditation tool that embraces cutting-edge AI and AR/VR technology, grounded in the science of mindfulness and psychology. We crafted a visually stunning 3D environment with intuitive spatial interactions and audio-reactive animation.
+
+Significant technical achievements include the successful integration of LLM-driven emotional analysis with AR/VR interactions and the delivery of a seamless controller-free VR headset experience. The core immersive interactions rely on hand tracking, combined with hand gesture detection.
+
+**Bridge AR and VR through User Actions**
+Through thoughtful UX design, we empowered users to seamlessly bridge the gap between AR and VR experiences, amplifying participatory joy.
+
+**Interactive 3D CTA**
+We innovated by replacing traditional 2D CTAs with a 3D cube, allowing users to proceed, revert actions, or engage with the AI agent all within a single interactive element.
+
+**Meditation Therapy LLM Agent**
+We developed an LLM-powered agent designed specifically for meditation therapy, providing dynamic, personalized guidance and emotional support.
+
+**Multi-Modal Input via Hand Gesture Detection**
+Using advanced hand tracking, we recognized gestures—such as index-finger poking, double-hand waving, and pushing—to enable intuitive, controller-free interactions.
+
+**Audio-Driven Prompting and Mood Detection**
+By feeding audio input to the LLM agent, we gauged positive or negative user moods in real time, generating responsive, interactable “bubbles” to enhance engagement.
+
+**Seamless Scene Blending with Oculus Scene API**
+We harnessed the Oculus Scene API to capture physical-world meshes, effortlessly merging real-world surroundings with the virtual scene during the bubble interaction phase.
+
+**Dissolving Transition Effect**
+A gradual dissolving effect transitions users from the real world to the virtual environment, maintaining immersion and ensuring a smooth user experience.
+
+**AI Agent Avatar with Real-Time Audio**
+We incorporated text-to-speech for the agent’s GPT-generated responses, supported by real-time audio reflection to enrich interactivity and bring the avatar to life.
 
 ## What we learned
 
-XR+UX
-XR+AI
-…
+* XR+UX
+* XR+AI
+* Integrating diverse multi-disciplinary tools from design to development, 2d to 3d, AI XR integration.
+
 
 
 ## What's next for Float Mind
 
-Expanding Float Mind’s emotional analysis capabilities to recognize a broader range of sentiments and introducing more interactive meditation elements.
-Integrate biofeedback mechanisms to make the experience even more personalized
-Explore partnerships with mental health professionals and wellness organizations to bring Float Mind to a wider audience.
+* Expand Float Mind’s emotional analysis capabilities to recognize a broader range of sentiments and introduce more interactive meditation elements.
+* Integrate biofeedback mechanisms to make the experience even more personalized.
+* Explore partnerships with mental health professionals and wellness organizations to bring Float Mind to a wider audience.
+
