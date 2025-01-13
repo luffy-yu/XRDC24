@@ -34,7 +34,7 @@ namespace XRDC24.Interaction
 
         private void Start()
         {
-            currentFrame = 24; //24
+            currentFrame = -1; //24
 
             // change font size
             ReformatFont();
@@ -147,6 +147,16 @@ namespace XRDC24.Interaction
             PlaySound();
             Breathe();
             ShowGuidance();
+            SetAutoJumper();
+        }
+
+        void SetAutoJumper()
+        {
+            FrameAutoJumper ftj;
+            if (CurrentFrame != null && CurrentFrame.TryGetComponent<FrameAutoJumper>(out ftj))
+            {
+                ftj.Monitor();
+            }
         }
 
         public void ShowFirst()

@@ -11988,6 +11988,7 @@ GameObject:
   - component: {fileID: 3859537210021436126}
   - component: {fileID: 3042019741491287960}
   - component: {fileID: 2355809914210473536}
+  - component: {fileID: 71890493097979043}
   m_Layer: 5
   m_Name: 02-2 meditation_stage 2_observe
   m_TagString: Untagged
@@ -12110,6 +12111,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &71890493097979043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237781008173140096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b5b60604a1429686e581ca4914ac4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gap: 3
+  playing: 0
 --- !u!1 &1279700840764620257
 GameObject:
   m_ObjectHideFlags: 0
@@ -19285,6 +19300,7 @@ GameObject:
   - component: {fileID: 6666146882817084931}
   - component: {fileID: 9097028107117951293}
   - component: {fileID: 5728965931198458892}
+  - component: {fileID: 6543525756722600399}
   m_Layer: 5
   m_Name: 02-4 meditation_stage 2_observe
   m_TagString: Untagged
@@ -19407,6 +19423,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &6543525756722600399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000144879465440164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b5b60604a1429686e581ca4914ac4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gap: 3
+  playing: 0
 --- !u!1 &2003345217584418563
 GameObject:
   m_ObjectHideFlags: 0
@@ -21832,6 +21862,7 @@ GameObject:
   - component: {fileID: 9048092950762289201}
   - component: {fileID: 763819421506825588}
   - component: {fileID: 8959675080226861512}
+  - component: {fileID: 2775522256482620835}
   m_Layer: 5
   m_Name: 02-8 meditation_stage 2_observe
   m_TagString: Untagged
@@ -21954,6 +21985,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &2775522256482620835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2166388325591036064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b5b60604a1429686e581ca4914ac4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gap: 3
+  playing: 0
 --- !u!1 &2171180532076022567
 GameObject:
   m_ObjectHideFlags: 0
@@ -30420,6 +30465,10 @@ MonoBehaviour:
   audioSource: {fileID: 8722997629751001668}
   m_AIAvatar: {fileID: 0}
   m_AIAvatarVFX: {fileID: 0}
+  originalRate: 0.5
+  originalAnimatedSpeed: 1
+  scaleMultiplier: 400
+  amplitudeSmoothTime: 0.2
 --- !u!82 &8722997629751001668
 AudioSource:
   m_ObjectHideFlags: 0
@@ -63409,6 +63458,7 @@ GameObject:
   - component: {fileID: 5522746320763320644}
   - component: {fileID: 3779719603007595450}
   - component: {fileID: 1617038939151515786}
+  - component: {fileID: 8930596929827688177}
   m_Layer: 5
   m_Name: 02-7 meditation_stage 2_observe
   m_TagString: Untagged
@@ -63531,6 +63581,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &8930596929827688177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6858499278628204998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b5b60604a1429686e581ca4914ac4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gap: 3
+  playing: 0
 --- !u!1 &6868567279967224835
 GameObject:
   m_ObjectHideFlags: 0
@@ -67631,6 +67695,7 @@ GameObject:
   - component: {fileID: 3050528215222938199}
   - component: {fileID: 3456469044721640129}
   - component: {fileID: 8408044419145038537}
+  - component: {fileID: 4882168457873163342}
   m_Layer: 5
   m_Name: 02-6 meditation_stage 2_observe
   m_TagString: Untagged
@@ -67753,6 +67818,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &4882168457873163342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7193144311937689767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b5b60604a1429686e581ca4914ac4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gap: 3
+  playing: 0
 --- !u!1 &7305279457897670723
 GameObject:
   m_ObjectHideFlags: 0
@@ -75266,6 +75345,7 @@ GameObject:
   - component: {fileID: 7333867430259850686}
   - component: {fileID: 6025581765673293201}
   - component: {fileID: 4039855528451630467}
+  - component: {fileID: 2234833683072638820}
   m_Layer: 5
   m_Name: 02-5 meditation_stage 2_observe
   m_TagString: Untagged
@@ -75388,6 +75468,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &2234833683072638820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8141417824644848200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b5b60604a1429686e581ca4914ac4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gap: 3
+  playing: 0
 --- !u!1 &8149752330736167485
 GameObject:
   m_ObjectHideFlags: 0
@@ -76168,6 +76262,7 @@ GameObject:
   - component: {fileID: 983969247560244029}
   - component: {fileID: 6780294645663631457}
   - component: {fileID: 3477169869965652948}
+  - component: {fileID: 2037597247441186149}
   m_Layer: 5
   m_Name: 02-3 meditation_stage 2_observe
   m_TagString: Untagged
@@ -76290,6 +76385,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &2037597247441186149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8219732111133290459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b5b60604a1429686e581ca4914ac4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gap: 3
+  playing: 0
 --- !u!1 &8235561378237489592
 GameObject:
   m_ObjectHideFlags: 0
@@ -85626,6 +85735,7 @@ GameObject:
   - component: {fileID: 7008502724990133544}
   - component: {fileID: 1835116432237043673}
   - component: {fileID: 5778202511449017325}
+  - component: {fileID: 8418885479100440890}
   m_Layer: 5
   m_Name: 02-1 meditation_stage 2_observe
   m_TagString: Untagged
@@ -85768,3 +85878,17 @@ MonoBehaviour:
   displayDuration: 3
   fadeDuration: 0.5
   inDebug: 0
+--- !u!114 &8418885479100440890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9209350846125965713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b5b60604a1429686e581ca4914ac4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gap: 3
+  playing: 0
