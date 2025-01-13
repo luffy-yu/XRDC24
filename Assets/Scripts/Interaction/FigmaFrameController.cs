@@ -301,9 +301,10 @@ namespace XRDC24.Interaction
         public VisualEffect m_AIAvatarVFX;
 
         private Vector3 originalScale; // = Vector3.one * 0.35416f;
-        
+
         [Header("Breathing Animation Parameters")]
         public float originalRate = 0.5f;
+
         public float originalAnimatedSpeed = 1f;
         public float scaleMultiplier = 100f;
         public float amplitudeSmoothTime = 0.1f;
@@ -406,6 +407,13 @@ namespace XRDC24.Interaction
             if (GUILayout.Button("Next Frame"))
             {
                 NextFrame();
+            }
+
+            if (GUILayout.Button("Reset"))
+            {
+                currentFrame = -1;
+                lastName = string.Empty;
+                SetVisible();
             }
 
             GUILayout.EndVertical();

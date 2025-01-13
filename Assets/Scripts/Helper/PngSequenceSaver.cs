@@ -24,6 +24,8 @@ namespace XRDC24.Helper
 
         private string directory;
 
+        private int fileCount;
+
         private void Awake()
         {
             directory = GetImageDirectory();
@@ -31,7 +33,7 @@ namespace XRDC24.Helper
             camera = gameObject.GetComponent<Camera>();
             // change it to renderTexture when starting
             camera.targetTexture = renderTexture;
-            
+
             // Set the camera's clear flags to SolidColor
             camera.clearFlags = CameraClearFlags.SolidColor;
 
@@ -87,8 +89,8 @@ namespace XRDC24.Helper
 
         public FileInfo SavePNG(byte[] bytes)
         {
-            var filename = System.DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-ffff") + ".png";
-            string filepath = Path.Combine(directory, filename);
+            // var filename = System.DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-ffff") + ".png";
+            string filepath = Path.Combine(directory, $"{fileCount + 1}.png");
 
             File.WriteAllBytes(filepath, bytes);
 
@@ -108,6 +110,11 @@ namespace XRDC24.Helper
             if (Input.GetKeyUp(KeyCode.Space))
             {
                 collecting = !collecting;
+                if (collecting)
+                {
+                    fileCount = 0;
+                }
+
                 Debug.LogWarning($"Collecting status: {collecting}");
             }
 
@@ -130,6 +137,8 @@ namespace XRDC24.Helper
             DestroyImmediate(image);
 
             var fileInfo = SavePNG(bytes);
+            fileCount++;
+
             print($"Save image to: {fileInfo.FullName}");
         }
     }
