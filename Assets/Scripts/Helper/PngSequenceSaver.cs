@@ -90,7 +90,7 @@ namespace XRDC24.Helper
         public FileInfo SavePNG(byte[] bytes)
         {
             // var filename = System.DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-ffff") + ".png";
-            string filepath = Path.Combine(directory, $"{fileCount + 1}.png");
+            string filepath = Path.Combine(directory, $"{fileCount + 1:D3}.png");
 
             File.WriteAllBytes(filepath, bytes);
 
