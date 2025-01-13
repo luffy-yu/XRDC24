@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using DA_Assets.Shared.Extensions;
+using TMPro;
 using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,6 +36,9 @@ namespace XRDC24.Interaction
         {
             currentFrame = -1; //24
 
+            // change font size
+            ReformatFont();
+
             // backup framesize delta
             BackupFrameSizeDelta();
 
@@ -53,6 +57,30 @@ namespace XRDC24.Interaction
             m_AIAvatarVFX.GetComponent<Animator>().enabled = false;
         }
 
+        void ReformatFont()
+        {
+            // Dialog_Agent
+            int size = 26;
+            foreach (var frame in frames)
+            {
+                var count = frame.transform.childCount;
+                for (var i = 0; i < count; i++)
+                {
+                    var child = frame.transform.GetChild(i).gameObject;
+                    if (child.name.Equals("Dialog_Agent"))
+                    {
+                        // font
+                        var tmp = child.GetComponentInChildren<TextMeshProUGUI>();
+                        tmp.enableAutoSizing = false;
+                        tmp.fontSize = size;
+                        tmp.alignment = TextAlignmentOptions.Center;
+
+                        break;
+                    }
+                }
+            }
+        }
+
         void BackupFrameSizeDelta()
         {
             var count = frames.Count;
@@ -64,7 +92,7 @@ namespace XRDC24.Interaction
             }
         }
 
-    void BindBreathingTimer()
+        void BindBreathingTimer()
         {
             frames.ForEach(item =>
             {
@@ -176,20 +204,20 @@ namespace XRDC24.Interaction
             // place children
             var childCanvas = frames[currentFrame].GetComponent<RectTransform>();
             var parentCanvas = rootCanvas.GetComponent<RectTransform>();
-            
+
             if (childCanvas.parent == null)
             {
                 childCanvas.SetParent(parentCanvas);
             }
-            
+
             childCanvas.localPosition = Vector3.zero;
             childCanvas.localRotation = Quaternion.identity;
             childCanvas.localScale = Vector3.one;
-            
+
             childCanvas.anchoredPosition = Vector2.zero;
             // childCanvas.sizeDelta = parentCanvas.sizeDelta;
             childCanvas.pivot = new Vector2(0.5f, 0.5f);
-            
+
             // Canvas.ForceUpdateCanvases();
             childCanvas.hasChanged = true;
         }
