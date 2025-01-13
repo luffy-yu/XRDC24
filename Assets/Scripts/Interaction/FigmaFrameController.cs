@@ -34,7 +34,7 @@ namespace XRDC24.Interaction
 
         private void Start()
         {
-            currentFrame = -1; //24
+            currentFrame = 24; //24
 
             // change font size
             ReformatFont();
@@ -291,10 +291,12 @@ namespace XRDC24.Interaction
         public VisualEffect m_AIAvatarVFX;
 
         private Vector3 originalScale; // = Vector3.one * 0.35416f;
-        private float originalRate = 0.5f;
-        private float originalAnimatedSpeed = 1f;
-        private float scaleMultiplier = 100f;
-        private float amplitudeSmoothTime = 0.1f;
+        
+        [Header("Breathing Animation Parameters")]
+        public float originalRate = 0.5f;
+        public float originalAnimatedSpeed = 1f;
+        public float scaleMultiplier = 100f;
+        public float amplitudeSmoothTime = 0.1f;
 
         private float currentAmplitude;
         private float amplitudeVelocity;
