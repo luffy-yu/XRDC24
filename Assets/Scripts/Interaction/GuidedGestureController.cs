@@ -122,6 +122,7 @@ namespace XRDC24.Interaction
 
                 // enter next frame
                 figmaFrameController.NextFrame();
+                yield return null;
             }
 
             // update guidance

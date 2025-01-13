@@ -34,7 +34,7 @@ namespace XRDC24.Interaction
 
         private void Start()
         {
-            currentFrame = -1; //24
+            currentFrame = 24; //24
 
             // change font size
             ReformatFont();
