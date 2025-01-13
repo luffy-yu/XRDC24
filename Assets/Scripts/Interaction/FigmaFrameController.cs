@@ -139,12 +139,20 @@ namespace XRDC24.Interaction
             });
         }
 
+
+        void TakeActions()
+        {
+            PlaceCenter();
+            PopupWindow();
+            PlaySound();
+            Breathe();
+            ShowGuidance();
+        }
+
         public void ShowFirst()
         {
             currentFrame = 0;
-            PlaceCenter();
-            PlaySound();
-            Breathe();
+            TakeActions();
         }
 
         void Breathe()
@@ -161,24 +169,40 @@ namespace XRDC24.Interaction
             }
         }
 
+        void ShowGuidance()
+        {
+            GuidedGestureController ggc;
+            if (CurrentFrame != null && CurrentFrame.TryGetComponent<GuidedGestureController>(out ggc))
+            {
+                ggc.EnableGuidance();
+            }
+        }
+
+        void PopupWindow()
+        {
+            PopupEffectController pec;
+            if (CurrentFrame != null && CurrentFrame.TryGetComponent<PopupEffectController>(out pec))
+            {
+                pec.ShowPopupWindow();
+            }
+        }
+
         public void PreviousFrame()
         {
             if (AtFirstFrame) return;
 
             currentFrame--;
 
-            PlaceCenter();
-            PlaySound();
-            Breathe();
+            TakeActions();
         }
 
         public void NextFrame()
         {
             if (AtLastFrame) return;
+
             currentFrame++;
-            PlaceCenter();
-            PlaySound();
-            Breathe();
+
+            TakeActions();
         }
 
         void SetVisible()

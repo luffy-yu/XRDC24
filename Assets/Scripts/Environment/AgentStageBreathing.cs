@@ -26,7 +26,7 @@ namespace XRDC24.Environment
 
         public void StartBreathing()
         {
-            BackupAgent();
+            // BackupAgent();
 
             animator.enabled = true;
 
@@ -66,11 +66,11 @@ namespace XRDC24.Environment
                     timerRunning = false;
                     
                     // stop animator
-                    animator.speed = 0f;
+                    StopBreathing();
                     
-                    // restore agent
-                    agent.transform.position = originalPosition;
-                    agent.transform.rotation = originalRotation;
+                    // // restore agent
+                    // agent.transform.position = originalPosition;
+                    // agent.transform.rotation = originalRotation;
                     
                     print("Time out");
 

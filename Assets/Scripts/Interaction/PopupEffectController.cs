@@ -29,6 +29,11 @@ namespace XRDC24.Interaction
         // trigger when enabled
         private void OnEnable()
         {
+            // StartCoroutine(InitEffect());
+        }
+
+        public void ShowPopupWindow()
+        {
             StartCoroutine(InitEffect());
         }
 
