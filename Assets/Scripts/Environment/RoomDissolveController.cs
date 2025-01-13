@@ -45,7 +45,7 @@ namespace XRDC24.Environment
         {
             // enable room
             room.SetActive(true);
-            
+
             // backup material
             if (roomMaterials.Count == 0)
             {
@@ -76,6 +76,7 @@ namespace XRDC24.Environment
 
                 yield return new WaitForSeconds(gap);
             }
+
             // set inactive
             room.SetActive(false);
         }
@@ -83,7 +84,7 @@ namespace XRDC24.Environment
         public void Revert()
         {
             room.SetActive(true);
-            
+
             foreach (var m in roomMaterials.Values)
             {
                 // m.shader = defaultShader;
@@ -93,10 +94,11 @@ namespace XRDC24.Environment
 
         private void Update()
         {
-            if (Input.GetKeyUp(KeyCode.D))
+            if (Input.GetKeyUp(KeyCode.D) || OVRInput.GetUp(OVRInput.Button.Any, OVRInput.Controller.All))
             {
                 Dissolve();
-            } else if (Input.GetKeyUp(KeyCode.R))
+            }
+            else if (Input.GetKeyUp(KeyCode.R))
             {
                 Revert();
             }

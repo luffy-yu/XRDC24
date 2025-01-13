@@ -144,6 +144,21 @@ namespace XRDC24.Interaction
             currentFrame = 0;
             PlaceCenter();
             PlaySound();
+            Breathe();
+        }
+
+        void Breathe()
+        {
+            AgentStageBreathing asb;
+            if (CurrentFrame != null && CurrentFrame.TryGetComponent<AgentStageBreathing>(out asb))
+            {
+                asb.StartBreathing();
+            }
+            else
+            {
+                var animator = m_AIAvatarVFX.gameObject.GetComponent<Animator>();
+                animator.enabled = false;
+            }
         }
 
         public void PreviousFrame()
@@ -154,6 +169,7 @@ namespace XRDC24.Interaction
 
             PlaceCenter();
             PlaySound();
+            Breathe();
         }
 
         public void NextFrame()
@@ -162,6 +178,7 @@ namespace XRDC24.Interaction
             currentFrame++;
             PlaceCenter();
             PlaySound();
+            Breathe();
         }
 
         void SetVisible()
@@ -189,6 +206,8 @@ namespace XRDC24.Interaction
         void PlaySound()
         {
             var name = GetFrameName();
+
+            print($"Enter frame: {name}");
 
             if (name != lastName)
             {
@@ -247,10 +266,10 @@ namespace XRDC24.Interaction
         public GameObject m_AIAvatar;
         public VisualEffect m_AIAvatarVFX;
 
-        private Vector3 originalScale;// = Vector3.one * 0.35416f;
+        private Vector3 originalScale; // = Vector3.one * 0.35416f;
         private float originalRate = 0.5f;
         private float originalAnimatedSpeed = 1f;
-        private float scaleMultiplier = 1000f;
+        private float scaleMultiplier = 100f;
         private float amplitudeSmoothTime = 0.1f;
 
         private float currentAmplitude;

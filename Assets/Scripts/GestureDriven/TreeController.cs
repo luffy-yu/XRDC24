@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
@@ -22,6 +23,17 @@ namespace XRDC24.GestureDriven
             }
         }
 
+        IEnumerator GrowAllTrees()
+        {
+            foreach (var tree in trees)
+            {
+                grownFlags[tree] = true;
+                tree.SetActive(true);
+                yield return new WaitForSeconds(0.5f);
+            }
+            yield return null;
+        }
+
         public void GrowTree()
         {
             if (grownFlags.Count == trees.Count)
@@ -29,6 +41,12 @@ namespace XRDC24.GestureDriven
                 Debug.LogWarning("All trees are grown up.");
                 return;
             }
+
+            // grow all trees
+            StartCoroutine(GrowAllTrees());
+
+            return;
+            
             // if there is a tree growing
             if (animator != null)
             {

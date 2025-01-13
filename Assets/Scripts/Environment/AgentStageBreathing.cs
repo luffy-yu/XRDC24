@@ -21,6 +21,11 @@ namespace XRDC24.Environment
 
         private void OnEnable()
         {
+            
+        }
+
+        public void StartBreathing()
+        {
             BackupAgent();
 
             animator.enabled = true;
@@ -29,6 +34,11 @@ namespace XRDC24.Environment
             animator.Play("Agent", 0, 0.0f);
             // start timer
             StartTimer();
+        }
+
+        public void StopBreathing()
+        {
+            animator.enabled = false;
         }
 
         void BackupAgent()

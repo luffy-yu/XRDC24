@@ -44,7 +44,8 @@ namespace XRDC24.GestureDriven
                 leaf.SetActive(true);
                 enabled.Add(leaf, true);
                 yield return new WaitForSeconds(gap);
-                break;
+                // fall all leaves
+                // break;
             }
 
             running = false;
