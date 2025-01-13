@@ -325,7 +325,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 4ff605470f4ee204887f45f229d7e9da, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -362,7 +362,7 @@ MonoBehaviour:
   Material: {fileID: 2100000, guid: 4ff605470f4ee204887f45f229d7e9da, type: 2}
   maxRenderingDistance: 1000
   useColorBlending: 1
-  BlendColor: {r: 1, g: 0.5113207, b: 0.5113207, a: 1}
+  BlendColor: {r: 0, g: 0, b: 0, a: 1}
   colorBlendingCurve:
     serializedVersion: 2
     m_Curve:
@@ -486,4 +486,4 @@ MonoBehaviour:
   myMeshRenderer: {fileID: 405396599500969887}
   _currentTexLeft: {fileID: 0}
   _currentTexRight: {fileID: 0}
-  _currentDistanceBlend: 0.147
+  _currentDistanceBlend: 0.116
