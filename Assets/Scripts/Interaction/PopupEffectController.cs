@@ -19,6 +19,8 @@ namespace XRDC24.Interaction
         private Vector2 bottomPosition;
         private Vector2 centerPosition;
 
+        public bool inDebug = false;
+
         private void Start()
         {
 
@@ -97,6 +99,8 @@ namespace XRDC24.Interaction
 
         private void OnGUI()
         {
+            if (!inDebug) return;
+
             GUILayout.BeginVertical();
 
             if (GUILayout.Button("Show Popup"))

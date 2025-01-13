@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using DA_Assets.Shared.Extensions;
+using TMPro;
 using UnityEditor.VersionControl;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.VFX;
 using XRDC24.Environment;
 
@@ -24,11 +28,20 @@ namespace XRDC24.Interaction
         // frame name (first 4 characters) and audio clip source
         Dictionary<string, AudioClip> frameClips = new Dictionary<string, AudioClip>();
 
+        Dictionary<int, Vector2> frameSizeDelta = new Dictionary<int, Vector2>();
+
         private string lastName = null;
 
         private void Start()
         {
             currentFrame = -1; //24
+
+            // change font size
+            ReformatFont();
+
+            // backup framesize delta
+            BackupFrameSizeDelta();
+
             // bind breathing event
             BindBreathingTimer();
             // init sounds
@@ -39,9 +52,44 @@ namespace XRDC24.Interaction
             SetVisible();
 
             lastName = "";
-            
+
             // disable agent animator at the start
             m_AIAvatarVFX.GetComponent<Animator>().enabled = false;
+        }
+
+        void ReformatFont()
+        {
+            // Dialog_Agent
+            int size = 26;
+            foreach (var frame in frames)
+            {
+                var count = frame.transform.childCount;
+                for (var i = 0; i < count; i++)
+                {
+                    var child = frame.transform.GetChild(i).gameObject;
+                    if (child.name.Equals("Dialog_Agent"))
+                    {
+                        // font
+                        var tmp = child.GetComponentInChildren<TextMeshProUGUI>();
+                        tmp.enableAutoSizing = false;
+                        tmp.fontSize = size;
+                        tmp.alignment = TextAlignmentOptions.Center;
+
+                        break;
+                    }
+                }
+            }
+        }
+
+        void BackupFrameSizeDelta()
+        {
+            var count = frames.Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                var size = frames[i].GetComponent<RectTransform>().sizeDelta;
+                frameSizeDelta.Add(i, size);
+            }
         }
 
         void BindBreathingTimer()
@@ -120,11 +168,13 @@ namespace XRDC24.Interaction
             {
                 if (i == currentFrame)
                 {
-                    frames[i].SetActive(true);
+                    // frames[i].SetActive(true);
+                    frames[i].GetComponent<RectTransform>().sizeDelta = frameSizeDelta[i];
                 }
                 else
                 {
-                    frames[i].SetActive(false);
+                    // frames[i].SetActive(false);
+                    frames[i].GetComponent<RectTransform>().sizeDelta = Vector2.zero;
                 }
             }
         }
@@ -167,6 +217,9 @@ namespace XRDC24.Interaction
             childCanvas.anchoredPosition = Vector2.zero;
             // childCanvas.sizeDelta = parentCanvas.sizeDelta;
             childCanvas.pivot = new Vector2(0.5f, 0.5f);
+
+            // Canvas.ForceUpdateCanvases();
+            childCanvas.hasChanged = true;
         }
 
         AudioClip LoadSound(string name)
