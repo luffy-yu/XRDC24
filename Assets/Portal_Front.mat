@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Portal_XRDC
+  m_Name: Portal_Front
   m_Shader: {fileID: -6465566751694194690, guid: b0d498fdf71c2b84086ba7ebcbd0f332,
     type: 3}
   m_Parent: {fileID: 0}
@@ -35,8 +35,8 @@ Material:
   stringTagMap:
     RenderType: Transparent
   disabledShaderPasses:
-  - MOTIONVECTORS
   - DepthOnly
+  - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -98,7 +98,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TexLeft:
-        m_Texture: {fileID: 8400000, guid: 26c4bf0b8a29f1648970cfd6dec38dc5, type: 2}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TexRight:
@@ -140,7 +140,7 @@ Material:
     - _DstBlend: 10
     - _EnvironmentReflections: 1
     - _Factor: 1
-    - _FadeColorBlend: 0.15
+    - _FadeColorBlend: 0.147
     - _ForceEye: 0
     - _GlossMapScale: 0
     - _Glossiness: 0
@@ -148,7 +148,7 @@ Material:
     - _Invert_Metallic: 0
     - _Metallic: 0
     - _MetallicV: 1
-    - _NearFadeBlur: 0.3
+    - _NearFadeBlur: 0.378
     - _NormalStrength: 0
     - _NormalToAlbedo: 0.155
     - _OcclusionStrength: 1
@@ -166,13 +166,13 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 5
     - _Surface: 1
-    - _Transparency: 3.9
+    - _Transparency: 3
     - _Use_Metallic_Texture: 0
     - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 0
     - _ZWriteControl: 0
-    - _refraction: -0.00000080432386
+    - _refraction: -0.0000009090798
     - _useTransparency: 1
     m_Colors:
     - _AlbedoSpeed: {r: 0, g: 0, b: -0.5, a: 0}
@@ -194,9 +194,9 @@ Material:
     - _Tiling_And_Offset: {r: 0.8, g: 0.8, b: 0.1, a: 0.1}
     - _Tiling_And_Offset_Normal: {r: 0.2, g: 0.2, b: 0, a: 0}
     - _Tiling_And_Offset_Transparency: {r: 0.9, g: 0.9, b: 0.05, a: 0.05}
-    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+    - _Tint: {r: 0.76792455, g: 0.8928033, b: 1, a: 1}
     - _TransparancySpeed: {r: 0, g: 0, b: 0.5, a: 0}
-    - _WorldDir: {r: 1, g: 0, b: 0, a: 0}
+    - _WorldDir: {r: 0, g: 0, b: 0, a: 0}
     - _WorldPos: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
