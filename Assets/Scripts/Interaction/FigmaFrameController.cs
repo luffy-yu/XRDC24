@@ -55,6 +55,8 @@ namespace XRDC24.Interaction
 
             // disable agent animator at the start
             m_AIAvatarVFX.GetComponent<Animator>().enabled = false;
+
+            originalScale = m_AIAvatar.transform.localScale;
         }
 
         void ReformatFont()
@@ -245,7 +247,7 @@ namespace XRDC24.Interaction
         public GameObject m_AIAvatar;
         public VisualEffect m_AIAvatarVFX;
 
-        private Vector3 originalScale = Vector3.one * 0.5f;
+        private Vector3 originalScale;// = Vector3.one * 0.35416f;
         private float originalRate = 0.5f;
         private float originalAnimatedSpeed = 1f;
         private float scaleMultiplier = 1000f;
