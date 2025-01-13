@@ -5769,6 +5769,7 @@ GameObject:
   - component: {fileID: 8591608209923463177}
   - component: {fileID: 5759925502947000815}
   - component: {fileID: 2772384331893477528}
+  - component: {fileID: 482000856848005222}
   m_Layer: 5
   m_Name: 04-4 meditation_stage 4_collect
   m_TagString: Untagged
@@ -5908,6 +5909,20 @@ MonoBehaviour:
   target: {fileID: 0}
   duration: 60
   animator: {fileID: 0}
+--- !u!114 &482000856848005222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 630947905648241823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b5b60604a1429686e581ca4914ac4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gap: 3
+  playing: 0
 --- !u!1 &681511016669400783
 GameObject:
   m_ObjectHideFlags: 0
@@ -13169,6 +13184,7 @@ GameObject:
   - component: {fileID: 5738219152537251608}
   - component: {fileID: 6780898090246259625}
   - component: {fileID: 2461646597878644583}
+  - component: {fileID: 5793526691616498763}
   m_Layer: 5
   m_Name: 01-3 meditation_stage 1_breath
   m_TagString: Untagged
@@ -13307,6 +13323,20 @@ MonoBehaviour:
   target: {fileID: 0}
   duration: 60
   animator: {fileID: 0}
+--- !u!114 &5793526691616498763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1352910640809179591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b5b60604a1429686e581ca4914ac4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gap: 3
+  playing: 0
 --- !u!1 &1355288602451068737
 GameObject:
   m_ObjectHideFlags: 0
@@ -20025,6 +20055,7 @@ GameObject:
   - component: {fileID: 2350824651482923483}
   - component: {fileID: 7561945251573142244}
   - component: {fileID: 4648777483326952099}
+  - component: {fileID: 631531093414507137}
   m_Layer: 5
   m_Name: 04-1 meditation_stage 4_collect
   m_TagString: Untagged
@@ -20167,6 +20198,20 @@ MonoBehaviour:
   displayDuration: 3
   fadeDuration: 0.5
   inDebug: 0
+--- !u!114 &631531093414507137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026628504569142235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b5b60604a1429686e581ca4914ac4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gap: 3
+  playing: 0
 --- !u!1 &2030471398051713199
 GameObject:
   m_ObjectHideFlags: 0
@@ -21018,6 +21063,7 @@ GameObject:
   - component: {fileID: 6016325425954839339}
   - component: {fileID: 8988802136788796912}
   - component: {fileID: 4497258678704671173}
+  - component: {fileID: 16329928035733766}
   m_Layer: 5
   m_Name: 01-2 meditation_stage 1_breath
   m_TagString: Untagged
@@ -21156,6 +21202,20 @@ MonoBehaviour:
   target: {fileID: 0}
   duration: 60
   animator: {fileID: 0}
+--- !u!114 &16329928035733766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104638116625801106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b5b60604a1429686e581ca4914ac4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gap: 3
+  playing: 0
 --- !u!1 &2110608427045592189
 GameObject:
   m_ObjectHideFlags: 0
@@ -22666,6 +22726,7 @@ GameObject:
   - component: {fileID: 1465970889984895389}
   - component: {fileID: 846464945087377793}
   - component: {fileID: 2964010649298014737}
+  - component: {fileID: 8582451143724634456}
   m_Layer: 5
   m_Name: 04-2 meditation_stage 4_collect
   m_TagString: Untagged
@@ -22805,6 +22866,20 @@ MonoBehaviour:
   target: {fileID: 0}
   duration: 60
   animator: {fileID: 0}
+--- !u!114 &8582451143724634456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2242511275259974436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b5b60604a1429686e581ca4914ac4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gap: 3
+  playing: 0
 --- !u!1 &2258131125515277743
 GameObject:
   m_ObjectHideFlags: 0
@@ -38018,6 +38093,7 @@ GameObject:
   - component: {fileID: 1890476568122164652}
   - component: {fileID: 5629892712673224041}
   - component: {fileID: 5058336066334301034}
+  - component: {fileID: 3078039878763577907}
   m_Layer: 5
   m_Name: 04-5 meditation_stage 4_collect
   m_TagString: Untagged
@@ -38157,6 +38233,20 @@ MonoBehaviour:
   target: {fileID: 0}
   duration: 60
   animator: {fileID: 0}
+--- !u!114 &3078039878763577907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3661634372183809617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b5b60604a1429686e581ca4914ac4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gap: 3
+  playing: 0
 --- !u!1 &3683997863662612142
 GameObject:
   m_ObjectHideFlags: 0
@@ -54018,6 +54108,7 @@ GameObject:
   - component: {fileID: 8023903870693094920}
   - component: {fileID: 5355785868777484513}
   - component: {fileID: 6396513522234286993}
+  - component: {fileID: 8151742667516802207}
   m_Layer: 5
   m_Name: 01-1 meditation_stage 1_breath
   m_TagString: Untagged
@@ -54160,6 +54251,20 @@ MonoBehaviour:
   displayDuration: 3
   fadeDuration: 0.5
   inDebug: 0
+--- !u!114 &8151742667516802207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5396330834409427854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b5b60604a1429686e581ca4914ac4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gap: 3
+  playing: 0
 --- !u!1 &5398931853570738566
 GameObject:
   m_ObjectHideFlags: 0
@@ -58886,6 +58991,7 @@ GameObject:
   - component: {fileID: 861455797744728973}
   - component: {fileID: 5518839666504688344}
   - component: {fileID: 7604429336422107294}
+  - component: {fileID: 2320746161616559534}
   m_Layer: 5
   m_Name: 05-4 meditation_closing
   m_TagString: Untagged
@@ -59009,6 +59115,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &2320746161616559534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6181438235661757633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b5b60604a1429686e581ca4914ac4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gap: 3
+  playing: 0
 --- !u!1 &6187959095719461227
 GameObject:
   m_ObjectHideFlags: 0
@@ -60719,6 +60839,7 @@ GameObject:
   - component: {fileID: 6067715737398157952}
   - component: {fileID: 2166674757531383726}
   - component: {fileID: 1218803055472971860}
+  - component: {fileID: 4306265380459692948}
   m_Layer: 5
   m_Name: 05-2 meditation_closing
   m_TagString: Untagged
@@ -60842,6 +60963,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &4306265380459692948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6317870395629767782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b5b60604a1429686e581ca4914ac4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gap: 3
+  playing: 0
 --- !u!1 &6323438537847337672
 GameObject:
   m_ObjectHideFlags: 0
@@ -64418,6 +64553,7 @@ GameObject:
   - component: {fileID: 9100049354211319813}
   - component: {fileID: 165414989334542257}
   - component: {fileID: 2324336571840783392}
+  - component: {fileID: 8286146377255108162}
   m_Layer: 5
   m_Name: 01-4 meditation_stage 1_breath
   m_TagString: Untagged
@@ -64556,6 +64692,20 @@ MonoBehaviour:
   target: {fileID: 0}
   duration: 60
   animator: {fileID: 0}
+--- !u!114 &8286146377255108162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6909229316669451219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b5b60604a1429686e581ca4914ac4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gap: 3
+  playing: 0
 --- !u!1 &6915802702078035388
 GameObject:
   m_ObjectHideFlags: 0
@@ -73661,6 +73811,7 @@ GameObject:
   - component: {fileID: 5135419509420172136}
   - component: {fileID: 7546000822264041467}
   - component: {fileID: 8788552055986064409}
+  - component: {fileID: 3444374025335605946}
   m_Layer: 5
   m_Name: 04-6 meditation_stage 4_collect
   m_TagString: Untagged
@@ -73800,6 +73951,20 @@ MonoBehaviour:
   target: {fileID: 0}
   duration: 60
   animator: {fileID: 0}
+--- !u!114 &3444374025335605946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7916561461630298631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b5b60604a1429686e581ca4914ac4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gap: 3
+  playing: 0
 --- !u!1 &7932716545946977658
 GameObject:
   m_ObjectHideFlags: 0
@@ -80570,6 +80735,7 @@ GameObject:
   - component: {fileID: 4143793389591047947}
   - component: {fileID: 6396776606737006616}
   - component: {fileID: 6245488550366674195}
+  - component: {fileID: 9096471746212842599}
   m_Layer: 5
   m_Name: 04-3 meditation_stage 4_collect
   m_TagString: Untagged
@@ -80709,6 +80875,20 @@ MonoBehaviour:
   target: {fileID: 0}
   duration: 60
   animator: {fileID: 0}
+--- !u!114 &9096471746212842599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8687456787760578577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b5b60604a1429686e581ca4914ac4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gap: 3
+  playing: 0
 --- !u!1 &8697962670836857989
 GameObject:
   m_ObjectHideFlags: 0
@@ -83005,6 +83185,7 @@ GameObject:
   - component: {fileID: 8698077561182672305}
   - component: {fileID: 3639984523593221107}
   - component: {fileID: 5974432274697658062}
+  - component: {fileID: 6644858042174699393}
   m_Layer: 5
   m_Name: 05-1 meditation_closing
   m_TagString: Untagged
@@ -83128,6 +83309,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &6644858042174699393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8888659035236748243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b5b60604a1429686e581ca4914ac4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gap: 3
+  playing: 0
 --- !u!1 &8946122860095045553
 GameObject:
   m_ObjectHideFlags: 0
