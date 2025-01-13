@@ -15,16 +15,33 @@ The experience begins with Flo, an empathetic AI companion that analyzes users�
 
 ## How we built it
 
-**Float Mind** was developed using Meta Quest 2, Unity 6, and advanced AI technologies. The emotional analysis feature leverages LLM Agent (GPT-o1 mini model) to detect positivity and negativity in user input, while the AR/VR experience was crafted using Oculus XR All-in-One SDK. Our team combined expertise in AI, UI/UX design, and immersive 3D environments to create a seamless and engaging user journey. Rigorous testing ensured the interactivity and flow worked smoothly without the need for controllers.
+**Float Mind** was developed using Meta Quest 3/Pro, Unity 6, and advanced AI technologies such as scene understanding, speech-to-text (STT), text-to-speech (TTS), and large language model (LLM). The emotional analysis feature leverages LLM Agent (GPT-o1 mini model) to detect positivity and negativity in user input, while the AR/VR experience was crafted using Meta XR All-in-One SDK. Our team combined expertise in AI, UI/UX design, and immersive 3D environments to create a seamless and engaging user journey. Rigorous testing ensured the interactivity and flow worked smoothly without the need for controllers.
 
 ## Challenges we ran into
 
-* Device constraints: eye tracking feature requires Oculus Quest Pro headset.
-* Large scene rendering latency in the headset, need to add optimization (eg. use lower mesh 3d models, less particles, bake environment lighting, etc.)
-* Inhale/exhale effect implementation
-* Portal effect implementation to bridge the virtuality and reality
-* Blender geometry node animation compatibility with Unity
-* Figma Converter compatibility with Unity.
+**1. Device constraints. For example, eye tracking feature is only available on Meta Quest Pro headset.**
+
+> Solution: Change the design and refrain from applying eye tracking.
+
+**2. Inhaling and exhaling breath effect.**
+
+> Solution: Utilize VFX Effect Graphics Editorto dynamically adjust particle density and motion paths, aligning seamlessly with the rhythmic flow of meditation breathing.
+
+**3. Portal effect to bridge the virtuality and reality.**
+
+> Solution: Develop a custom shader to create a see-through render texture for virtual scenes, incorporating rotating and edge-dissolving effects with an albedo material and alpha texture. Adjust scene layers and camera culling settings to achieve a portal effect.
+
+**4. Blender geometry node animation compatibility with Unity.**
+
+> Solution: Utilize MDD exporting format to remap Blender's geometry node effects into frame-based animation clips, enabling seamless integration with the Unity Animator.
+
+**5. Unity plugin [Figma Converter for Unity](https://assetstore.unity.com/packages/tools/utilities/figma-converter-for-unity-198134) compatibility issues and bugs.**
+
+> Solution: Dive into the source code and fix them.
+
+**6. Frame layout offset issue when switching frames via enabling/disabling.**
+
+> Solution: Use `RectTransform.sizeDelta` property to realize switching, i.e., set it to `Vector2.zero` to hide.
 
 ## Accomplishments that we're proud of
 
@@ -32,41 +49,62 @@ We're proud to create an immersive and gamified meditation tool that embraces cu
 
 Significant technical achievements include the successful integration of LLM-driven emotional analysis with AR/VR interactions and the delivery of a seamless controller-free VR headset experience. The core immersive interactions rely on hand tracking, combined with hand gesture detection.
 
-**Bridge AR and VR through User Actions**
+### 1. Bridge AR and VR through User Actions
+
 Through thoughtful UX design, we empowered users to seamlessly bridge the gap between AR and VR experiences, amplifying participatory joy.
 
-**Interactive 3D CTA**
+### 2. Interactive 3D CTA
+
 We innovated by replacing traditional 2D CTAs with a 3D cube, allowing users to proceed, revert actions, or engage with the AI agent all within a single interactive element.
 
-**Meditation Therapy LLM Agent**
+### 3. Meditation Therapy LLM Agent
+
 We developed an LLM-powered agent designed specifically for meditation therapy, providing dynamic, personalized guidance and emotional support.
 
-**Multi-Modal Input via Hand Gesture Detection**
+### 4. Multi-Modal Input via Hand Gesture Detection
+
 Using advanced hand tracking, we recognized gestures—such as index-finger poking, double-hand waving, and pushing—to enable intuitive, controller-free interactions.
 
-**Audio-Driven Prompting and Mood Detection**
+### 5. Audio-Driven Prompting and Mood Detection
+
 By feeding audio input to the LLM agent, we gauged positive or negative user moods in real time, generating responsive, interactable “bubbles” to enhance engagement.
 
-**Seamless Scene Blending with Oculus Scene API**
-We harnessed the Oculus Scene API to capture physical-world meshes, effortlessly merging real-world surroundings with the virtual scene during the bubble interaction phase.
+### 6. Seamless Scene Blending with Meta Scene API
 
-**Dissolving Transition Effect**
+We harnessed the Meta Scene API to capture physical-world meshes, effortlessly merging real-world surroundings with the virtual scene during the bubble interaction phase.
+
+### 7. Dissolving Transition Effect
+
 A gradual dissolving effect transitions users from the real world to the virtual environment, maintaining immersion and ensuring a smooth user experience.
 
-**AI Agent Avatar with Real-Time Audio**
+### 8. AI Agent Avatar with Real-Time Audio
+
 We incorporated text-to-speech for the agent’s GPT-generated responses, supported by real-time audio reflection to enrich interactivity and bring the avatar to life.
 
 ## What we learned
 
-* XR+UX
-* XR+AI
-* Integrating diverse multi-disciplinary tools from design to development, 2d to 3d, AI XR integration.
+### 1. XR + UX
 
+Bridging XR and UX with the help of fine-tuned plugins and customized scripts.
 
+### 2. XR + AI
+
+Applying scene understanding to sense user's surroundings, generating seamless virtual-real world blending, and employing LLMs capacities to process context (e.g., user's emotion) to facilitate personalized immersive experience. 
+
+### 3. Multidisciplinary Integration
+
+Integrating diverse multidisciplinary tools from design to development, 2D to 3D, text to audio, and vice versa. Creating immersive experience with environment, animations, sounds, visuals, and interactions.
 
 ## What's next for Float Mind
 
-* Expand Float Mind’s emotional analysis capabilities to recognize a broader range of sentiments and introduce more interactive meditation elements.
-* Integrate biofeedback mechanisms to make the experience even more personalized.
-* Explore partnerships with mental health professionals and wellness organizations to bring Float Mind to a wider audience.
+- Expand **Float Mind**’s emotional analysis capabilities to recognize a broader range of sentiments and introduce more interactive meditation elements.
+- Integrate biofeedback mechanisms to make the experience even more personalized.
+- Explore partnerships with mental health professionals and wellness organizations to bring **Float Mind** to a wider audience.
 
+## Team
+
+- Zia (Zihan Li), **Game Designer & Product Designer, AI Agent Game Developer, UPenn Architecture Student**, [Personal Website](https://www.zihanli.org/)
+- Jennifer (Yan Zeng), **Product Design, XR/UX/UI Design, User Flow, Wireframing, Prototyping, 3D Design & Modelling Product Designer specializes in SaaS+AI | Mixed Reality Creator | 3D Artist | Gaming Enthusiast | Architectural Designer | Cat Lover @UPenn**, [LinkedIn](https://www.linkedin.com/in/jennifer-zeng-b4244b171/)
+- Tingting Luo, **UX Researcher & Designer, 3D Animation Artist**, [LinkedIn](https://www.linkedin.com/in/tingting-luo-uiux/)
+- Muki (Shuqi Liao), **XR Developer, CS PhD Student**, [Personal Website](https://yvettemuki.github.io/)
+- Luffy (Liuchuan Yu), **Developer & Bug Fixer, CS PhD Student Dedicated to AI + XR**, [Person Website](https://www.chuange.org/)
