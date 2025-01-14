@@ -5059,6 +5059,7 @@ MonoBehaviour:
   pokeDuration: 0.8
   fallenAnimation: {fileID: 5953108787315759741}
   fallenDuration: 1
+  inDebugMode: 0
   gapSeconds: 0.2
 --- !u!1 &1844834925346062187
 GameObject:
@@ -24776,7 +24777,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.029, y: 0.019, z: 0.032000065}
-  m_LocalScale: {x: 0.57574, y: 0.57574, z: 0.57574}
+  m_LocalScale: {x: 0.52, y: 0.52, z: 0.52}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3544319578376224348}
@@ -24812,7 +24813,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8cef9145eb2b9df4fa55cb62dba5160c, type: 2}
+  - {fileID: 2100000, guid: 803cbc60b662af2499cd7f7100e61552, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
