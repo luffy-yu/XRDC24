@@ -38,6 +38,7 @@ namespace XRDC24.Interaction
         // for windows demo build
         [HideInInspector] public bool AutoLoop = false;
         private int guidanceShowTime = 5; //guidance show time 
+        [HideInInspector] public bool AutoLoopDone = false;
 
         private void OnEnable()
         {
@@ -60,6 +61,7 @@ namespace XRDC24.Interaction
             {
                 if (AutoLoop)
                 {
+                    AutoLoopDone = false;
                     StartCoroutine(StartAutoLoop());
                 }
                 else
@@ -89,6 +91,8 @@ namespace XRDC24.Interaction
                 // wait
                 yield return new WaitForSeconds(gestures[i].waitTime);
             }
+
+            AutoLoopDone = true;
 
             // enter next frame
             figmaFrameController.NextFrame();

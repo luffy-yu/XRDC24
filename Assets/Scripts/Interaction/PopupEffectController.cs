@@ -16,6 +16,8 @@ namespace XRDC24.Interaction
         public float displayDuration = 3.0f; // Time to stay at the center
         public float fadeDuration = 0.5f; // Time to fade out
 
+        [HideInInspector] public float TimeBeforeSound => riseDuration + displayDuration + fadeDuration;
+        
         private Vector2 bottomPosition;
         private Vector2 centerPosition;
 
@@ -61,6 +63,14 @@ namespace XRDC24.Interaction
             // Activate the popup and set its initial position
             popupWindow.gameObject.SetActive(true);
             popupWindow.anchoredPosition = bottomPosition;
+            
+            // Ensure the CanvasGroup alpha is reset to 1
+            CanvasGroup canvasGroup = popupWindow.GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
+            {
+                canvasGroup = popupWindow.gameObject.AddComponent<CanvasGroup>();
+            }
+            canvasGroup.alpha = 1;
 
             // Animate rising to the center
             float elapsedTime = 0;
@@ -77,12 +87,6 @@ namespace XRDC24.Interaction
             yield return new WaitForSeconds(displayDuration);
 
             // Animate fading out
-            CanvasGroup canvasGroup = popupWindow.GetComponent<CanvasGroup>();
-            if (canvasGroup == null)
-            {
-                canvasGroup = popupWindow.gameObject.AddComponent<CanvasGroup>();
-            }
-
             elapsedTime = 0;
             while (elapsedTime < fadeDuration)
             {

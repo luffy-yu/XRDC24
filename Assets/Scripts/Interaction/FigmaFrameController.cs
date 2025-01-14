@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.VFX;
@@ -139,8 +140,18 @@ namespace XRDC24.Interaction
         void TakeActions()
         {
             PlaceCenter();
-            PopupWindow();
-            PlaySound();
+            // pop up window
+            var pec = GetPopupWindow();
+            if (pec != null)
+            {
+                pec.ShowPopupWindow();
+                // wait for seconds to play sound
+                StartCoroutine(PlaySound(pec));
+            }
+            else
+            {
+                PlaySound();
+            }
             Breathe();
             ShowGuidance();
             SetAutoJumper();
@@ -184,6 +195,17 @@ namespace XRDC24.Interaction
             }
         }
 
+        GuidedGestureController GetGuidedGestureController()
+        {
+            GuidedGestureController ggc;
+            if (CurrentFrame != null && CurrentFrame.TryGetComponent<GuidedGestureController>(out ggc))
+            {
+                return ggc;
+            }
+
+            return null;
+        }
+
         void PopupWindow()
         {
             PopupEffectController pec;
@@ -191,6 +213,17 @@ namespace XRDC24.Interaction
             {
                 pec.ShowPopupWindow();
             }
+        }
+
+        PopupEffectController GetPopupWindow()
+        {
+            PopupEffectController pec;
+            if (CurrentFrame != null && CurrentFrame.TryGetComponent<PopupEffectController>(out pec))
+            {
+                return pec;
+            }
+
+            return null;
         }
 
         public void PreviousFrame()
@@ -205,6 +238,15 @@ namespace XRDC24.Interaction
         public void NextFrame()
         {
             if (AtLastFrame) return;
+            
+            // TODO: show end screen
+
+            var ggc = GetGuidedGestureController();
+            if (ggc != null && ggc.AutoLoop && !ggc.AutoLoopDone)
+            {
+                // return if it's in auto loop mode and the auto loop is not done.
+                return;
+            }
 
             currentFrame++;
 
@@ -240,13 +282,19 @@ namespace XRDC24.Interaction
             return frames[currentFrame].name.Substring(0, 4);
         }
 
+        IEnumerator PlaySound(PopupEffectController pec)
+        {
+            yield return new WaitForSecondsRealtime(pec.TimeBeforeSound);
+            PlaySound();
+        }
+
         void PlaySound()
         {
             var name = GetFrameName();
 
             print($"Enter frame: {name}");
 
-            if (name != lastName)
+            if (name != lastName && frameClips.ContainsKey(name))
             {
                 // play
                 audioSource.PlayOneShot(frameClips[name]);
