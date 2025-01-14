@@ -24,6 +24,8 @@ namespace XRDC24.Bubble
         private bool pokedPlaying = false;
         private bool fallenPlaying = false;
 
+        public bool inDebugMode = false;
+
         #region event
 
         public System.Action<GameObject, AnimationType> OnAnimationFinished;
@@ -162,6 +164,24 @@ namespace XRDC24.Bubble
         public void TriggerPokedAnimation()
         {
             StartCoroutine(OnPoked());
+        }
+
+        private void OnGUI()
+        {
+            if (!inDebugMode) return;
+
+            GUILayout.BeginVertical();
+            if (GUILayout.Button("Fall"))
+            {
+                TriggerFallenAnimation();
+            }
+
+            if (GUILayout.Button("Poke"))
+            {
+                TriggerPokedAnimation();
+            }
+
+            GUILayout.EndVertical();
         }
     }
 }
