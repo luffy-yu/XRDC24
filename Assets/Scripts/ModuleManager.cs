@@ -8,7 +8,6 @@ using XRDC24.Bubble;
 using UnityEngine.VFX;
 using System.Collections;
 using XRDC24.Interaction;
-using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 using static ButtonBubbleTrigger;
 
 public class ModuleManager : MonoBehaviour
@@ -180,7 +179,7 @@ public class ModuleManager : MonoBehaviour
         dialog.transform.Find("Dialog_User").gameObject.SetActive(false);
 
         // trigger bubble instruction
-        m_TextToSpeech.SendRequest("Let’s pop some bubbles together. Stretch your hand to break them, or let them float down – it’s all part of the journey!");
+        m_TextToSpeech.SendRequest("Letâ€™s pop some bubbles together. Stretch your hand to break them, or let them float down â€“ itâ€™s all part of the journey!");
         audioFrameIndex = 0;
     }
 
@@ -227,12 +226,12 @@ public class ModuleManager : MonoBehaviour
                 break;
 
             case 3:
-                m_TextToSpeech.SendRequest("Take your time. As you speak, I’ll reflect your words as bubbles.");
+                m_TextToSpeech.SendRequest("Take your time. As you speak, Iâ€™ll reflect your words as bubbles.");
                 frameIndex = 0;
                 break;
 
             case 4:
-                m_TextToSpeech.SendRequest("Your positive emotions will form soft, glowing bubbles. If there are heavier \r\nfeelings, they might appear darker or sharper – and that’s okay.");
+                m_TextToSpeech.SendRequest("Your positive emotions will form soft, glowing bubbles. If there are heavier \r\nfeelings, they might appear darker or sharper â€“ and thatâ€™s okay.");
                 frameIndex = 0;
                 break;
 
@@ -248,7 +247,7 @@ public class ModuleManager : MonoBehaviour
         m_3DUIPanel.transform.Find("FigmaCanvasI01")?.gameObject.SetActive(false);
 
         // to next onboarding frame
-        m_TextToSpeech.SendRequest("Hello, my name is Flo, your personal mental health assistant, I’m here to listen. How are you feeling today?");
+        m_TextToSpeech.SendRequest("Hello, my name is Flo, your personal mental health assistant, Iâ€™m here to listen. How are you feeling today?");
     }
 
     private IEnumerator DisappearingTitle()
@@ -263,7 +262,7 @@ public class ModuleManager : MonoBehaviour
             time += Time.deltaTime;
             float alpha = Mathf.Lerp(startAlpha, 0f, time / Constants.TITLE_DISAPPEAR_DURATION);
 
-            // Update the material’s color
+            // Update the materialâ€™s color
             foreach (Transform child in m_TitleLogo.transform)
             {
                 child.GetComponent<MeshRenderer>().material.SetFloat("_OverallAlpha", alpha);
@@ -328,7 +327,7 @@ public class ModuleManager : MonoBehaviour
         {
             if (isBubbleFirstPoked)
             {
-                m_TextToSpeech.SendRequest("Wonderful! You’ve touched a bubble – feel the energy flow through you.");
+                m_TextToSpeech.SendRequest("Wonderful! Youâ€™ve touched a bubble â€“ feel the energy flow through you.");
                 isBubbleFirstPoked = false;
             }
             else if (isBubbleSeconPoked)
@@ -463,7 +462,7 @@ public class ModuleManager : MonoBehaviour
         // use to gen the audio file
         //if (Input.GetKeyDown(KeyCode.Space))
         //{
-        //    m_TextToSpeech.SendRequest("Wonderful! You’ve touched a bubble – feel the energy flow through you.\r\n\r\nGreat focus! Watch as the bubble shatters, opening portals around you.\r\n");
+        //    m_TextToSpeech.SendRequest("Wonderful! Youâ€™ve touched a bubble â€“ feel the energy flow through you.\r\n\r\nGreat focus! Watch as the bubble shatters, opening portals around you.\r\n");
         //}
     }
 
