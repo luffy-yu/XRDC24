@@ -26,6 +26,8 @@ namespace XRDC24.Interaction
 
         private string lastName = null;
 
+        [HideInInspector] public bool inDebugMode = true;
+
         private void Start()
         {
             currentFrame = -1; //24
@@ -209,6 +211,13 @@ namespace XRDC24.Interaction
             TakeActions();
         }
 
+        public void ResetFrame()
+        {
+            currentFrame = -1;
+            lastName = string.Empty;
+            SetVisible();
+        }
+
         void SetVisible()
         {
             for (int i = 0; i < frames.Count; i++)
@@ -283,7 +292,7 @@ namespace XRDC24.Interaction
             }
             else
             {
-                Debug.LogError($"Failed to load {path}");
+                Debug.LogWarning($"Failed to load {path}");
             }
 
             return clip;
@@ -386,6 +395,8 @@ namespace XRDC24.Interaction
 
         private void OnGUI()
         {
+            if (!inDebugMode) return;
+
             GUILayout.BeginVertical();
 
             if (GUILayout.Button("Show First"))
@@ -405,9 +416,7 @@ namespace XRDC24.Interaction
 
             if (GUILayout.Button("Reset"))
             {
-                currentFrame = -1;
-                lastName = string.Empty;
-                SetVisible();
+                ResetFrame();
             }
 
             GUILayout.EndVertical();

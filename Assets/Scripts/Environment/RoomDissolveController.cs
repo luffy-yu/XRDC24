@@ -15,6 +15,8 @@ namespace XRDC24.Environment
         private Shader defaultShader;
 
         const string dissolveKey = "_Dissolve";
+        
+        [HideInInspector] public bool inDebugMode = true;
 
         private void Start()
         {
@@ -66,12 +68,13 @@ namespace XRDC24.Environment
 
         IEnumerator DynamicDissolve()
         {
-            var gap = duration / 10f;
-            for (var i = 0; i < 10; i++)
+            var gap = 1 / 30f;
+            var frames = duration * 30;
+            for (var i = 0; i <= frames; i++)
             {
                 foreach (var m in roomMaterials.Values)
                 {
-                    m.SetFloat(dissolveKey, i * 0.1f);
+                    m.SetFloat(dissolveKey, i / frames);
                 }
 
                 yield return new WaitForSeconds(gap);
@@ -94,7 +97,7 @@ namespace XRDC24.Environment
 
         private void Update()
         {
-            if (Input.GetKeyUp(KeyCode.D) || OVRInput.GetUp(OVRInput.Button.Any, OVRInput.Controller.All))
+            if (Input.GetKeyUp(KeyCode.E) || OVRInput.GetUp(OVRInput.Button.Any, OVRInput.Controller.All))
             {
                 Dissolve();
             }
@@ -108,6 +111,8 @@ namespace XRDC24.Environment
 
         private void OnGUI()
         {
+            if (!inDebugMode) return;
+            
             GUILayout.BeginVertical();
 
             if (GUILayout.Button("Dissolve"))

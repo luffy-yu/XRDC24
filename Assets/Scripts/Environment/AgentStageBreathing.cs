@@ -90,12 +90,12 @@ namespace XRDC24.Environment
 
         private void OnGUI()
         {
-            GUILayout.BeginVertical();
-            if (GUILayout.Button("Start"))
-            {
-                OnEnable();
-            }
-            GUILayout.EndVertical();
+            // GUILayout.BeginVertical();
+            // if (GUILayout.Button("Start"))
+            // {
+            //     OnEnable();
+            // }
+            // GUILayout.EndVertical();
         }
 
         #endregion
