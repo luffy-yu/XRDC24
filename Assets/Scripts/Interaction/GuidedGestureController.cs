@@ -35,9 +35,13 @@ namespace XRDC24.Interaction
 
         public bool inDebug = false;
 
+        // for windows demo build
+        [HideInInspector] public bool AutoLoop = false;
+        private int guidanceShowTime = 5; //guidance show time 
+
         private void OnEnable()
         {
-            
+
         }
 
         private void Start()
@@ -54,11 +58,40 @@ namespace XRDC24.Interaction
             if (figmaFrameController != null && figmaFrameController.CurrentFrame != null &&
                 figmaFrameController.CurrentFrame == gameObject)
             {
-                // enable first state
-                current = 0;
-
-                StartGuidance();
+                if (AutoLoop)
+                {
+                    StartCoroutine(StartAutoLoop());
+                }
+                else
+                {
+                    // enable first state
+                    current = 0;
+                    StartGuidance();
+                }
             }
+        }
+
+        IEnumerator StartAutoLoop()
+        {
+            var count = gestures.Count;
+            for (var i = 0; i < count; i++)
+            {
+                var demos = gestures[i].demos;
+                var handlers = gestures[i].handlers;
+                // enable demo
+                demos.ForEach(item => item.SetActive(true));
+                // show guidance
+                yield return new WaitForSeconds(guidanceShowTime);
+                // disable guidance
+                demos.ForEach(item => item.SetActive(false));
+                // trigger handler
+                handlers.ForEach(item => item.TriggerGesture());
+                // wait
+                yield return new WaitForSeconds(gestures[i].waitTime);
+            }
+
+            // enter next frame
+            figmaFrameController.NextFrame();
         }
 
         void ResetGestures()

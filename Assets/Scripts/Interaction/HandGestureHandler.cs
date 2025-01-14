@@ -40,6 +40,11 @@ namespace XRDC24.Interaction
             whenGestureActivated?.Invoke();
         }
 
+        public void TriggerGesture()
+        {
+            GestureActivated();
+        }
+
         void Update()
         {
 

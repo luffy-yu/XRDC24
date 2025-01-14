@@ -13,11 +13,13 @@ namespace XRDC24.Helper
         public FigmaFrameController frameController;
         public RoomDissolveController dissolveController;
         public List<GameObject> gestureRecognizers;
+        public GuidedGestureController gestureController;
         public Text helpText; // Assign a UI Text element in the Inspector to display help information
 
         private bool isHelpVisible = false;
         private Vector3 initialPosition;
         private Quaternion initialRotation;
+        private bool enableRotation = false;
 
         void Start()
         {
@@ -29,8 +31,10 @@ namespace XRDC24.Helper
             // disable gesture recognizers
             foreach (var gr in gestureRecognizers)
             {
-                gr.SetActive(false);
+                // gr.SetActive(false);
             }
+            // enable auto loop
+            gestureController.AutoLoop = true;
             
             // Save the initial position and rotation for reset functionality
             initialPosition = transform.position;
@@ -61,6 +65,20 @@ namespace XRDC24.Helper
                     helpText.gameObject.SetActive(isHelpVisible);
                 }
             }
+            
+            // Camera rotation
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                // disable
+                enableRotation = false;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Mouse1) ||
+                Input.GetKeyDown(KeyCode.Mouse2))
+            {
+                // enable
+                enableRotation = true;
+            }
 
             // WASD for movement
             float moveSpeed = 5f;
@@ -69,22 +87,25 @@ namespace XRDC24.Helper
             Vector3 movement = new Vector3(horizontal, 0, vertical) * moveSpeed * Time.deltaTime;
             transform.Translate(movement, Space.Self);
 
-            // Mouse for camera rotation
-            float mouseSensitivity = 2f;
-            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
-            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+            if (enableRotation)
+            {
+                // Mouse for camera rotation
+                float mouseSensitivity = 2f;
+                float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+                float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
-            transform.Rotate(Vector3.up, mouseX, Space.World);
-            transform.Rotate(Vector3.left, mouseY, Space.Self);
+                transform.Rotate(Vector3.up, mouseX, Space.World);
+                transform.Rotate(Vector3.left, mouseY, Space.Self);   
+            }
 
-            // Right arrow to trigger next function
-            if (Input.GetKeyDown(KeyCode.RightArrow))
+            // N to trigger next function
+            if (Input.GetKeyDown(KeyCode.N))
             {
                 TriggerNextFunction();
             }
 
-            // Left arrow to trigger previous function
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            // P to trigger previous function
+            if (Input.GetKeyDown(KeyCode.P))
             {
                 TriggerPreviousFunction();
             }
