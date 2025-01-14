@@ -97,11 +97,11 @@ namespace XRDC24.Environment
 
         private void Update()
         {
-            if (Input.GetKeyUp(KeyCode.E) || OVRInput.GetUp(OVRInput.Button.Any, OVRInput.Controller.All))
+            if (Input.GetKeyUp(KeyCode.N) || OVRInput.GetUp(OVRInput.Button.Any, OVRInput.Controller.All))
             {
                 Dissolve();
             }
-            else if (Input.GetKeyUp(KeyCode.R))
+            else if (Input.GetKeyUp(KeyCode.P))
             {
                 Revert();
             }
