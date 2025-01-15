@@ -89,6 +89,12 @@ namespace XRDC24.Bubble
             }
         }
 
+        public void ManualPoke()
+        {
+            OnBubbleAnimated.Invoke(gameObject, AnimationType.Poke);
+            TriggerPokedAnimation();
+        }
+
         IEnumerator OnPoked()
         {
             pokedPlaying = true;

@@ -60,6 +60,7 @@ public class BubblesManager : MonoBehaviour
             {
                 Destroy(bubble);
             }
+
             spawnedBubbles.Clear();
         }
 
@@ -83,6 +84,47 @@ public class BubblesManager : MonoBehaviour
         Debug.Log($"Bubbles spawned: positive = {positiveNum}, negative = {negativeNum}, total = {totalBubbles}");
     }
 
+    #region Hack
+
+    public void SpawnBubbles(Camera camera, int positive, int negative)
+    {
+        positiveNum = positive;
+        negativeNum = negative;
+        totalBubbles = positiveNum + negativeNum;
+
+        if (spawnedBubbles.Count > 0)
+        {
+            // clear previous
+            foreach (var bubble in spawnedBubbles)
+            {
+                Destroy(bubble);
+            }
+
+            spawnedBubbles.Clear();
+        }
+
+        Vector3 headPos = camera.transform.position;
+        Vector3 forward = camera.transform.forward;
+
+        for (var i = 0; i < positiveNum; i++)
+        {
+            var template = GetRandomTemplate(BubbleType.Positive);
+            SpawnBubble(template, headPos, forward);
+        }
+
+        for (var i = 0; i < negativeNum; i++)
+        {
+            var template = GetRandomTemplate(BubbleType.Negative);
+            SpawnBubble(template, headPos, forward);
+        }
+
+        StartCoroutine(PlayBubbleGenerateSound());
+
+        Debug.Log($"Bubbles spawned: positive = {positiveNum}, negative = {negativeNum}, total = {totalBubbles}");
+    }
+
+    #endregion
+
     private IEnumerator PlayBubbleGenerateSound()
     {
         m_AudioSource.clip = m_BubbleGenSound;
@@ -101,6 +143,7 @@ public class BubblesManager : MonoBehaviour
             {
                 GameObject.Destroy(bubble);
             }
+
             spawnedBubbles.Clear();
         }
     }
@@ -117,11 +160,32 @@ public class BubblesManager : MonoBehaviour
         GameObject bubbleAnimation = Instantiate(prefab, spawnPoint, Quaternion.identity);
 
         // binding event
-        bubbleAnimation.transform.GetChild(0).GetComponent<BubbleController>().OnAnimationFinished += OnAnimationFinished;
+        bubbleAnimation.transform.GetChild(0).GetComponent<BubbleController>().OnAnimationFinished +=
+            OnAnimationFinished;
         bubbleAnimation.transform.GetChild(0).GetComponent<BubbleController>().OnBubbleAnimated += BubbleAnimated;
 
         spawnedBubbles.Add(bubbleAnimation);
     }
+
+    #region Hack
+
+    private List<GameObject> triggeredBubbles = new List<GameObject>();
+
+    public void TriggerBubbleAnimation()
+    {
+        foreach (var go in spawnedBubbles)
+        {
+            if (!go.activeSelf || triggeredBubbles.Contains(go)) continue;
+
+            // poke
+            go.GetComponentInChildren<BubbleController>().ManualPoke();
+
+            triggeredBubbles.Add(go);
+            break;
+        }
+    }
+
+    #endregion
 
     private GameObject GetRandomTemplate(BubbleType type)
     {
@@ -155,7 +219,8 @@ public class BubblesManager : MonoBehaviour
 
         go.SetActive(false);
 
-        Debug.Log($"Poke count: {pokeCount}, Fall count: {fallCount} Remaining: {totalBubbles - pokeCount - fallCount}");
+        Debug.Log(
+            $"Poke count: {pokeCount}, Fall count: {fallCount} Remaining: {totalBubbles - pokeCount - fallCount}");
 
         if (totalBubbles - pokeCount - fallCount <= 0)
             OnBubbleInteractionFinished();

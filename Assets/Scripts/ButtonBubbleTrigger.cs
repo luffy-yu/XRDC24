@@ -33,4 +33,9 @@ public class ButtonBubbleTrigger : MonoBehaviour
         }
        
     }
+
+    public void ManualTrigger()
+    {
+        OnBubbleButtonClicked.Invoke(m_Type);
+    }
 }

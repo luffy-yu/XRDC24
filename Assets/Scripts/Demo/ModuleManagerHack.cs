@@ -1,4 +1,5 @@
-﻿using Meta.XR.MRUtilityKit;
+﻿using System;
+using Meta.XR.MRUtilityKit;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
@@ -126,6 +127,9 @@ namespace XRDC24.Demo
 
             yield return new WaitForSeconds(second);
 
+            // enable after audio is played
+            nextActionAvailable = true;
+
             // hide text
             dialog.SetActive(false);
             dialog.transform.Find("Dialog_Agent").gameObject.SetActive(false);
@@ -157,15 +161,11 @@ namespace XRDC24.Demo
             {
                 if (audioFrameIndex == 0)
                 {
-                    m_TextToSpeech.SendRequest(
-                        "With each bubble you break, the world around you opens a little more. Not all bubbles need to be touched. Sometimes letting them fall brings new life.");
+                    // m_TextToSpeech.SendRequest(
+                    // "With each bubble you break, the world around you opens a little more. Not all bubbles need to be touched. Sometimes letting them fall brings new life.");
+                    PlayTTSCache(0);
                     audioFrameIndex++;
                 }
-                //else if (audioFrameIndex == 1)
-                //{
-                //    m_TextToSpeech.SendRequest("Not all bubbles need to be touched. Sometimes letting them fall brings new life.");
-                //    audioFrameIndex++;
-                //}
             }
         }
 
@@ -184,8 +184,9 @@ namespace XRDC24.Demo
             dialog.transform.Find("Dialog_User").gameObject.SetActive(false);
 
             // trigger bubble instruction
-            m_TextToSpeech.SendRequest(
-                "Let’s pop some bubbles together. Stretch your hand to break them, or let them float down – it’s all part of the journey!");
+            // m_TextToSpeech.SendRequest(
+            // "Let’s pop some bubbles together. Stretch your hand to break them, or let them float down – it’s all part of the journey!");
+            PlayTTSCache(1);
             audioFrameIndex = 0;
         }
 
@@ -232,14 +233,17 @@ namespace XRDC24.Demo
                     break;
 
                 case 3:
-                    m_TextToSpeech.SendRequest("Take your time. As you speak, I’ll reflect your words as bubbles.");
+                    // m_TextToSpeech.SendRequest("Take your time. As you speak, I’ll reflect your words as bubbles.");
+                    PlayTTSCache(2);
                     frameIndex = 0;
                     break;
 
                 case 4:
-                    m_TextToSpeech.SendRequest(
-                        "Your positive emotions will form soft, glowing bubbles. If there are heavier \r\nfeelings, they might appear darker or sharper – and that’s okay.");
+                    // m_TextToSpeech.SendRequest(
+                    // "Your positive emotions will form soft, glowing bubbles. If there are heavier \r\nfeelings, they might appear darker or sharper – and that’s okay.");
+                    PlayTTSCache(3);
                     frameIndex = 0;
+                    audioFrameIndex = 3; // by pass
                     break;
 
             }
@@ -254,8 +258,9 @@ namespace XRDC24.Demo
             m_3DUIPanel.transform.Find("FigmaCanvasI01")?.gameObject.SetActive(false);
 
             // to next onboarding frame
-            m_TextToSpeech.SendRequest(
-                "Hello, my name is Flo, your personal mental health assistant, I’m here to listen. How are you feeling today?");
+            // m_TextToSpeech.SendRequest(
+            // "Hello, my name is Flo, your personal mental health assistant, I’m here to listen. How are you feeling today?");
+            PlayTTSCache(4);
         }
 
         private IEnumerator DisappearingTitle()
@@ -311,7 +316,8 @@ namespace XRDC24.Demo
         {
             Debug.Log($"receive meditation result: {res}");
 
-            m_TextToSpeech.SendRequest(res);
+            // m_TextToSpeech.SendRequest(res);
+            PlayTTSCache(5);
         }
 
         private void SpawnPortal(Vector3 origin, Vector3 target, AnimationType type)
@@ -335,24 +341,38 @@ namespace XRDC24.Demo
             {
                 if (isBubbleFirstPoked)
                 {
-                    m_TextToSpeech.SendRequest(
-                        "Wonderful! You’ve touched a bubble – feel the energy flow through you.");
+                    // m_TextToSpeech.SendRequest(
+                    // "Wonderful! You’ve touched a bubble – feel the energy flow through you.");
+
+                    // disable to make it play
+                    nextActionAvailable = false;
+                    PlayTTSCache(6);
                     isBubbleFirstPoked = false;
                 }
                 else if (isBubbleSeconPoked)
                 {
-                    m_TextToSpeech.SendRequest(
-                        "Great focus! Watch as the bubble shatters, opening portals around you.");
+                    // m_TextToSpeech.SendRequest(
+                    // "Great focus! Watch as the bubble shatters, opening portals around you.");
+                    nextActionAvailable = false;
+                    PlayTTSCache(7);
                     isBubbleSeconPoked = false;
                 }
             }
-            else if (totalTriggerNum == 15)
+
+            if (totalTriggerNum == 14)
             {
-                m_TextToSpeech.SendRequest("Every movement matters.");
+                // disable next
+                nextActionAvailable = false;
+                // m_TextToSpeech.SendRequest("Every movement matters.");
+                PlayTTSCache(8);
             }
-            else if (totalTriggerNum == 18)
+
+            if (totalTriggerNum == 17)
             {
-                m_TextToSpeech.SendRequest("Keep going at your own pace.");
+                // disable next
+                nextActionAvailable = false;
+                // m_TextToSpeech.SendRequest("Keep going at your own pace.");
+                PlayTTSCache(9);
             }
         }
 
@@ -460,6 +480,16 @@ namespace XRDC24.Demo
                 .GetComponent<TextMeshProUGUI>();
             textUser = m_3DUIPanel.transform.Find("DialogAgentUser").Find("Dialog_User").GetChild(0).GetChild(0)
                 .GetComponent<TextMeshProUGUI>();
+
+            #region Hack
+
+            LoadTTSCache();
+            nextActionAvailable = true;
+
+            humanSource = GetComponent<AudioSource>();
+
+
+            #endregion
         }
 
         void Update()
@@ -470,12 +500,6 @@ namespace XRDC24.Demo
             UpdateAIAvatarParticleRate();
 
             PlayOnBoardingFrames();
-
-            // use to gen the audio file
-            //if (Input.GetKeyDown(KeyCode.Space))
-            //{
-            //    m_TextToSpeech.SendRequest("Wonderful! You’ve touched a bubble – feel the energy flow through you.\r\n\r\nGreat focus! Watch as the bubble shatters, opening portals around you.\r\n");
-            //}
         }
 
         private void AdjustUIPose()
@@ -591,6 +615,12 @@ namespace XRDC24.Demo
         {
             m_ModuleState++;
 
+            #region Hack
+
+            pokingBubbles = false;
+
+            #endregion
+
             // to handle the pipline
             switch (m_ModuleState)
             {
@@ -627,6 +657,218 @@ namespace XRDC24.Demo
                 m_OVRCameraRig.centerEyeAnchor.GetComponent<Camera>().clearFlags = CameraClearFlags.Skybox;
             }
         }
+
+        #region Hack for Windows Demostration
+
+        private string TTSCacheFolder = "TTSCache";
+
+        private Dictionary<int, AudioClip> TTSCache = new Dictionary<int, AudioClip>();
+
+        private string[] demoTTSStrings = new string[]
+        {
+            "With each bubble you break, the world around you opens a little more. Not all bubbles need to be touched. Sometimes letting them fall brings new life.",
+            "Let’s pop some bubbles together. Stretch your hand to break them, or let them float down – it’s all part of the journey!",
+            "Take your time. As you speak, I’ll reflect your words as bubbles.",
+            "Your positive emotions will form soft, glowing bubbles. If there are heavier \r\nfeelings, they might appear darker or sharper – and that’s okay.",
+            "Hello, my name is Flo, your personal mental health assistant, I’m here to listen. How are you feeling today?",
+            "Hi, I’m doing great today! I just got my new VR Headset today. Which I’ve been dreaming about for months.", // this is input from user
+            "Wonderful! You’ve touched a bubble – feel the energy flow through you.",
+            "Great focus! Watch as the bubble shatters, opening portals around you.",
+            "Every movement matters.",
+            "Keep going at your own pace.",
+        };
+
+        private AudioClip positiveInput;
+        private AudioClip positiveOutput;
+
+        void LoadTTSCache()
+        {
+            print("Loading TTS cache...");
+            TTSCache.Clear();
+            InitSounds();
+        }
+
+        void PlayTTSCache(int index)
+        {
+            // load clip and get text
+            var clip = TTSCache[index];
+            var text = demoTTSStrings[index];
+            // set clip
+            m_TextToSpeech.audioSource.clip = clip;
+            PlayAIAgentAudioClip(clip, text);
+        }
+
+        void InitSounds()
+        {
+            var count = demoTTSStrings.Length;
+            for (var i = 0; i < count; i++)
+            {
+                var clip = LoadSound(i);
+                TTSCache.Add(i, clip);
+            }
+
+            // load positive
+            positiveInput = LoadSound("positive_input");
+            positiveOutput = LoadSound("positive_output");
+        }
+
+        AudioClip LoadSoundByPath(string path)
+        {
+            AudioClip clip = Resources.Load<AudioClip>(path);
+
+            if (clip != null)
+            {
+                Debug.Log($"Loaded {path}");
+            }
+            else
+            {
+                Debug.LogWarning($"Failed to load {path}");
+            }
+
+            return clip;
+        }
+
+        AudioClip LoadSound(int index)
+        {
+            // start from 1
+            string path = $"Sounds/Windows/TTSCache_input_{index + 1}";
+            return LoadSoundByPath(path);
+        }
+
+        AudioClip LoadSound(string name)
+        {
+            // start from 1
+            string path = $"Sounds/Windows/{name}";
+            return LoadSoundByPath(path);
+        }
+
+        void ClickStart()
+        {
+            m_BubbleButtonStart.transform.Find("Sphere").GetChild(0).GetComponent<ButtonBubbleTrigger>()
+                .ManualTrigger();
+            nextActionAvailable = false;
+        }
+
+        void PlayPositiveInput()
+        {
+            print("Playing positive input...");
+            var text =
+                "Hi, I’m doing great today! I just got my new VR Headset today, which I’ve been dreaming about for months.";
+            // m_TextToSpeech.audioSource.clip = positiveInput;
+
+            // play audio first and then show text
+            var second = positiveInput.length;
+            // m_TextToSpeech.audioSource.Play();
+
+            humanSource.clip = positiveInput;
+            humanSource.Play();
+
+            StartCoroutine(DelayShowText(second, text));
+        }
+
+        IEnumerator DelayShowText(float second, string text)
+        {
+            yield return new WaitForSeconds(second + 0.5f);
+            yield return ShowAgentText(second, text);
+        }
+
+        void PlayPositiveOutput()
+        {
+            var text =
+                "That's awesome! VR headsets are so cool. What games or experiences are you planing to try first?";
+            m_TextToSpeech.audioSource.clip = positiveOutput;
+            PlayAIAgentAudioClip(positiveOutput, text);
+            // change stage
+            StartCoroutine(SwitchState(positiveOutput.length));
+        }
+
+        IEnumerator SwitchState(float gap)
+        {
+            yield return new WaitForSeconds(gap);
+            m_ModuleState = ModuleState.MoodDetection;
+        }
+
+        void SpawnBubbles()
+        {
+            totalBubbleN = 18;
+            int positiveBubbleN = 10;
+            int negativeBubbleN = totalBubbleN - positiveBubbleN;
+            m_BubbleManager.SpawnBubbles(unityCamera, positiveBubbleN, negativeBubbleN);
+        }
+
+        void LoadRoom()
+        {
+            print("Load Room");
+        }
+
+        void StartPoking()
+        {
+            pokingBubbles = true;
+        }
+
+        void RandomPokeBubbles()
+        {
+            m_BubbleManager.TriggerBubbleAnimation();
+        }
+
+        private int actionIndex = 0;
+
+        private bool nextActionAvailable = false;
+
+        private bool pokingBubbles = false;
+
+        private AudioSource humanSource;
+
+        [Space(30)] [Header("Hack")] public Camera unityCamera;
+
+        public void SimulateAction()
+        {
+            switch (actionIndex)
+            {
+                // click start
+                case 0:
+                    ClickStart();
+                    break;
+                // click recording button, play positive input
+                case 1:
+                    PlayPositiveInput();
+                    break;
+                // play positive output
+                case 2:
+                    PlayPositiveOutput();
+                    break;
+                case 3:
+                    LoadRoom();
+                    break;
+                // spawn bubbles
+                case 4:
+                    SpawnBubbles();
+                    break;
+                case 5:
+                    StartPoking();
+                    break;
+                case 6: // todo
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void LateUpdate()
+        {
+            if (nextActionAvailable && !pokingBubbles && Input.GetKeyUp(KeyCode.N))
+            {
+                SimulateAction();
+                actionIndex++;
+            }
+
+            if (nextActionAvailable && pokingBubbles && Input.GetKeyUp(KeyCode.N))
+            {
+                RandomPokeBubbles();
+            }
+        }
+
+        #endregion
 
     }
 }
