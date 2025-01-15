@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 using XRDC24.Environment;
 using XRDC24.Helper;
 
@@ -16,7 +18,7 @@ namespace XRDC24.Demo
 
         public Camera part1Camera;
         public Camera part2Camera;
-        
+
         public RoomDissolveController dissolveController;
 
         private int p1CameraCullingMask;
@@ -33,12 +35,14 @@ namespace XRDC24.Demo
             // disable p2 camera
             part2Camera.enabled = false;
 
+            part2Camera.gameObject.GetComponent<AudioListener>().enabled = false;
+
             moduleManagerHack.SwitchToPart2 += SwitchToPart2;
             customInputHandler.frameController.OnFinalFrame += OnFinalFrame;
             // disable part2 first
             part2Root.SetActive(false);
             customInputHandler.MyTurn = false;
-            
+
             dissolveController.inDebugMode = false;
         }
 
@@ -46,8 +50,24 @@ namespace XRDC24.Demo
         {
             // show splash screen, disable all interactions
             part2Root.SetActive(false);
-            customInputHandler.gameObject.SetActive(false);
-            // enable splash
+            customInputHandler.MyTurn = false;
+
+            part2Camera.enabled = false;
+            part1Camera.enabled = true;
+
+            // revert disolve
+            dissolveController.Revert();
+            // reset
+            moduleManagerHack.BackToStart();
+            // show part1
+            part1Root.SetActive(true);
+            // reset
+            StartCoroutine(ShowFullScreen());
+        }
+
+        IEnumerator ShowFullScreen()
+        {
+            yield return new WaitForSeconds(5f);
             splashScreen.ShowEnd();
         }
 
@@ -57,15 +77,36 @@ namespace XRDC24.Demo
             part2Camera.enabled = true;
 
             customInputHandler.MyTurn = true;
-            
+
+            part1Camera.gameObject.GetComponent<AudioListener>().enabled = false;
+            part2Camera.gameObject.GetComponent<AudioListener>().enabled = true;
+
             // disolve
             dissolveController.Dissolve();
+
+            // clear portals
+            moduleManagerHack.ClearPortals();
 
             // disable stage1
             part1Root.SetActive(false);
             moduleManagerHack.gameObject.SetActive(false);
             // enable stage2
             part2Root.SetActive(true);
+        }
+
+        private void Update()
+        {
+#if UNITY_EDITOR
+            if (Input.GetKeyDown(KeyCode.Alpha0))
+            {
+                SwitchToPart2();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                OnFinalFrame();
+            }
+#endif
         }
     }
 }

@@ -522,12 +522,21 @@ namespace XRDC24.Demo
                 var count = m_3DUIPanel.transform.childCount;
                 for (var i = 0; i < count; i++)
                 {
-                    var child = m_3DUIPanel.transform.GetChild(i).gameObject;
-                    var name = child.name.ToLower();
-                    if (name.Contains("canvas") || name.Contains("dialog") || name.Contains("cube"))
+
+                    // error for unknown reason
+                    try
                     {
-                        // change parent
-                        child.transform.SetParent(virtualCanvasRoot.transform);
+                        var child = m_3DUIPanel.transform.GetChild(i).gameObject;
+                        var name = child.name.ToLower();
+                        if (name.Contains("canvas") || name.Contains("dialog") || name.Contains("cube"))
+                        {
+                            // change parent
+                            child.transform.SetParent(virtualCanvasRoot.transform);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        
                     }
                 }
             }
@@ -1003,6 +1012,22 @@ namespace XRDC24.Demo
                 default:
                     break;
             }
+        }
+
+        public void BackToStart()
+        {
+            // disable camera control
+            enableCameraControl = false;
+            // reset camera
+            ResetPositionAndRotation();
+            actionIndex = -1;
+            nextActionAvailable = true;
+            pokingBubbles = false;
+        }
+
+        public void ClearPortals()
+        {
+            m_PortalManager.ClearPortals();
         }
 
         private void LateUpdate()
