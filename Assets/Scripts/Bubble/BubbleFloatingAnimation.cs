@@ -86,14 +86,14 @@ namespace XRDC24.Bubble
 
         private void OnGUI()
         {
-            GUILayout.BeginVertical();
-
-            if (GUILayout.Button("Start Following"))
-            {
-                StartFollowing();
-            }
-
-            GUILayout.EndVertical();
+            // GUILayout.BeginVertical();
+            //
+            // if (GUILayout.Button("Start Following"))
+            // {
+            //     StartFollowing();
+            // }
+            //
+            // GUILayout.EndVertical();
         }
 
         private void Update()
