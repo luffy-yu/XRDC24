@@ -6,12 +6,13 @@ namespace XRDC24.Helper
     public class HTMLTextOnGUI : MonoBehaviour
     {
         private string htmlText =
-            "<size=50><color=purple><b>Float Mind</b></color></size>\n\n" +
-            "<size=25><color=purple>By Zia, Jennifer, Tingting, Muki, and Luffy</color></size>\n" +
+            "<size=50><color=white><b>Float Mind</b></color></size>\n\n" +
+            "<size=25><color=white>By Zia, Jennifer, Tingting, Muki, and Luffy</color></size>\n" +
             "<size=25><color=black>-------------------------------------------------------</color></size>\n" +
             "<color=white>WASD: Move Camera</color>\n" +
             "<color=white>Mouse: Rotate Camera</color>\n" +
             "<color=white>ESC: Lock Rotation</color>\n" +
+            "<color=white>Space: Reset Camera</color>\n" +
             "<color=white>(N)ext, (P)revious: Frame Control</color>\n" +
             "<size=25><color=black>-------------------------------------------------------</color></size>\n" +
             "<size=15><i><color=yellow>Design Review Purpose Only,</color></i></size>\n" +

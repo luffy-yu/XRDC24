@@ -29,6 +29,8 @@ namespace XRDC24.Interaction
 
         [HideInInspector] public bool inDebugMode = true;
 
+        public System.Action OnFinalFrame;
+
         private void Start()
         {
             currentFrame = -1; //24
@@ -237,9 +239,11 @@ namespace XRDC24.Interaction
 
         public void NextFrame()
         {
-            if (AtLastFrame) return;
-            
-            // TODO: show end screen
+            if (AtLastFrame)
+            {
+                OnFinalFrame?.Invoke();
+                return;
+            }
 
             var ggc = GetGuidedGestureController();
             if (ggc != null && ggc.AutoLoop && !ggc.AutoLoopDone)

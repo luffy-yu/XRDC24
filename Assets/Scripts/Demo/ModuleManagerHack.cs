@@ -499,6 +499,11 @@ namespace XRDC24.Demo
 
             #region Hack
 
+            // Save the initial position and rotation for reset functionality
+            var t = unityCamera.transform;
+            initialPosition = t.position;
+            initialRotation = t.rotation;
+
             m_BubbleManager.unityCamera = unityCamera;
             m_PortalManager.unityCamera = unityCamera;
 
@@ -538,6 +543,50 @@ namespace XRDC24.Demo
             UpdateAIAvatarParticleRate();
 
             PlayOnBoardingFrames();
+
+            ControlCamera();
+        }
+
+        private void ControlCamera()
+        {
+            if (!enableCameraControl) return;
+
+            // Camera rotation
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                // disable
+                enableRotation = false;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Mouse1) ||
+                Input.GetKeyDown(KeyCode.Mouse2))
+            {
+                // enable
+                enableRotation = true;
+            }
+
+            if (enableRotation)
+            {
+                // Mouse for camera rotation
+                float mouseSensitivity = 2f;
+                float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+                float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+
+                transform.Rotate(Vector3.up, mouseX, Space.World);
+                transform.Rotate(Vector3.left, mouseY, Space.Self);
+            }
+
+            // Space to reset position and rotation
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                ResetPositionAndRotation();
+            }
+        }
+
+        private void ResetPositionAndRotation()
+        {
+            unityCamera.transform.position = initialPosition;
+            unityCamera.transform.rotation = initialRotation;
         }
 
         private void AdjustUIPose()
@@ -844,6 +893,8 @@ namespace XRDC24.Demo
             int positiveBubbleN = 10;
             int negativeBubbleN = totalBubbleN - positiveBubbleN;
             m_BubbleManager.SpawnBubbles(unityCamera, positiveBubbleN, negativeBubbleN);
+            // enable camera control
+            enableCameraControl = true;
         }
 
         void StartPoking()
@@ -868,12 +919,19 @@ namespace XRDC24.Demo
         void SwitchToNext()
         {
             print("Switch to next...");
+            // remove all portals
             // disable stage 1
             nextActionAvailable = false;
             // disable environment
             m_AvatarBackground.SetActive(false);
             // disable exit button
             m_BubbleButtonExit.SetActive(false);
+            // disable camera control
+            enableCameraControl = false;
+            // reset camera
+            ResetPositionAndRotation();
+            // switch part2
+            SwitchToPart2?.Invoke();
         }
 
         private int actionIndex = -1;
@@ -886,8 +944,16 @@ namespace XRDC24.Demo
 
         private GameObject virtualCanvasRoot;
 
+        public System.Action SwitchToPart2;
+
         [Space(30)] [Header("Hack")] public Camera unityCamera;
         public FullScreenImage fullScreenImage;
+
+        private Vector3 initialPosition;
+        private Quaternion initialRotation;
+        private bool enableRotation = false;
+
+        private bool enableCameraControl = false;
 
         public void SimulateAction()
         {

@@ -14,9 +14,7 @@ namespace XRDC24.Helper
         public RoomDissolveController dissolveController;
         public List<GameObject> gestureRecognizers;
         public GuidedGestureController gestureController;
-        public Text helpText; // Assign a UI Text element in the Inspector to display help information
-
-        private bool isHelpVisible = false;
+        
         private Vector3 initialPosition;
         private Quaternion initialRotation;
         private bool enableRotation = false;
@@ -39,12 +37,6 @@ namespace XRDC24.Helper
             // Save the initial position and rotation for reset functionality
             initialPosition = transform.position;
             initialRotation = transform.rotation;
-
-            // Ensure help text is hidden initially
-            if (helpText != null)
-            {
-                helpText.gameObject.SetActive(false);
-            }
         }
 
         void Update()
@@ -56,16 +48,6 @@ namespace XRDC24.Helper
 
         private void HandleInput()
         {
-            // Toggle help information with Tab
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                isHelpVisible = !isHelpVisible;
-                if (helpText != null)
-                {
-                    helpText.gameObject.SetActive(isHelpVisible);
-                }
-            }
-            
             // Camera rotation
             if (Input.GetKeyDown(KeyCode.Escape))
             {
