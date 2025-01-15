@@ -231,7 +231,7 @@ public class ModuleManager : MonoBehaviour
                 break;
 
             case 4:
-                m_TextToSpeech.SendRequest("Your positive emotions will form soft, glowing bubbles. If there are heavier \r\nfeelings, they might appear darker or sharper – and that’s okay.");
+                m_TextToSpeech.SendRequest("Your positive emotions will form soft, glowing bubbles. If there are heavier \r\nfeelings, they might appear in a dark color – and that’s okay.");
                 frameIndex = 0;
                 break;
 
