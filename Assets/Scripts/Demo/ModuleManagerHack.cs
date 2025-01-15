@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using XRDC24.Bubble;
 using UnityEngine.VFX;
 using System.Collections;
+using XRDC24.Helper;
 using XRDC24.Interaction;
 using static ButtonBubbleTrigger;
 
@@ -875,7 +876,7 @@ namespace XRDC24.Demo
             m_BubbleButtonExit.SetActive(false);
         }
 
-        private int actionIndex = 0;
+        private int actionIndex = -1;
 
         private bool nextActionAvailable = false;
 
@@ -886,13 +887,19 @@ namespace XRDC24.Demo
         private GameObject virtualCanvasRoot;
 
         [Space(30)] [Header("Hack")] public Camera unityCamera;
+        public FullScreenImage fullScreenImage;
 
         public void SimulateAction()
         {
             switch (actionIndex)
             {
+                // case -1:
+                case -1:
+                    fullScreenImage.ShowStart();
+                    break;
                 // click start
                 case 0:
+                    fullScreenImage.DisableSplash();
                     ClickStart();
                     break;
                 // click recording button, play positive input
