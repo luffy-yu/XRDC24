@@ -18,6 +18,8 @@ namespace XRDC24.Helper
         private Vector3 initialPosition;
         private Quaternion initialRotation;
         private bool enableRotation = false;
+        
+        [HideInInspector]public bool MyTurn = false;
 
         void Start()
         {
@@ -48,6 +50,8 @@ namespace XRDC24.Helper
 
         private void HandleInput()
         {
+            if (!MyTurn) return;
+            
             // Camera rotation
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -115,11 +119,11 @@ namespace XRDC24.Helper
         {
             transform.position = initialPosition;
             transform.rotation = initialRotation;
-            // reset frames
-            frameController.ResetFrame();
-            // reset dissolve
-            dissolveController.Revert();
-            Debug.Log("Position and rotation reset.");
+            // // reset frames
+            // frameController.ResetFrame();
+            // // reset dissolve
+            // dissolveController.Revert();
+            // Debug.Log("Position and rotation reset.");
         }
     }
 }

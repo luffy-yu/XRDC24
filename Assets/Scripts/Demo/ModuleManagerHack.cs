@@ -331,7 +331,7 @@ namespace XRDC24.Demo
 
             print("Spawning portal");
 
-            if (Physics.Raycast(ray, out RaycastHit hit, 100f, 1 << LayerMask.NameToLayer("RoomMesh")))
+            if (Physics.Raycast(ray, out RaycastHit hit, 100f, 1 << LayerMask.NameToLayer("Default")))
             {
                 print("Spawned portal");
 
@@ -410,50 +410,50 @@ namespace XRDC24.Demo
             m_SpeechToText.EndRecording();
         }
 
-        public void SceneInitialized()
-        {
-            Debug.Log("scene loaded and created Successfully");
+        // public void SceneInitialized()
+        // {
+        //     Debug.Log("scene loaded and created Successfully");
+        //
+        //     foreach (MRUKRoom room in MRUK.Instance.Rooms)
+        //     {
+        //         foreach (MRUKAnchor childAnchor in room.Anchors)
+        //         {
+        //             if (childAnchor.HasAnyLabel(MRUKAnchor.SceneLabels.WALL_FACE))
+        //             {
+        //                 walls.Add(childAnchor);
+        //             }
+        //             else if (childAnchor.HasAnyLabel(MRUKAnchor.SceneLabels.FLOOR))
+        //             {
+        //                 ground = childAnchor;
+        //             }
+        //
+        //         }
+        //     }
+        //
+        //     Debug.Log($"wall num: {walls.Count}");
+        //     Debug.Log($"ground: {ground != null}");
+        // }
 
-            foreach (MRUKRoom room in MRUK.Instance.Rooms)
-            {
-                foreach (MRUKAnchor childAnchor in room.Anchors)
-                {
-                    if (childAnchor.HasAnyLabel(MRUKAnchor.SceneLabels.WALL_FACE))
-                    {
-                        walls.Add(childAnchor);
-                    }
-                    else if (childAnchor.HasAnyLabel(MRUKAnchor.SceneLabels.FLOOR))
-                    {
-                        ground = childAnchor;
-                    }
 
-                }
-            }
-
-            Debug.Log($"wall num: {walls.Count}");
-            Debug.Log($"ground: {ground != null}");
-        }
-
-
-        private void SetupSceneMeshes()
-        {
-            print("SetupSceneMeshes");
-            // walls
-            foreach (var anchor in walls)
-            {
-                if (anchor.transform.GetChild(0))
-                    anchor.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("RoomMesh");
-                else
-                    Debug.LogError("No scene meshes were created! Please check!");
-            }
-
-            // ground
-            if (ground.transform.GetChild(0))
-                ground.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("RoomMesh");
-            else
-                Debug.LogError("No scene meshes were created! Please check!");
-
-        }
+        // private void SetupSceneMeshes()
+        // {
+        //     print("SetupSceneMeshes");
+        //     // walls
+        //     foreach (var anchor in walls)
+        //     {
+        //         if (anchor.transform.GetChild(0))
+        //             anchor.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("RoomMesh");
+        //         else
+        //             Debug.LogError("No scene meshes were created! Please check!");
+        //     }
+        //
+        //     // ground
+        //     if (ground.transform.GetChild(0))
+        //         ground.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("RoomMesh");
+        //     else
+        //         Debug.LogError("No scene meshes were created! Please check!");
+        //
+        // }
 
         private void ModuleTrigger(BubbleButtonType type)
         {
@@ -537,14 +537,14 @@ namespace XRDC24.Demo
 
         void Update()
         {
+            ControlCamera();
+            
             AdjustUIPose();
 
             UpdateAIAvatarScale();
             UpdateAIAvatarParticleRate();
 
             PlayOnBoardingFrames();
-
-            ControlCamera();
         }
 
         private void ControlCamera()
@@ -572,8 +572,8 @@ namespace XRDC24.Demo
                 float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
                 float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
-                transform.Rotate(Vector3.up, mouseX, Space.World);
-                transform.Rotate(Vector3.left, mouseY, Space.Self);
+                unityCamera.transform.Rotate(Vector3.up, mouseX, Space.World);
+                unityCamera.transform.Rotate(Vector3.left, mouseY, Space.Self);
             }
 
             // Space to reset position and rotation
@@ -727,7 +727,7 @@ namespace XRDC24.Demo
                     break;
 
                 case ModuleState.MoodDetection:
-                    SetupSceneMeshes();
+                    // SetupSceneMeshes();
                     break;
 
                 case ModuleState.FreeSpeech:
@@ -889,19 +889,22 @@ namespace XRDC24.Demo
 
         void SpawnBubbles()
         {
+            StartCoroutine(SpwanBubblesImpl());
+        }
+
+        IEnumerator SpwanBubblesImpl()
+        {
+            // wait for voice to be played
+            yield return new WaitForSeconds(1.0f);
+            
             totalBubbleN = 18;
             int positiveBubbleN = 10;
             int negativeBubbleN = totalBubbleN - positiveBubbleN;
             m_BubbleManager.SpawnBubbles(unityCamera, positiveBubbleN, negativeBubbleN);
-            // enable camera control
-            enableCameraControl = true;
         }
 
         void StartPoking()
         {
-            // prepare portals
-            SetupSceneMeshes();
-
             pokingBubbles = true;
         }
 
@@ -934,7 +937,7 @@ namespace XRDC24.Demo
             SwitchToPart2?.Invoke();
         }
 
-        private int actionIndex = -1;
+        private int actionIndex = -2;
 
         private bool nextActionAvailable = false;
 
@@ -955,17 +958,23 @@ namespace XRDC24.Demo
 
         private bool enableCameraControl = false;
 
+        // public List<GameObject> wallObjects;
+        // public List<GameObject> groundObjects;
+
         public void SimulateAction()
         {
             switch (actionIndex)
             {
-                // case -1:
-                case -1:
+                // case -2:
+                case -2:
                     fullScreenImage.ShowStart();
                     break;
                 // click start
-                case 0:
+                case -1:
                     fullScreenImage.DisableSplash();
+                    m_BubbleButtonStart.SetActive(true);
+                    break;
+                case 0:
                     ClickStart();
                     break;
                 // click recording button, play positive input
@@ -974,6 +983,8 @@ namespace XRDC24.Demo
                     break;
                 // play positive output
                 case 2:
+                    // enable camera control
+                    enableCameraControl = true;
                     PlayPositiveOutput();
                     SpawnBubbles();
                     break;

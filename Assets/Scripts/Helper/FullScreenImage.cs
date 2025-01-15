@@ -39,20 +39,20 @@ namespace XRDC24.Helper
 
         void Update()
         {
-            if (Input.GetKeyUp(KeyCode.S))
-            {
-                ShowStart();
-            }
-
-            if (Input.GetKeyUp(KeyCode.E))
-            {
-                ShowEnd();
-            }
-
-            if (Input.GetKeyUp(KeyCode.D))
-            {
-                DisableSplash();
-            }
+            // if (Input.GetKeyUp(KeyCode.S))
+            // {
+            //     ShowStart();
+            // }
+            //
+            // if (Input.GetKeyUp(KeyCode.E))
+            // {
+            //     ShowEnd();
+            // }
+            //
+            // if (Input.GetKeyUp(KeyCode.D))
+            // {
+            //     DisableSplash();
+            // }
         }
     }
 }
