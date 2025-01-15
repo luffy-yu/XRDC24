@@ -13,6 +13,7 @@ public class BubblesManager : MonoBehaviour
 
     public int pokeCount = 0;
     public int fallCount = 0;
+    public int PokedFallen => pokeCount + fallCount;
     public AudioSource m_AudioSource;
     public AudioClip m_BubbleBurstSound;
     public AudioClip m_BubbleGenSound;

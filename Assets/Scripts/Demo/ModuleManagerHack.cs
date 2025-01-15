@@ -323,17 +323,17 @@ namespace XRDC24.Demo
         private void SpawnPortal(Vector3 origin, Vector3 target, AnimationType type)
         {
             var newOrigin = new Vector3(origin.x, origin.y, origin.z);
-            
+
             newOrigin.y -= 1.0f;
-            
+
             Ray ray = new Ray(newOrigin, target - newOrigin);
-            
+
             print("Spawning portal");
 
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, 1 << LayerMask.NameToLayer("RoomMesh")))
             {
                 print("Spawned portal");
-                
+
                 Vector3 hitPoint = hit.point;
                 GameObject hitObject = hit.collider.gameObject;
 
@@ -475,7 +475,7 @@ namespace XRDC24.Demo
 
         private void Awake()
         {
-            
+
         }
 
         void Start()
@@ -490,7 +490,7 @@ namespace XRDC24.Demo
             m_TitleLogo.SetActive(true);
             m_AvatarBackground.SetActive(true);
             m_AIAvatar.SetActive(true);
-            
+
             textAgent = m_3DUIPanel.transform.Find("DialogAgentUser").Find("Dialog_Agent").GetChild(0).GetChild(0)
                 .GetComponent<TextMeshProUGUI>();
             textUser = m_3DUIPanel.transform.Find("DialogAgentUser").Find("Dialog_User").GetChild(0).GetChild(0)
@@ -509,7 +509,7 @@ namespace XRDC24.Demo
             virtualCanvasRoot = new GameObject();
             virtualCanvasRoot.transform.SetAsFirstSibling();
             virtualCanvasRoot.name = "VirtualCanvasRoot";
-            
+
             // generate virtual canvas
             if (virtualCanvasRoot.transform.childCount == 0)
             {
@@ -650,6 +650,18 @@ namespace XRDC24.Demo
 
         public void ToNext()
         {
+            print("bubbles Finished");
+            pokingBubbles = false;
+            // disable virtual canvas
+            virtualCanvasRoot.SetActive(false);
+
+            // early exit
+            if (!pokingBubbles)
+            {
+                nextActionAvailable = true;
+                return;
+            }
+
             m_ModuleState++;
 
             #region Hack
@@ -837,7 +849,7 @@ namespace XRDC24.Demo
         {
             // prepare portals
             SetupSceneMeshes();
-            
+
             pokingBubbles = true;
         }
 
@@ -848,7 +860,19 @@ namespace XRDC24.Demo
 
         void ShowExitButton()
         {
+            print("Show exit button...");
             m_BubbleButtonExit.SetActive(true);
+        }
+
+        void SwitchToNext()
+        {
+            print("Switch to next...");
+            // disable stage 1
+            nextActionAvailable = false;
+            // disable environment
+            m_AvatarBackground.SetActive(false);
+            // disable exit button
+            m_BubbleButtonExit.SetActive(false);
         }
 
         private int actionIndex = 0;
@@ -858,7 +882,7 @@ namespace XRDC24.Demo
         private bool pokingBubbles = false;
 
         private AudioSource humanSource;
-        
+
         private GameObject virtualCanvasRoot;
 
         [Space(30)] [Header("Hack")] public Camera unityCamera;
@@ -887,6 +911,10 @@ namespace XRDC24.Demo
                 // show exit button
                 case 4:
                     ShowExitButton();
+                    break;
+                // swith to next sceen
+                case 5:
+                    SwitchToNext();
                     break;
                 default:
                     break;
