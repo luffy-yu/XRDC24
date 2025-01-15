@@ -118,7 +118,7 @@ namespace XRDC24.Demo
 
         private IEnumerator ShowAgentText(float second, string text)
         {
-            GameObject dialog = m_3DUIPanel.transform.Find("DialogAgentUser").gameObject;
+            GameObject dialog = virtualCanvasRoot.transform.Find("DialogAgentUser").gameObject;
 
             // show text
             dialog.SetActive(true);
@@ -141,7 +141,7 @@ namespace XRDC24.Demo
                     yield return new WaitForSeconds(0.5f);
 
                     m_3DButton.SetActive(true);
-                    m_3DUIPanel.transform.Find("FigmaCanvas02").gameObject.SetActive(true);
+                    virtualCanvasRoot.transform.Find("FigmaCanvas02").gameObject.SetActive(true);
 
                     frameIndex = 3;
                     audioFrameIndex++;
@@ -171,7 +171,7 @@ namespace XRDC24.Demo
 
         private IEnumerator ShowUserText(string text)
         {
-            GameObject dialog = m_3DUIPanel.transform.Find("DialogAgentUser").gameObject;
+            GameObject dialog = virtualCanvasRoot.transform.Find("DialogAgentUser").gameObject;
 
             // show text
             dialog.SetActive(true);
@@ -251,11 +251,11 @@ namespace XRDC24.Demo
 
         private IEnumerator ShowOnboardPanel()
         {
-            m_3DUIPanel.transform.Find("FigmaCanvasI01")?.gameObject.SetActive(true);
+            virtualCanvasRoot.transform.Find("FigmaCanvasI01")?.gameObject.SetActive(true);
 
             yield return new WaitForSeconds(Constants.ONBOARD_PANEL_SHOW_SECONDS);
 
-            m_3DUIPanel.transform.Find("FigmaCanvasI01")?.gameObject.SetActive(false);
+            virtualCanvasRoot.transform.Find("FigmaCanvasI01")?.gameObject.SetActive(false);
 
             // to next onboarding frame
             // m_TextToSpeech.SendRequest(
@@ -388,7 +388,7 @@ namespace XRDC24.Demo
             if (type != TriggerType.Recording)
                 return;
 
-            m_3DUIPanel.transform.Find("FigmaCanvas02").gameObject.SetActive(false);
+            virtualCanvasRoot.transform.Find("FigmaCanvas02").gameObject.SetActive(false);
             m_SpeechToText.StartRecording();
         }
 
@@ -463,6 +463,11 @@ namespace XRDC24.Demo
             }
         }
 
+        private void Awake()
+        {
+            
+        }
+
         void Start()
         {
             // init states
@@ -475,7 +480,7 @@ namespace XRDC24.Demo
             m_TitleLogo.SetActive(true);
             m_AvatarBackground.SetActive(true);
             m_AIAvatar.SetActive(true);
-
+            
             textAgent = m_3DUIPanel.transform.Find("DialogAgentUser").Find("Dialog_Agent").GetChild(0).GetChild(0)
                 .GetComponent<TextMeshProUGUI>();
             textUser = m_3DUIPanel.transform.Find("DialogAgentUser").Find("Dialog_User").GetChild(0).GetChild(0)
@@ -483,11 +488,32 @@ namespace XRDC24.Demo
 
             #region Hack
 
+            m_BubbleManager.unityCamera = unityCamera;
+
             LoadTTSCache();
             nextActionAvailable = true;
 
             humanSource = GetComponent<AudioSource>();
 
+            virtualCanvasRoot = new GameObject();
+            virtualCanvasRoot.transform.SetAsFirstSibling();
+            virtualCanvasRoot.name = "VirtualCanvasRoot";
+            
+            // generate virtual canvas
+            if (virtualCanvasRoot.transform.childCount == 0)
+            {
+                var count = m_3DUIPanel.transform.childCount;
+                for (var i = 0; i < count; i++)
+                {
+                    var child = m_3DUIPanel.transform.GetChild(i).gameObject;
+                    var name = child.name.ToLower();
+                    if (name.Contains("canvas") || name.Contains("dialog") || name.Contains("cube"))
+                    {
+                        // change parent
+                        child.transform.SetParent(virtualCanvasRoot.transform);
+                    }
+                }
+            }
 
             #endregion
         }
@@ -505,13 +531,13 @@ namespace XRDC24.Demo
         private void AdjustUIPose()
         {
             Vector3 headPos = unityCamera.transform.position;
-            if (Vector3.Distance(headPos, m_3DUIPanel.transform.position) < 1f)
+            if (Vector3.Distance(headPos, virtualCanvasRoot.transform.position) < 1f)
                 return;
 
             Vector3 forward = unityCamera.transform.forward;
-
-            m_3DUIPanel.transform.position = headPos + forward * 0.8f;
-            m_3DUIPanel.transform.rotation = unityCamera.transform.rotation;
+            // only update canvas
+            virtualCanvasRoot.transform.position = headPos + forward * 0.55f;
+            virtualCanvasRoot.transform.rotation = unityCamera.transform.rotation;
 
             // m_AIAvatar.transform.position = headPos + forward * 1.5f;
             // m_AIAvatar.transform.rotation = unityCamera.transform.rotation;
@@ -818,6 +844,8 @@ namespace XRDC24.Demo
         private bool pokingBubbles = false;
 
         private AudioSource humanSource;
+        
+        private GameObject virtualCanvasRoot;
 
         [Space(30)] [Header("Hack")] public Camera unityCamera;
 

@@ -63,9 +63,20 @@ public class BubblesManager : MonoBehaviour
 
             spawnedBubbles.Clear();
         }
+        
+        Vector3 headPos = Vector3.zero;
+        Vector3 forward = Vector3.forward;
 
-        Vector3 headPos = m_OVRCameraRig.centerEyeAnchor.position;
-        Vector3 forward = m_OVRCameraRig.transform.forward;
+        if (unityCamera != null)
+        {
+            headPos = unityCamera.transform.position;
+            forward = unityCamera.transform.forward;
+        }
+        else
+        {
+            headPos = m_OVRCameraRig.centerEyeAnchor.position;
+            forward = m_OVRCameraRig.transform.forward;   
+        }
 
         for (var i = 0; i < positiveNum; i++)
         {
@@ -232,9 +243,22 @@ public class BubblesManager : MonoBehaviour
         m_AudioSource.clip = m_BubbleBurstSound;
         m_AudioSource.Play();
 
-        // ray cast to get the portal position and sent back to module manager
-        OnBubbleAnimated(m_OVRCameraRig.centerEyeAnchor.position, obj.transform.position, type);
+        if (unityCamera == null)
+        {
+            // ray cast to get the portal position and sent back to module manager
+            OnBubbleAnimated(m_OVRCameraRig.centerEyeAnchor.position, obj.transform.position, type);   
+        }
+        else
+        {
+            OnBubbleAnimated(unityCamera.transform.position, obj.transform.position, type);
+        }
     }
+
+    #region Hack
+
+    [HideInInspector] public Camera unityCamera;
+
+    #endregion
 
     void LetAllFall()
     {
