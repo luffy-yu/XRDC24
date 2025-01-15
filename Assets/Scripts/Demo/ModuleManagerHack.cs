@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using XRDC24.Bubble;
 using UnityEngine.VFX;
 using System.Collections;
+using XRDC24.Helper;
 using XRDC24.Interaction;
 using static ButtonBubbleTrigger;
 
@@ -118,7 +119,7 @@ namespace XRDC24.Demo
 
         private IEnumerator ShowAgentText(float second, string text)
         {
-            GameObject dialog = m_3DUIPanel.transform.Find("DialogAgentUser").gameObject;
+            GameObject dialog = virtualCanvasRoot.transform.Find("DialogAgentUser").gameObject;
 
             // show text
             dialog.SetActive(true);
@@ -141,7 +142,7 @@ namespace XRDC24.Demo
                     yield return new WaitForSeconds(0.5f);
 
                     m_3DButton.SetActive(true);
-                    m_3DUIPanel.transform.Find("FigmaCanvas02").gameObject.SetActive(true);
+                    virtualCanvasRoot.transform.Find("FigmaCanvas02").gameObject.SetActive(true);
 
                     frameIndex = 3;
                     audioFrameIndex++;
@@ -171,7 +172,7 @@ namespace XRDC24.Demo
 
         private IEnumerator ShowUserText(string text)
         {
-            GameObject dialog = m_3DUIPanel.transform.Find("DialogAgentUser").gameObject;
+            GameObject dialog = virtualCanvasRoot.transform.Find("DialogAgentUser").gameObject;
 
             // show text
             dialog.SetActive(true);
@@ -251,11 +252,11 @@ namespace XRDC24.Demo
 
         private IEnumerator ShowOnboardPanel()
         {
-            m_3DUIPanel.transform.Find("FigmaCanvasI01")?.gameObject.SetActive(true);
+            virtualCanvasRoot.transform.Find("FigmaCanvasI01")?.gameObject.SetActive(true);
 
             yield return new WaitForSeconds(Constants.ONBOARD_PANEL_SHOW_SECONDS);
 
-            m_3DUIPanel.transform.Find("FigmaCanvasI01")?.gameObject.SetActive(false);
+            virtualCanvasRoot.transform.Find("FigmaCanvasI01")?.gameObject.SetActive(false);
 
             // to next onboarding frame
             // m_TextToSpeech.SendRequest(
@@ -322,10 +323,18 @@ namespace XRDC24.Demo
 
         private void SpawnPortal(Vector3 origin, Vector3 target, AnimationType type)
         {
-            Ray ray = new Ray(origin, target - origin);
+            var newOrigin = new Vector3(origin.x, origin.y, origin.z);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, 100f, 1 << LayerMask.NameToLayer("RoomMesh")))
+            newOrigin.y -= 1.0f;
+
+            Ray ray = new Ray(newOrigin, target - newOrigin);
+
+            print("Spawning portal");
+
+            if (Physics.Raycast(ray, out RaycastHit hit, 100f, 1 << LayerMask.NameToLayer("Default")))
             {
+                print("Spawned portal");
+
                 Vector3 hitPoint = hit.point;
                 GameObject hitObject = hit.collider.gameObject;
 
@@ -388,7 +397,7 @@ namespace XRDC24.Demo
             if (type != TriggerType.Recording)
                 return;
 
-            m_3DUIPanel.transform.Find("FigmaCanvas02").gameObject.SetActive(false);
+            virtualCanvasRoot.transform.Find("FigmaCanvas02").gameObject.SetActive(false);
             m_SpeechToText.StartRecording();
         }
 
@@ -401,48 +410,50 @@ namespace XRDC24.Demo
             m_SpeechToText.EndRecording();
         }
 
-        public void SceneInitialized()
-        {
-            Debug.Log("scene loaded and created Successfully");
+        // public void SceneInitialized()
+        // {
+        //     Debug.Log("scene loaded and created Successfully");
+        //
+        //     foreach (MRUKRoom room in MRUK.Instance.Rooms)
+        //     {
+        //         foreach (MRUKAnchor childAnchor in room.Anchors)
+        //         {
+        //             if (childAnchor.HasAnyLabel(MRUKAnchor.SceneLabels.WALL_FACE))
+        //             {
+        //                 walls.Add(childAnchor);
+        //             }
+        //             else if (childAnchor.HasAnyLabel(MRUKAnchor.SceneLabels.FLOOR))
+        //             {
+        //                 ground = childAnchor;
+        //             }
+        //
+        //         }
+        //     }
+        //
+        //     Debug.Log($"wall num: {walls.Count}");
+        //     Debug.Log($"ground: {ground != null}");
+        // }
 
-            foreach (MRUKRoom room in MRUK.Instance.Rooms)
-            {
-                foreach (MRUKAnchor childAnchor in room.Anchors)
-                {
-                    if (childAnchor.HasAnyLabel(MRUKAnchor.SceneLabels.WALL_FACE))
-                    {
-                        walls.Add(childAnchor);
-                    }
-                    else if (childAnchor.HasAnyLabel(MRUKAnchor.SceneLabels.FLOOR))
-                    {
-                        ground = childAnchor;
-                    }
 
-                }
-            }
-
-            Debug.Log($"wall num: {walls.Count}");
-        }
-
-
-        private void SetupSceneMeshes()
-        {
-            // walls
-            foreach (var anchor in walls)
-            {
-                if (anchor.transform.GetChild(0))
-                    anchor.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("RoomMesh");
-                else
-                    Debug.LogError("No scene meshes were created! Please check!");
-            }
-
-            // ground
-            if (ground.transform.GetChild(0))
-                ground.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("RoomMesh");
-            else
-                Debug.LogError("No scene meshes were created! Please check!");
-
-        }
+        // private void SetupSceneMeshes()
+        // {
+        //     print("SetupSceneMeshes");
+        //     // walls
+        //     foreach (var anchor in walls)
+        //     {
+        //         if (anchor.transform.GetChild(0))
+        //             anchor.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("RoomMesh");
+        //         else
+        //             Debug.LogError("No scene meshes were created! Please check!");
+        //     }
+        //
+        //     // ground
+        //     if (ground.transform.GetChild(0))
+        //         ground.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("RoomMesh");
+        //     else
+        //         Debug.LogError("No scene meshes were created! Please check!");
+        //
+        // }
 
         private void ModuleTrigger(BubbleButtonType type)
         {
@@ -461,6 +472,11 @@ namespace XRDC24.Demo
 
                 m_BubbleButtonExit.SetActive(false);
             }
+        }
+
+        private void Awake()
+        {
+
         }
 
         void Start()
@@ -483,17 +499,55 @@ namespace XRDC24.Demo
 
             #region Hack
 
+            // Save the initial position and rotation for reset functionality
+            var t = unityCamera.transform;
+            initialPosition = t.position;
+            initialRotation = t.rotation;
+
+            m_BubbleManager.unityCamera = unityCamera;
+            m_PortalManager.unityCamera = unityCamera;
+
             LoadTTSCache();
             nextActionAvailable = true;
 
             humanSource = GetComponent<AudioSource>();
 
+            virtualCanvasRoot = new GameObject();
+            virtualCanvasRoot.transform.SetAsFirstSibling();
+            virtualCanvasRoot.name = "VirtualCanvasRoot";
+
+            // generate virtual canvas
+            if (virtualCanvasRoot.transform.childCount == 0)
+            {
+                var count = m_3DUIPanel.transform.childCount;
+                for (var i = 0; i < count; i++)
+                {
+
+                    // error for unknown reason
+                    try
+                    {
+                        var child = m_3DUIPanel.transform.GetChild(i).gameObject;
+                        var name = child.name.ToLower();
+                        if (name.Contains("canvas") || name.Contains("dialog") || name.Contains("cube"))
+                        {
+                            // change parent
+                            child.transform.SetParent(virtualCanvasRoot.transform);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        
+                    }
+                }
+            }
 
             #endregion
         }
 
         void Update()
         {
+            ControlCamera();
+            
             AdjustUIPose();
 
             UpdateAIAvatarScale();
@@ -502,16 +556,58 @@ namespace XRDC24.Demo
             PlayOnBoardingFrames();
         }
 
+        private void ControlCamera()
+        {
+            if (!enableCameraControl) return;
+
+            // Camera rotation
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                // disable
+                enableRotation = false;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Mouse1) ||
+                Input.GetKeyDown(KeyCode.Mouse2))
+            {
+                // enable
+                enableRotation = true;
+            }
+
+            if (enableRotation)
+            {
+                // Mouse for camera rotation
+                float mouseSensitivity = 2f;
+                float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+                float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+
+                unityCamera.transform.Rotate(Vector3.up, mouseX, Space.World);
+                unityCamera.transform.Rotate(Vector3.left, mouseY, Space.Self);
+            }
+
+            // Space to reset position and rotation
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                ResetPositionAndRotation();
+            }
+        }
+
+        private void ResetPositionAndRotation()
+        {
+            unityCamera.transform.position = initialPosition;
+            unityCamera.transform.rotation = initialRotation;
+        }
+
         private void AdjustUIPose()
         {
             Vector3 headPos = unityCamera.transform.position;
-            if (Vector3.Distance(headPos, m_3DUIPanel.transform.position) < 1f)
+            if (Vector3.Distance(headPos, virtualCanvasRoot.transform.position) < 1f)
                 return;
 
             Vector3 forward = unityCamera.transform.forward;
-
-            m_3DUIPanel.transform.position = headPos + forward * 0.8f;
-            m_3DUIPanel.transform.rotation = unityCamera.transform.rotation;
+            // only update canvas
+            virtualCanvasRoot.transform.position = headPos + forward * 0.55f;
+            virtualCanvasRoot.transform.rotation = unityCamera.transform.rotation;
 
             // m_AIAvatar.transform.position = headPos + forward * 1.5f;
             // m_AIAvatar.transform.rotation = unityCamera.transform.rotation;
@@ -613,6 +709,18 @@ namespace XRDC24.Demo
 
         public void ToNext()
         {
+            print("bubbles Finished");
+            pokingBubbles = false;
+            // disable virtual canvas
+            virtualCanvasRoot.SetActive(false);
+
+            // early exit
+            if (!pokingBubbles)
+            {
+                nextActionAvailable = true;
+                return;
+            }
+
             m_ModuleState++;
 
             #region Hack
@@ -628,7 +736,7 @@ namespace XRDC24.Demo
                     break;
 
                 case ModuleState.MoodDetection:
-                    SetupSceneMeshes();
+                    // SetupSceneMeshes();
                     break;
 
                 case ModuleState.FreeSpeech:
@@ -790,6 +898,14 @@ namespace XRDC24.Demo
 
         void SpawnBubbles()
         {
+            StartCoroutine(SpwanBubblesImpl());
+        }
+
+        IEnumerator SpwanBubblesImpl()
+        {
+            // wait for voice to be played
+            yield return new WaitForSeconds(1.0f);
+            
             totalBubbleN = 18;
             int positiveBubbleN = 10;
             int negativeBubbleN = totalBubbleN - positiveBubbleN;
@@ -808,10 +924,29 @@ namespace XRDC24.Demo
 
         void ShowExitButton()
         {
+            print("Show exit button...");
             m_BubbleButtonExit.SetActive(true);
         }
 
-        private int actionIndex = 0;
+        void SwitchToNext()
+        {
+            print("Switch to next...");
+            // remove all portals
+            // disable stage 1
+            nextActionAvailable = false;
+            // disable environment
+            m_AvatarBackground.SetActive(false);
+            // disable exit button
+            m_BubbleButtonExit.SetActive(false);
+            // disable camera control
+            enableCameraControl = false;
+            // reset camera
+            ResetPositionAndRotation();
+            // switch part2
+            SwitchToPart2?.Invoke();
+        }
+
+        private int actionIndex = -2;
 
         private bool nextActionAvailable = false;
 
@@ -819,13 +954,35 @@ namespace XRDC24.Demo
 
         private AudioSource humanSource;
 
+        private GameObject virtualCanvasRoot;
+
+        public System.Action SwitchToPart2;
+
         [Space(30)] [Header("Hack")] public Camera unityCamera;
+        public FullScreenImage fullScreenImage;
+
+        private Vector3 initialPosition;
+        private Quaternion initialRotation;
+        private bool enableRotation = false;
+
+        private bool enableCameraControl = false;
+
+        // public List<GameObject> wallObjects;
+        // public List<GameObject> groundObjects;
 
         public void SimulateAction()
         {
             switch (actionIndex)
             {
+                // case -2:
+                case -2:
+                    fullScreenImage.ShowStart();
+                    break;
                 // click start
+                case -1:
+                    fullScreenImage.DisableSplash();
+                    m_BubbleButtonStart.SetActive(true);
+                    break;
                 case 0:
                     ClickStart();
                     break;
@@ -835,6 +992,8 @@ namespace XRDC24.Demo
                     break;
                 // play positive output
                 case 2:
+                    // enable camera control
+                    enableCameraControl = true;
                     PlayPositiveOutput();
                     SpawnBubbles();
                     break;
@@ -846,9 +1005,29 @@ namespace XRDC24.Demo
                 case 4:
                     ShowExitButton();
                     break;
+                // swith to next sceen
+                case 5:
+                    SwitchToNext();
+                    break;
                 default:
                     break;
             }
+        }
+
+        public void BackToStart()
+        {
+            // disable camera control
+            enableCameraControl = false;
+            // reset camera
+            ResetPositionAndRotation();
+            actionIndex = -1;
+            nextActionAvailable = true;
+            pokingBubbles = false;
+        }
+
+        public void ClearPortals()
+        {
+            m_PortalManager.ClearPortals();
         }
 
         private void LateUpdate()

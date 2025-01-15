@@ -97,6 +97,7 @@ namespace XRDC24.Environment
 
         private void Update()
         {
+            if(!inDebugMode) return;
             if (Input.GetKeyUp(KeyCode.N) || OVRInput.GetUp(OVRInput.Button.Any, OVRInput.Controller.All))
             {
                 Dissolve();
