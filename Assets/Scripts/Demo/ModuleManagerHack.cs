@@ -322,10 +322,18 @@ namespace XRDC24.Demo
 
         private void SpawnPortal(Vector3 origin, Vector3 target, AnimationType type)
         {
-            Ray ray = new Ray(origin, target - origin);
+            var newOrigin = new Vector3(origin.x, origin.y, origin.z);
+            
+            newOrigin.y -= 1.0f;
+            
+            Ray ray = new Ray(newOrigin, target - newOrigin);
+            
+            print("Spawning portal");
 
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, 1 << LayerMask.NameToLayer("RoomMesh")))
             {
+                print("Spawned portal");
+                
                 Vector3 hitPoint = hit.point;
                 GameObject hitObject = hit.collider.gameObject;
 
@@ -422,11 +430,13 @@ namespace XRDC24.Demo
             }
 
             Debug.Log($"wall num: {walls.Count}");
+            Debug.Log($"ground: {ground != null}");
         }
 
 
         private void SetupSceneMeshes()
         {
+            print("SetupSceneMeshes");
             // walls
             foreach (var anchor in walls)
             {
@@ -489,6 +499,7 @@ namespace XRDC24.Demo
             #region Hack
 
             m_BubbleManager.unityCamera = unityCamera;
+            m_PortalManager.unityCamera = unityCamera;
 
             LoadTTSCache();
             nextActionAvailable = true;
@@ -824,6 +835,9 @@ namespace XRDC24.Demo
 
         void StartPoking()
         {
+            // prepare portals
+            SetupSceneMeshes();
+            
             pokingBubbles = true;
         }
 

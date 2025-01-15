@@ -33,21 +33,38 @@ public class PortalManager : MonoBehaviour
     public GameObject m_RenderCamPrefab;
 
     private List<PortalSet> portals = new List<PortalSet>();
-    
+
     void Start()
     {
-        
+
     }
 
     void Update()
     {
-        
+
     }
+
+    #region Hack
+
+    [HideInInspector] public Camera unityCamera;
+
+
+    #endregion
 
     public void SpawnPortal(Vector3 pos, Quaternion rot)
     {
         // init render camera with texture
-        GameObject cam = Instantiate(m_RenderCamPrefab, m_CenterEyeCamera.transform, false);
+        GameObject cam = null;
+        if (unityCamera == null)
+        {
+            cam = Instantiate(m_RenderCamPrefab, m_CenterEyeCamera.transform, false);
+        }
+        else
+        {
+            cam = Instantiate(m_RenderCamPrefab, unityCamera.transform, false);
+        }
+
+
         RenderTexture rt = new RenderTexture(Constants.RT_WIDTH, Constants.RT_WIDTH, 24);
         rt.filterMode = FilterMode.Bilinear;
         rt.wrapMode = TextureWrapMode.Clamp;
