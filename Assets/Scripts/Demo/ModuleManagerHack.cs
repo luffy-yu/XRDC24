@@ -15,8 +15,8 @@ namespace XRDC24.Demo
 {
     public class ModuleManagerHack : MonoBehaviour
     {
-        [SerializeField] OVRCameraRig m_OVRCameraRig;
-        [SerializeField] OVRManager m_OVRManager;
+        // [SerializeField] OVRCameraRig m_OVRCameraRig;
+        // [SerializeField] OVRManager m_OVRManager;
         [SerializeField] BubblesManager m_BubbleManager;
         [SerializeField] LLMAgentManager m_LLMAgentManager;
         [SerializeField] STT m_SpeechToText;
@@ -504,17 +504,17 @@ namespace XRDC24.Demo
 
         private void AdjustUIPose()
         {
-            Vector3 headPos = m_OVRCameraRig.centerEyeAnchor.position;
+            Vector3 headPos = unityCamera.transform.position;
             if (Vector3.Distance(headPos, m_3DUIPanel.transform.position) < 1f)
                 return;
 
-            Vector3 forward = m_OVRCameraRig.transform.forward;
+            Vector3 forward = unityCamera.transform.forward;
 
             m_3DUIPanel.transform.position = headPos + forward * 0.8f;
-            m_3DUIPanel.transform.rotation = m_OVRCameraRig.transform.rotation;
+            m_3DUIPanel.transform.rotation = unityCamera.transform.rotation;
 
-            m_AIAvatar.transform.position = headPos + forward * 1.5f;
-            m_AIAvatar.transform.rotation = m_OVRCameraRig.transform.rotation;
+            // m_AIAvatar.transform.position = headPos + forward * 1.5f;
+            // m_AIAvatar.transform.rotation = unityCamera.transform.rotation;
         }
 
         private void UpdateAIAvatarScale()
@@ -648,13 +648,13 @@ namespace XRDC24.Demo
         {
             if (isEnabled)
             {
-                m_OVRManager.isInsightPassthroughEnabled = true;
-                m_OVRCameraRig.centerEyeAnchor.GetComponent<Camera>().clearFlags = CameraClearFlags.SolidColor;
+                // m_OVRManager.isInsightPassthroughEnabled = true;
+                unityCamera.clearFlags = CameraClearFlags.SolidColor;
             }
             else
             {
-                m_OVRManager.isInsightPassthroughEnabled = false;
-                m_OVRCameraRig.centerEyeAnchor.GetComponent<Camera>().clearFlags = CameraClearFlags.Skybox;
+                // m_OVRManager.isInsightPassthroughEnabled = false;
+                unityCamera.clearFlags = CameraClearFlags.Skybox;
             }
         }
 
@@ -796,11 +796,6 @@ namespace XRDC24.Demo
             m_BubbleManager.SpawnBubbles(unityCamera, positiveBubbleN, negativeBubbleN);
         }
 
-        void LoadRoom()
-        {
-            print("Load Room");
-        }
-
         void StartPoking()
         {
             pokingBubbles = true;
@@ -809,6 +804,11 @@ namespace XRDC24.Demo
         void RandomPokeBubbles()
         {
             m_BubbleManager.TriggerBubbleAnimation();
+        }
+
+        void ShowExitButton()
+        {
+            m_BubbleButtonExit.SetActive(true);
         }
 
         private int actionIndex = 0;
@@ -836,18 +836,15 @@ namespace XRDC24.Demo
                 // play positive output
                 case 2:
                     PlayPositiveOutput();
-                    break;
-                case 3:
-                    LoadRoom();
-                    break;
-                // spawn bubbles
-                case 4:
                     SpawnBubbles();
                     break;
-                case 5:
+                // start poking bubbles
+                case 3:
                     StartPoking();
                     break;
-                case 6: // todo
+                // show exit button
+                case 4:
+                    ShowExitButton();
                     break;
                 default:
                     break;
