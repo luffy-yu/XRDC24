@@ -57,17 +57,17 @@ namespace XRDC24.Demo
 
             // revert disolve
             dissolveController.Revert();
-            // reset
-            moduleManagerHack.BackToStart();
             // show part1
             part1Root.SetActive(true);
             // reset
-            StartCoroutine(ShowFullScreen());
+            moduleManagerHack.BackToStart();
+            // reset
+            // StartCoroutine(ShowFullScreen());
         }
 
         IEnumerator ShowFullScreen()
         {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(10f);
             splashScreen.ShowEnd();
         }
 

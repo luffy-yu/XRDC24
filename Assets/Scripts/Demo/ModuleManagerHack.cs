@@ -1020,6 +1020,7 @@ namespace XRDC24.Demo
             enableCameraControl = false;
             // reset camera
             ResetPositionAndRotation();
+            m_AvatarBackground.SetActive(true);
             actionIndex = -1;
             nextActionAvailable = true;
             pokingBubbles = false;
