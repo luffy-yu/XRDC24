@@ -107,4 +107,4 @@ Integrating diverse multidisciplinary tools from design to development, 2D to 3D
 - Jennifer (Yan Zeng), **Product Design, XR/UX/UI Design, User Flow, Wireframing, Prototyping, 3D Design & Modelling Product Designer specializes in SaaS+AI | Mixed Reality Creator | 3D Artist | Gaming Enthusiast | Architectural Designer | Cat Lover @UPenn**, [LinkedIn](https://www.linkedin.com/in/jennifer-zeng-b4244b171/)
 - Tingting Luo, **UX Researcher & Designer, 3D Animation Artist**, [LinkedIn](https://www.linkedin.com/in/tingting-luo-uiux/)
 - Muki (Shuqi Liao), **XR Developer, CS PhD Student**, [Personal Website](https://yvettemuki.github.io/)
-- Luffy (Liuchuan Yu), **Developer & Bug Fixer, CS PhD Student Dedicated to AI + XR**, [Person Website](https://www.chuange.org/)
+- Luffy (Liuchuan Yu), **Developer & Bug Fixer, CS PhD Student Dedicated to AI + XR**, [Personal Website](https://www.chuange.org/)
