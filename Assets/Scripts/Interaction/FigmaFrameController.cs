@@ -117,7 +117,10 @@ namespace XRDC24.Interaction
                 if (frameClips.ContainsKey(key)) continue;
 
                 var clip = LoadSound(frame.name);
-                frameClips.Add(key, clip);
+                if (clip != null)
+                {
+                    frameClips.Add(key, clip);   
+                }
             }
         }
 
