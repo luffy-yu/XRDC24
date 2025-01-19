@@ -1,6 +1,6 @@
 # Float Mind
 
-[![Float Mind Windows Splash Intro](docs/Splash_Intro.png)](docs/Splash_Intro.mp4)
+[![Float Mind Windows Splash Intro](docs/Splash_Intro.png)](https://youtu.be/4PgnTSuonMU)
 
 ## Inspiration
 
