@@ -31,6 +31,9 @@ namespace XRDC24.Interaction
 
         public System.Action OnFinalFrame;
 
+        // whether switching is available
+        private bool switchingAvailable = true;
+
         private void Start()
         {
             currentFrame = -1; //24
@@ -154,6 +157,7 @@ namespace XRDC24.Interaction
             {
                 PlaySound();
             }
+
             Breathe();
             ShowGuidance();
             SetAutoJumper();
@@ -230,6 +234,8 @@ namespace XRDC24.Interaction
 
         public void PreviousFrame()
         {
+            if (!switchingAvailable) return;
+
             if (AtFirstFrame) return;
 
             currentFrame--;
@@ -239,6 +245,8 @@ namespace XRDC24.Interaction
 
         public void NextFrame()
         {
+            if (!switchingAvailable) return;
+
             if (AtLastFrame)
             {
                 OnFinalFrame?.Invoke();
@@ -300,10 +308,20 @@ namespace XRDC24.Interaction
 
             if (name != lastName && frameClips.ContainsKey(name))
             {
+                // disable action
+                switchingAvailable = false;
                 // play
                 audioSource.PlayOneShot(frameClips[name]);
                 lastName = name;
+                var seconds = frameClips[name].length;
+                StartCoroutine(WaitSoundOver(seconds));
             }
+        }
+
+        IEnumerator WaitSoundOver(float sec)
+        {
+            yield return new WaitForSeconds(sec);
+            switchingAvailable = true;
         }
 
         void PlaceCenter()

@@ -101,7 +101,7 @@ namespace XRDC24.Demo
             moduleManagerHack.BackToStart();
 
             // show help text
-            htmlTextOnGUI.gameObject.SetActive(true);
+            // htmlTextOnGUI.gameObject.SetActive(true);
         }
 
         private void SwitchToPart2()

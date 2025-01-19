@@ -1,5 +1,7 @@
 # Float Mind
 
+[![Float Mind Windows Splash Intro](docs/Splash_intro.gif)](Assets/Resources/Videos/Splash_Intro.mp4)
+
 ## Inspiration
 
 In our fast-paced world, stress and emotional disconnect are widespread. To address this, we explored how new technologies could help stressed individuals relax and recharge quickly. Inspired by mindfulness and visual-based meditation, our team developed a gamified meditation approach. This helps users relax their bodies and minds while visualizing and overcoming emotional challenges. Our solution blends gamification, AR/VR, and AI to make mental wellness practices more engaging and impactful.

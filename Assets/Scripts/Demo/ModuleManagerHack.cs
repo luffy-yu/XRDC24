@@ -113,6 +113,8 @@ namespace XRDC24.Demo
         private void PlayAIAgentAudioClip(AudioClip clip, string text)
         {
             m_TextToSpeech.audioSource.Play();
+            // disable action
+            nextActionAvailable = false;
 
             StartCoroutine(ShowAgentText(clip.length, text));
         }
@@ -859,6 +861,8 @@ namespace XRDC24.Demo
 
         void PlayPositiveInput()
         {
+            // disable action
+            nextActionAvailable = false;
             print("Playing positive input...");
             var text =
                 "Hi, I’m doing great today! I just got my new VR Headset today, which I’ve been dreaming about for months.";
@@ -877,11 +881,15 @@ namespace XRDC24.Demo
         IEnumerator DelayShowText(float second, string text)
         {
             yield return new WaitForSeconds(second + 0.5f);
+            // enable action
+            nextActionAvailable = true;
             yield return ShowAgentText(second, text);
         }
 
         void PlayPositiveOutput()
         {
+            // disable action
+            nextActionAvailable = false;
             var text =
                 "That's awesome! VR headsets are so cool. What games or experiences are you planing to try first?";
             m_TextToSpeech.audioSource.clip = positiveOutput;
@@ -1025,6 +1033,12 @@ namespace XRDC24.Demo
             actionIndex = -2;
             nextActionAvailable = false;
             pokingBubbles = false;
+            // reset titles
+            m_TitleLogo.SetActive(true);
+            foreach (Transform child in m_TitleLogo.transform)
+            {
+                child.GetComponent<MeshRenderer>().material.SetFloat("_OverallAlpha", 1.0f);
+            }
         }
 
         public void ClearPortals()
