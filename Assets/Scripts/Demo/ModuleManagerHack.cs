@@ -946,9 +946,9 @@ namespace XRDC24.Demo
             SwitchToPart2?.Invoke();
         }
 
-        private int actionIndex = -2;
+        private int actionIndex = -1;
 
-        private bool nextActionAvailable = false;
+        [HideInInspector]public bool nextActionAvailable = false;
 
         private bool pokingBubbles = false;
 
@@ -976,9 +976,9 @@ namespace XRDC24.Demo
             {
                 // case -2:
                 case -2:
-                    fullScreenImage.ShowStart();
+                    // fullScreenImage.ShowStart();
                     break;
-                // click start
+                // after intro video
                 case -1:
                     fullScreenImage.DisableSplash();
                     m_BubbleButtonStart.SetActive(true);
@@ -1021,8 +1021,9 @@ namespace XRDC24.Demo
             // reset camera
             ResetPositionAndRotation();
             m_AvatarBackground.SetActive(true);
-            actionIndex = -1;
-            nextActionAvailable = true;
+            m_AIAvatar.SetActive(true);
+            actionIndex = -2;
+            nextActionAvailable = false;
             pokingBubbles = false;
         }
 

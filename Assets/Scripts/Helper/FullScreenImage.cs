@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 namespace XRDC24.Helper
 {
@@ -8,33 +9,60 @@ namespace XRDC24.Helper
     {
         public Canvas targetCanvas;
 
-        public Image startImage;
+        [Header("Image")] public Image startImage;
         public Image endImage;
-        
+
+        [Header("Video")] public VideoPlayer videoPlayer;
+        public VideoClip startVideo;
+        public VideoClip endVideo;
+
+        public System.Action OnStartVideoEnded;
+        public System.Action OnEndVideoEnded;
+
         public void ShowStart()
         {
             targetCanvas.enabled = true;
-            startImage.gameObject.SetActive(true);
-            endImage.gameObject.SetActive(false);
+
+            videoPlayer.enabled = true;
+            videoPlayer.clip = startVideo;
+            videoPlayer.Play();
         }
 
         public void ShowEnd()
         {
             targetCanvas.enabled = true;
-            startImage.gameObject.SetActive(false);
-            endImage.gameObject.SetActive(true);
+
+            videoPlayer.enabled = true;
+            videoPlayer.clip = endVideo;
+            videoPlayer.Play();
         }
 
         public void DisableSplash()
         {
             targetCanvas.enabled = false;
-            startImage.gameObject.SetActive(false);
-            endImage.gameObject.SetActive(false);
+            videoPlayer.enabled = false;
         }
 
         void Start()
         {
+            videoPlayer.loopPointReached += VideoPlayerOnloopPointReached;
+            // disable images
+            // startImage.gameObject.SetActive(false);
+            // endImage.gameObject.SetActive(false);
+
             ShowStart();
+        }
+
+        private void VideoPlayerOnloopPointReached(VideoPlayer source)
+        {
+            if (videoPlayer.clip == startVideo)
+            {
+                OnStartVideoEnded?.Invoke();
+            }
+            else if (videoPlayer.clip == endVideo)
+            {
+                OnEndVideoEnded?.Invoke();
+            }
         }
 
         void Update()

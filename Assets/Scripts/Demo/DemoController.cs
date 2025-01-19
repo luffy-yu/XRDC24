@@ -21,6 +21,8 @@ namespace XRDC24.Demo
 
         public RoomDissolveController dissolveController;
 
+        public HTMLTextOnGUI htmlTextOnGUI;
+
         private int p1CameraCullingMask;
         private int p2CameraCullingMask;
 
@@ -39,19 +41,55 @@ namespace XRDC24.Demo
 
             moduleManagerHack.SwitchToPart2 += SwitchToPart2;
             customInputHandler.frameController.OnFinalFrame += OnFinalFrame;
+
             // disable part2 first
             part2Root.SetActive(false);
             customInputHandler.MyTurn = false;
 
             dissolveController.inDebugMode = false;
+
+            // disable help text first
+            htmlTextOnGUI.gameObject.SetActive(false);
+
+            // disable action first
+            moduleManagerHack.nextActionAvailable = false;
+
+            splashScreen.OnStartVideoEnded += OnStartVideoEnded;
+            splashScreen.OnEndVideoEnded += OnEndVideoEnded;
+        }
+
+        private void OnStartVideoEnded()
+        {
+            print("starting video ended");
+            // enable help text
+            htmlTextOnGUI.gameObject.SetActive(true);
+            // enable action
+            moduleManagerHack.nextActionAvailable = true;
+        }
+
+        private void OnEndVideoEnded()
+        {
+            // disable splash
+            splashScreen.DisableSplash();
+            // go to start
+            BackToStart();
         }
 
         private void OnFinalFrame()
         {
-            // show splash screen, disable all interactions
+            // show splash screen
+            splashScreen.ShowEnd();
+
+            // disable interaction
             part2Root.SetActive(false);
             customInputHandler.MyTurn = false;
 
+            // disable help text
+            htmlTextOnGUI.gameObject.SetActive(false);
+        }
+
+        void BackToStart()
+        {
             part2Camera.enabled = false;
             part1Camera.enabled = true;
 
@@ -61,14 +99,9 @@ namespace XRDC24.Demo
             part1Root.SetActive(true);
             // reset
             moduleManagerHack.BackToStart();
-            // reset
-            // StartCoroutine(ShowFullScreen());
-        }
 
-        IEnumerator ShowFullScreen()
-        {
-            yield return new WaitForSeconds(10f);
-            splashScreen.ShowEnd();
+            // show help text
+            htmlTextOnGUI.gameObject.SetActive(true);
         }
 
         private void SwitchToPart2()
