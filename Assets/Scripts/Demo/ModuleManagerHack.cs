@@ -119,7 +119,16 @@ namespace XRDC24.Demo
             StartCoroutine(ShowAgentText(clip.length, text));
         }
 
-        private IEnumerator ShowAgentText(float second, string text)
+        private void PlayAIAgentAudioClip(AudioClip clip, string text, bool action = true)
+        {
+            m_TextToSpeech.audioSource.Play();
+            // disable action
+            nextActionAvailable = false;
+
+            StartCoroutine(ShowAgentText(clip.length, text, action));
+        }
+
+        private IEnumerator ShowAgentText(float second, string text, bool action = true)
         {
             GameObject dialog = virtualCanvasRoot.transform.Find("DialogAgentUser").gameObject;
 
@@ -131,7 +140,7 @@ namespace XRDC24.Demo
             yield return new WaitForSeconds(second);
 
             // enable after audio is played
-            nextActionAvailable = true;
+            nextActionAvailable = action;
 
             // hide text
             dialog.SetActive(false);
@@ -237,14 +246,14 @@ namespace XRDC24.Demo
 
                 case 3:
                     // m_TextToSpeech.SendRequest("Take your time. As you speak, I’ll reflect your words as bubbles.");
-                    PlayTTSCache(2);
+                    PlayTTSCache(2, false);
                     frameIndex = 0;
                     break;
 
                 case 4:
                     // m_TextToSpeech.SendRequest(
                     // "Your positive emotions will form soft, glowing bubbles. If there are heavier \r\nfeelings, they might appear darker or sharper – and that’s okay.");
-                    PlayTTSCache(3);
+                    PlayTTSCache(3, true);
                     frameIndex = 0;
                     audioFrameIndex = 3; // by pass
                     break;
@@ -263,7 +272,7 @@ namespace XRDC24.Demo
             // to next onboarding frame
             // m_TextToSpeech.SendRequest(
             // "Hello, my name is Flo, your personal mental health assistant, I’m here to listen. How are you feeling today?");
-            PlayTTSCache(4);
+            PlayTTSCache(4, false);
         }
 
         private IEnumerator DisappearingTitle()
@@ -538,7 +547,7 @@ namespace XRDC24.Demo
                     }
                     catch (Exception e)
                     {
-                        
+
                     }
                 }
             }
@@ -549,7 +558,7 @@ namespace XRDC24.Demo
         void Update()
         {
             ControlCamera();
-            
+
             AdjustUIPose();
 
             UpdateAIAvatarScale();
@@ -798,14 +807,14 @@ namespace XRDC24.Demo
             InitSounds();
         }
 
-        void PlayTTSCache(int index)
+        void PlayTTSCache(int index, bool action = true) // enable action action after playing sound
         {
             // load clip and get text
             var clip = TTSCache[index];
             var text = demoTTSStrings[index];
             // set clip
             m_TextToSpeech.audioSource.clip = clip;
-            PlayAIAgentAudioClip(clip, text);
+            PlayAIAgentAudioClip(clip, text, action);
         }
 
         void InitSounds()
@@ -913,7 +922,7 @@ namespace XRDC24.Demo
         {
             // wait for voice to be played
             yield return new WaitForSeconds(1.0f);
-            
+
             totalBubbleN = 18;
             int positiveBubbleN = 10;
             int negativeBubbleN = totalBubbleN - positiveBubbleN;
@@ -956,7 +965,7 @@ namespace XRDC24.Demo
 
         private int actionIndex = -1;
 
-        [HideInInspector]public bool nextActionAvailable = false;
+        [HideInInspector] public bool nextActionAvailable = false;
 
         private bool pokingBubbles = false;
 
